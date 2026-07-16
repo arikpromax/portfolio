@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-// ⚠️ Після публікації заміни URL-и на адресу свого сайту (зараз — GitHub Pages з оригіналу)
-const SITE_URL = "https://arik77777.github.io/portfolio/";
+// Публічна адреса сайту (Vercel). Якщо колись підключите свій домен — заміни тут
+const SITE_URL = "https://portfolio-zeta-gold-0elpf422sg.vercel.app/";
 
 export const metadata: Metadata = {
   title: "arawebsite — сайти, які приносять заявки вашому бізнесу",
