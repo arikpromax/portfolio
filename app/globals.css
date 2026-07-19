@@ -553,3 +553,5 @@ body.menu-open{overflow:hidden}
 
 /* справжній скриншот у картці кейса (замість стилізованого макета) */
 .cs-shot{display:block;width:100%;height:200px;object-fit:cover;object-position:top}
+/* картка з реальним посиланням — клікабельна */
+.cs-card--linked{cursor:pointer}

@@ -27,6 +27,8 @@ export default function Cases({ items }: { items?: CaseItem[] }) {
   };
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    // Клік почався на посиланні — не вмикаємо перетягування, хай посилання спрацює
+    if ((e.target as HTMLElement).closest("a")) return;
     const slide = slideRefs.current[idx];
     if (!slide) return;
     drag.current = { startX: e.clientX, lastDx: 0, dragging: true, slide };
@@ -54,6 +56,14 @@ export default function Cases({ items }: { items?: CaseItem[] }) {
     else if (d.lastDx >= SWIPE_THRESHOLD && idx > 0) go(idx - 1);
   };
 
+  // Клік по картці (без потягування) відкриває сайт кейса
+  const onStackClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if ((e.target as HTMLElement).closest("a")) return; // посилання обробляє себе саме
+    if (Math.abs(drag.current.lastDx) > 8) return; // це був свайп, а не клік
+    const current = cases[idx];
+    if (current.link) window.open(current.link, "_blank", "noopener");
+  };
+
   return (
     <section className="section" id="cases">
       <div className="wrap">
@@ -69,6 +79,7 @@ export default function Cases({ items }: { items?: CaseItem[] }) {
           onPointerMove={onPointerMove}
           onPointerUp={endDrag}
           onPointerCancel={endDrag}
+          onClick={onStackClick}
         >
           {cases.map((c, i) => (
             <div
@@ -78,7 +89,7 @@ export default function Cases({ items }: { items?: CaseItem[] }) {
                 slideRefs.current[i] = el;
               }}
             >
-              <article className="cs-card">
+              <article className={`cs-card${c.link ? " cs-card--linked" : ""}`}>
                 <div className="cs-browser">
                   <div className="cs-bar">
                     <i></i>
