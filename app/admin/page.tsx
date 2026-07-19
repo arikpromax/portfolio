@@ -14,6 +14,7 @@ const emptyCase: CaseItem = {
   description: "",
   result: "",
   link: "",
+  image_url: "",
   sort_order: 0,
 };
 
@@ -33,6 +34,7 @@ export default function AdminPage() {
   const [editing, setEditing] = useState<CaseItem | null>(null);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<Notice>(null);
+  const [uploading, setUploading] = useState(false);
 
   const load = useCallback(async () => {
     if (!supabase) return;
@@ -154,6 +156,25 @@ export default function AdminPage() {
 
   const set = (patch: Partial<CaseItem>) =>
     setEditing((prev) => (prev ? { ...prev, ...patch } : prev));
+
+  // Завантаження скриншота у сховище Supabase (bucket "case-images")
+  const uploadPhoto = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !editing) return;
+    setUploading(true);
+    setNotice(null);
+    const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
+    const path = `case-${Date.now()}.${ext}`;
+    const { error } = await supabase.storage.from("case-images").upload(path, file);
+    if (error) {
+      setNotice({ kind: "err", text: "Не вдалося завантажити фото: " + error.message });
+    } else {
+      const { data } = supabase.storage.from("case-images").getPublicUrl(path);
+      set({ image_url: data.publicUrl });
+    }
+    setUploading(false);
+    e.target.value = "";
+  };
 
   if (checkingAuth) {
     return (
@@ -370,6 +391,34 @@ export default function AdminPage() {
                   onChange={(e) => set({ result: e.target.value })}
                   placeholder="+40% записів за перший місяць."
                 />
+              </div>
+              <div className="field">
+                <label htmlFor="c-photo">
+                  Скриншот сайту{" "}
+                  <span className="opt">(необов&apos;язково — без нього буде стилізований макет)</span>
+                </label>
+                {editing.image_url ? (
+                  <div className="admin-photo">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={editing.image_url} alt="Скриншот кейса" />
+                    <button
+                      type="button"
+                      className="btn btn--ghost btn--sm"
+                      onClick={() => set({ image_url: "" })}
+                    >
+                      Прибрати фото
+                    </button>
+                  </div>
+                ) : (
+                  <input
+                    id="c-photo"
+                    type="file"
+                    accept="image/*"
+                    onChange={uploadPhoto}
+                    disabled={uploading}
+                  />
+                )}
+                {uploading && <p className="admin-note">Завантажую фото…</p>}
               </div>
               <div className="admin-grid2">
                 <div className="field">

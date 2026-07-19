@@ -11,6 +11,7 @@ export type CaseItem = {
   description: string; // звичайний текст опису
   result: string; // фраза-результат, виводиться жирним у кінці
   link: string; // реальне посилання на сайт ("" — якщо ще немає)
+  image_url: string; // скриншот сайту зі сховища Supabase ("" — стилізований макет)
   sort_order: number;
 };
 
@@ -25,6 +26,7 @@ export const demoCases: CaseItem[] = [
     description: "Сайт клініки: онлайн-запис, лікарі, обладнання, відгуки.",
     result: "+40% записів за перший місяць.",
     link: "",
+    image_url: "",
     sort_order: 1,
   },
   {
@@ -36,6 +38,7 @@ export const demoCases: CaseItem[] = [
     description: "Запис онлайн 24/7, портфоліо робіт, прайс і майстри.",
     result: "Запис без дзвінків.",
     link: "",
+    image_url: "",
     sort_order: 2,
   },
   {
@@ -47,6 +50,7 @@ export const demoCases: CaseItem[] = [
     description: "Каталог об'єктів, етапи робіт, матеріали й форма прорахунку.",
     result: "Заявки на кошторис.",
     link: "",
+    image_url: "",
     sort_order: 3,
   },
   {
@@ -58,6 +62,7 @@ export const demoCases: CaseItem[] = [
     description: "Меню, бронювання столиків і карта на сайті.",
     result: "Гості бачать усе одразу.",
     link: "",
+    image_url: "",
     sort_order: 4,
   },
 ];

@@ -86,29 +86,35 @@ export default function Cases({ items }: { items?: CaseItem[] }) {
                     <i></i>
                     <span className="cs-url">{c.url_label}</span>
                   </div>
-                  <div
-                    className="cs-mini"
-                    style={{ "--accent": c.accent, "--accent2": c.accent2 } as React.CSSProperties}
-                  >
-                    <div className="cs-nav">
-                      <span className="cs-logo"></span>
-                      <span className="cs-links">
+                  {c.image_url ? (
+                    // Справжній скриншот сайту, завантажений через адмінку
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img className="cs-shot" src={c.image_url} alt={`Скриншот сайту ${c.title}`} />
+                  ) : (
+                    <div
+                      className="cs-mini"
+                      style={{ "--accent": c.accent, "--accent2": c.accent2 } as React.CSSProperties}
+                    >
+                      <div className="cs-nav">
+                        <span className="cs-logo"></span>
+                        <span className="cs-links">
+                          <span></span>
+                          <span></span>
+                          <span></span>
+                        </span>
+                      </div>
+                      <div className="cs-hero">
+                        <span className="cs-h"></span>
+                        <span className="cs-h s"></span>
+                        <span className="cs-cta"></span>
+                      </div>
+                      <div className="cs-cards">
                         <span></span>
                         <span></span>
                         <span></span>
-                      </span>
+                      </div>
                     </div>
-                    <div className="cs-hero">
-                      <span className="cs-h"></span>
-                      <span className="cs-h s"></span>
-                      <span className="cs-cta"></span>
-                    </div>
-                    <div className="cs-cards">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                  </div>
+                  )}
                 </div>
                 <div className="cs-info">
                   <span className="cs-meta">{c.meta}</span>
