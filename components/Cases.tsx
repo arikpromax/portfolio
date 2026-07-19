@@ -1,62 +1,15 @@
 "use client";
 
 import { useRef, useState } from "react";
-
-const cases = [
-  {
-    url: "dentacare.ua",
-    accent: "#0FA39B",
-    accent2: "#0F3D52",
-    meta: "Стоматологія · Київ",
-    title: "DentaCare",
-    desc: (
-      <>
-        Сайт клініки: онлайн-запис, лікарі, обладнання, відгуки. <b>+40% записів</b> за перший
-        місяць.
-      </>
-    ),
-  },
-  {
-    url: "nailstudio.ua",
-    accent: "#E26AA6",
-    accent2: "#7A1F58",
-    meta: "Б'юті-студія · Львів",
-    title: "Nail&Studio",
-    desc: (
-      <>
-        Запис онлайн 24/7, портфоліо робіт, прайс і майстри. <b>Запис без дзвінків.</b>
-      </>
-    ),
-  },
-  {
-    url: "budmayster.ua",
-    accent: "#E8943A",
-    accent2: "#7A4A12",
-    meta: "Будівництво · Дніпро",
-    title: "БудМайстер",
-    desc: (
-      <>
-        Каталог об'єктів, етапи робіт, матеріали й форма прорахунку. <b>Заявки на кошторис.</b>
-      </>
-    ),
-  },
-  {
-    url: "coffeepoint.ua",
-    accent: "#9B6A43",
-    accent2: "#3E2A1B",
-    meta: "Кав'ярня · Одеса",
-    title: "CoffeePoint",
-    desc: (
-      <>
-        Меню, бронювання столиків і карта на сайті. <b>Гості бачать усе одразу.</b>
-      </>
-    ),
-  },
-];
+import { demoCases, type CaseItem } from "@/lib/supabase";
 
 const SWIPE_THRESHOLD = 55;
 
-export default function Cases() {
+export default function Cases({ items }: { items?: CaseItem[] }) {
+  // Якщо база порожня чи недоступна — показуємо вбудовані демо-кейси
+  const usingDemo = !items || items.length === 0;
+  const cases = usingDemo ? demoCases : items;
+
   const [idx, setIdx] = useState(0);
   const [hintHidden, setHintHidden] = useState(false);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -119,7 +72,7 @@ export default function Cases() {
         >
           {cases.map((c, i) => (
             <div
-              key={c.title}
+              key={c.id ?? c.title}
               className={slideClass(i)}
               ref={(el) => {
                 slideRefs.current[i] = el;
@@ -131,7 +84,7 @@ export default function Cases() {
                     <i></i>
                     <i></i>
                     <i></i>
-                    <span className="cs-url">{c.url}</span>
+                    <span className="cs-url">{c.url_label}</span>
                   </div>
                   <div
                     className="cs-mini"
@@ -160,11 +113,19 @@ export default function Cases() {
                 <div className="cs-info">
                   <span className="cs-meta">{c.meta}</span>
                   <h3 className="cs-title">{c.title}</h3>
-                  <p className="cs-res">{c.desc}</p>
-                  {/* Демо-посилання: не стрибати вгору. Реальні URL працюватимуть нормально */}
-                  <a className="cs-link" href="#" onClick={(e) => e.preventDefault()}>
-                    Дивитись сайт <i className="fa-solid fa-arrow-right"></i>
-                  </a>
+                  <p className="cs-res">
+                    {c.description} <b>{c.result}</b>
+                  </p>
+                  {c.link ? (
+                    <a className="cs-link" href={c.link} target="_blank" rel="noopener">
+                      Дивитись сайт <i className="fa-solid fa-arrow-right"></i>
+                    </a>
+                  ) : (
+                    // Посилання ще немає — нікуди не ведемо
+                    <a className="cs-link" href="#" onClick={(e) => e.preventDefault()}>
+                      Дивитись сайт <i className="fa-solid fa-arrow-right"></i>
+                    </a>
+                  )}
                 </div>
               </article>
             </div>
@@ -183,7 +144,7 @@ export default function Cases() {
           <div className="cs-dots">
             {cases.map((c, i) => (
               <button
-                key={c.title}
+                key={c.id ?? c.title}
                 className={`cs-dot${i === idx ? " on" : ""}`}
                 aria-label={`Кейс ${i + 1}`}
                 onClick={() => go(i)}
@@ -202,7 +163,9 @@ export default function Cases() {
         <p className={`cs-hint${hintHidden ? " hide" : ""}`}>
           <i className="fa-solid fa-hand-pointer"></i> Гортайте вбік або тягніть картку
         </p>
-        <p className="cs-note">Демо-приклади — справжні кейси з&apos;являться тут згодом.</p>
+        {usingDemo && (
+          <p className="cs-note">Демо-приклади — справжні кейси з&apos;являться тут згодом.</p>
+        )}
       </div>
     </section>
   );
