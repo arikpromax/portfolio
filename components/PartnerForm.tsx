@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { getSupabase, type PartnerLead } from "@/lib/supabase";
+import { makeRefCode, refLink } from "@/lib/referral";
 
 const methods = [
   { name: "Telegram", icon: "fa-brands fa-telegram", ph: "@username" },
@@ -38,6 +39,8 @@ export default function PartnerForm() {
   const [hasClient, setHasClient] = useState(false);
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState<Status>(null);
+  const [myLink, setMyLink] = useState(""); // персональне посилання після успіху
+  const [copied, setCopied] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const contactRef = useRef<HTMLInputElement>(null);
 
@@ -89,6 +92,7 @@ export default function PartnerForm() {
       client_contact: hasClient ? String(fd.get("p-cl-contact") || "").trim() : "",
       client_when: hasClient ? String(fd.get("p-when") || "") : "",
       message: String(fd.get("p-message") || "").trim(),
+      ref_code: makeRefCode(name),
     };
 
     setStatus(null);
@@ -105,7 +109,28 @@ export default function PartnerForm() {
       return;
     }
 
-    const { error } = await supabase.from("partner_leads").insert(lead);
+    const save = (row: PartnerLead) => supabase.from("partner_leads").insert(row);
+
+    let savedRef = lead.ref_code!;
+    let { error } = await save(lead);
+
+    // Код збігся з чужим (шанс мізерний, але буває) — пробуємо ще раз з новим
+    if (error?.code === "23505") {
+      savedRef = lead.ref_code = makeRefCode(name);
+      ({ error } = await save(lead));
+    }
+
+    // У базі ще немає колонки ref_code (не виконано db/referrals.sql) —
+    // зберігаємо анкету без неї, щоб не втратити партнера через технічну дрібницю
+    if (error) {
+      const { ref_code: _unused, ...withoutRef } = lead;
+      const retry = await save(withoutRef as PartnerLead);
+      if (!retry.error) {
+        error = null;
+        savedRef = "";
+      }
+    }
+
     if (error) {
       setStatus({
         kind: "err",
@@ -118,11 +143,23 @@ export default function PartnerForm() {
         icon: "fa-solid fa-circle-check",
         text: "Анкету отримано! Напишу вам протягом дня — розповім умови й дам матеріали для клієнтів.",
       });
+      setMyLink(savedRef ? refLink(savedRef) : "");
+      setCopied(false);
       form.reset();
       setContact("");
       setHasClient(false);
     }
     setSending(false);
+  };
+
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(myLink);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      // буфер обміну недоступний — посилання видно на екрані, скопіюють вручну
+    }
   };
 
   return (
@@ -283,6 +320,26 @@ export default function PartnerForm() {
         {status && (
           <div className={`form-status ${status.kind}`}>
             <i className={status.icon}></i> {status.text}
+          </div>
+        )}
+
+        {myLink && (
+          <div className="pn-link">
+            <p className="pn-link__title">
+              <i className="fa-solid fa-link"></i>Ваше персональне посилання
+            </p>
+            <div className="pn-link__row">
+              <code>{myLink}</code>
+              <button type="button" className="btn btn--primary btn--sm" onClick={copyLink}>
+                <i className={copied ? "fa-solid fa-check" : "fa-solid fa-copy"}></i>
+                {copied ? "Скопійовано" : "Копіювати"}
+              </button>
+            </div>
+            <p className="pn-link__note">
+              Давайте його клієнтам замість звичайної адреси сайту. Хто перейде за ним і залишить
+              заявку — автоматично зарахується вам, навіть якщо напише не одразу, а через два місяці.
+              Збережіть посилання: воно у вас одне.
+            </p>
           </div>
         )}
         <p className="form-note">

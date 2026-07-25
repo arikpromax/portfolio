@@ -16,6 +16,7 @@ import BackToTop from "@/components/BackToTop";
 import TelegramFab from "@/components/TelegramFab";
 import Footer from "@/components/Footer";
 import SiteEffects from "@/components/SiteEffects";
+import RefCapture from "@/components/RefCapture";
 import { getSupabase, type CaseItem } from "@/lib/supabase";
 
 // Раз на хвилину сторінка перевіряє, чи не з'явились у базі нові кейси
@@ -54,6 +55,7 @@ export default async function Home() {
       <TelegramFab />
       <Footer />
       <SiteEffects />
+      <RefCapture />
     </>
   );
 }

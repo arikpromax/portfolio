@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { getSupabase, type PartnerLead } from "@/lib/supabase";
+import { refLink } from "@/lib/referral";
 
 // Шлях анкети: нова → спілкуємось → клієнт погодився → виплачено (або закрито)
 const STATUSES = [
@@ -30,6 +31,9 @@ export default function PartnersAdminPage() {
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<Notice>(null);
   const [filter, setFilter] = useState<string>("all");
+  // Скільки заявок прийшло за посиланням кожного партнера: { ref_code: кількість }
+  const [refCounts, setRefCounts] = useState<Record<string, number>>({});
+  const [copied, setCopied] = useState<string>("");
 
   const load = useCallback(async () => {
     if (!supabase) return;
@@ -46,6 +50,16 @@ export default function PartnersAdminPage() {
           ". Чи виконано db/partner_leads.sql у Supabase?",
       });
     else setLeads((data ?? []) as PartnerLead[]);
+
+    // Рахуємо заявки за міткою кожного партнера
+    const { data: siteLeads } = await supabase.from("leads").select("ref_code");
+    if (siteLeads) {
+      const counts: Record<string, number> = {};
+      for (const row of siteLeads as { ref_code: string }[]) {
+        if (row.ref_code) counts[row.ref_code] = (counts[row.ref_code] ?? 0) + 1;
+      }
+      setRefCounts(counts);
+    }
   }, [supabase]);
 
   useEffect(() => {
@@ -137,6 +151,16 @@ export default function PartnersAdminPage() {
     setBusy(false);
   };
 
+  const copyLink = async (code: string) => {
+    try {
+      await navigator.clipboard.writeText(refLink(code, window.location.origin));
+      setCopied(code);
+      setTimeout(() => setCopied(""), 2500);
+    } catch {
+      // буфер недоступний — посилання видно на екрані
+    }
+  };
+
   const shown = filter === "all" ? leads : leads.filter((l) => (l.status ?? "new") === filter);
   const newCount = leads.filter((l) => (l.status ?? "new") === "new").length;
 
@@ -149,11 +173,11 @@ export default function PartnersAdminPage() {
             {newCount > 0 && <span className="adm-badge">{newCount} нових</span>}
           </h1>
           <div className="admin-actions">
+            <a href="/admin/leads" className="btn btn--ghost btn--sm">
+              <i className="fa-solid fa-inbox"></i>Заявки
+            </a>
             <a href="/admin" className="btn btn--ghost btn--sm">
               <i className="fa-solid fa-images"></i>Кейси
-            </a>
-            <a href="/" className="btn btn--ghost btn--sm">
-              <i className="fa-solid fa-house"></i>На сайт
             </a>
           </div>
         </div>
@@ -207,6 +231,9 @@ export default function PartnersAdminPage() {
                     </b>
                     <span>
                       {l.method}: {l.contact} · {l.who || "—"} · {formatDate(l.created_at)}
+                      {l.ref_code && refCounts[l.ref_code] ? (
+                        <b className="adm-refcount"> · привів {refCounts[l.ref_code]}</b>
+                      ) : null}
                     </span>
                   </div>
                   <span className="adm-status-pill">{statusLabel(l.status)}</span>
@@ -229,6 +256,25 @@ export default function PartnersAdminPage() {
                       <b>Виплата</b>
                       <span>{l.payout || "—"}</span>
                     </div>
+                    {l.ref_code && (
+                      <div className="adm-kv">
+                        <b>Персональне посилання</b>
+                        <span className="adm-ref">
+                          <code>{refLink(l.ref_code, typeof window !== "undefined" ? window.location.origin : "")}</code>
+                          <button
+                            type="button"
+                            className="btn btn--ghost btn--sm"
+                            onClick={() => copyLink(l.ref_code!)}
+                          >
+                            <i className={copied === l.ref_code ? "fa-solid fa-check" : "fa-solid fa-copy"}></i>
+                            {copied === l.ref_code ? "Скопійовано" : "Копіювати"}
+                          </button>
+                          <span className="adm-ref__count">
+                            заявок за ним: <b>{refCounts[l.ref_code] ?? 0}</b>
+                          </span>
+                        </span>
+                      </div>
+                    )}
                     {l.has_client && (
                       <>
                         <div className="adm-kv">

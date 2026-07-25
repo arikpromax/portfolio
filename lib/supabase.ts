@@ -30,7 +30,21 @@ export type PartnerLead = {
   client_contact: string;
   client_when: string; // коли клієнту потрібен сайт
   message: string;
+  ref_code?: string; // персональний код партнера для посилання ?ref=
   status?: string; // new | talking | deal | paid | closed — веду в адмінці
+};
+
+// Заявка з головної форми сайту — таблиця `leads` у Supabase
+export type Lead = {
+  id?: number;
+  created_at?: string;
+  name: string;
+  method: string;
+  contact: string;
+  business: string;
+  message: string;
+  ref_code: string; // мітка партнера ("" — клієнт прийшов сам)
+  status?: string; // new | talking | deal | done | closed
 };
 
 // Демо-кейси: показуються, поки база порожня або Supabase не підключений
