@@ -179,7 +179,14 @@ export default function PartnerForm() {
         <div className="pn-grid2">
           <div className="field">
             <label htmlFor="p-name">Ваше ім&apos;я</label>
-            <input type="text" id="p-name" name="p-name" placeholder="Як до вас звертатися" required />
+            <input
+              type="text"
+              id="p-name"
+              name="p-name"
+              placeholder="Як до вас звертатися"
+              maxLength={120}
+              required
+            />
           </div>
           <div className="field">
             <label htmlFor="p-who">Чим займаєтесь</label>
@@ -216,6 +223,7 @@ export default function PartnerForm() {
               id="p-contact"
               name="p-contact"
               placeholder={active.ph}
+              maxLength={200}
               required
               ref={contactRef}
               value={contact}
@@ -257,12 +265,13 @@ export default function PartnerForm() {
                   type="text"
                   id="p-niche"
                   name="p-niche"
+                  maxLength={300}
                   placeholder="Наприклад: стоматологія, автосервіс, кав&#39;ярня"
                 />
               </div>
               <div className="field">
                 <label htmlFor="p-city">Місто</label>
-                <input type="text" id="p-city" name="p-city" placeholder="Київ" />
+                <input type="text" id="p-city" name="p-city" maxLength={120} placeholder="Київ" />
               </div>
             </div>
             <div className="pn-grid2">
@@ -282,6 +291,7 @@ export default function PartnerForm() {
                   type="text"
                   id="p-cl-contact"
                   name="p-cl-contact"
+                  maxLength={200}
                   placeholder="Телефон, Telegram або Instagram"
                 />
               </div>
@@ -301,6 +311,7 @@ export default function PartnerForm() {
             id="p-message"
             name="p-message"
             rows={3}
+            maxLength={3000}
             placeholder="Наприклад: скільки клієнтів реально приводити на місяць?"
           ></textarea>
         </div>

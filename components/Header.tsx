@@ -30,6 +30,12 @@ export default function Header() {
   const onHome = pathname === "/";
   const to = (hash: string) => (onHome ? hash : `/${hash}`);
 
+  // Один готовий список пунктів — і для десктопного меню, і для мобільного
+  const items = [
+    ...links.map((l) => ({ href: to(l.hash), label: l.label })),
+    ...(showPartners ? [{ href: "/partners", label: "Партнерам" }] : []),
+  ];
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -50,12 +56,11 @@ export default function Header() {
             <span className="logo__mark">a</span>arawebsite
           </a>
           <nav className="nav__links">
-            {links.map((l) => (
-              <a key={l.hash} href={to(l.hash)}>
+            {items.map((l) => (
+              <a key={l.href} href={l.href}>
                 {l.label}
               </a>
             ))}
-            {showPartners && <a href="/partners">Партнерам</a>}
           </nav>
           <div className="nav__cta">
             <a href={to("#contact")} className="btn btn--primary">
@@ -75,16 +80,11 @@ export default function Header() {
       </header>
 
       <nav className={`mobile-menu${open ? " open" : ""}`}>
-        {links.map((l) => (
-          <a key={l.hash} href={to(l.hash)} onClick={() => setOpen(false)}>
+        {items.map((l) => (
+          <a key={l.href} href={l.href} onClick={() => setOpen(false)}>
             {l.label}
           </a>
         ))}
-        {showPartners && (
-          <a href="/partners" onClick={() => setOpen(false)}>
-            Партнерам
-          </a>
-        )}
         <a href={to("#contact")} className="btn btn--primary" onClick={() => setOpen(false)}>
           <i className="fa-solid fa-calculator"></i>Розрахувати сайт
         </a>

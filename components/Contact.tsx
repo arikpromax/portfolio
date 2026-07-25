@@ -154,7 +154,14 @@ export default function Contact() {
           <form ref={formRef} onSubmit={onSubmit} noValidate>
             <div className="field">
               <label htmlFor="name">Ваше ім&apos;я</label>
-              <input type="text" id="name" name="name" placeholder="Як до вас звертатися" required />
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Як до вас звертатися"
+                maxLength={120}
+                required
+              />
             </div>
             <div className="field">
               <label>Як з вами зв&apos;язатися?</label>
@@ -180,6 +187,7 @@ export default function Contact() {
                 id="contactField"
                 name="contact"
                 placeholder={active.ph}
+                maxLength={200}
                 required
                 ref={contactRef}
                 value={contact}
@@ -207,6 +215,7 @@ export default function Contact() {
                 id="message"
                 name="message"
                 rows={3}
+                maxLength={3000}
                 placeholder="Коротко про ваш проєкт або питання…"
               ></textarea>
             </div>
