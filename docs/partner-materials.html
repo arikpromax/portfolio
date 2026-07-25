@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<title>Матеріали партнера — arawebsite</title>
+<style>
+  @page { size: A4; margin: 15mm 14mm 16mm; }
+
+  :root{
+    --ink:#0E2230; --muted:#5C7080; --line:#E2EAEE;
+    --deep:#0F3D52; --teal:#0FA39B; --teal-ink:#0B8079; --tint:#E6F7F5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Segoe UI",system-ui,Arial,sans-serif;
+    color:var(--ink); font-size:10.5pt; line-height:1.55;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+
+  /* ---- шапка ---- */
+  .cover{
+    background:linear-gradient(140deg,var(--deep),#0B2E3F);
+    color:#fff; padding:22px 24px; border-radius:14px; margin-bottom:22px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:11pt;letter-spacing:.02em}
+  .brand span{
+    width:24px;height:24px;border-radius:7px;display:inline-grid;place-items:center;
+    background:linear-gradient(135deg,var(--teal),#34D1C4);color:#06212c;font-weight:800
+  }
+  .cover h1{font-size:22pt;line-height:1.15;margin:14px 0 8px;font-weight:700}
+  .cover p{color:rgba(255,255,255,.8);font-size:10.5pt;max-width:145mm}
+  .cover .rate{
+    display:inline-block;margin-top:12px;padding:5px 14px;border-radius:99px;
+    background:#34D1C4;color:#06212c;font-weight:700;font-size:10pt
+  }
+
+  /* ---- секції ---- */
+  section{margin-bottom:16px;break-inside:avoid}
+  h2{
+    font-size:13pt;font-weight:700;color:var(--deep);
+    padding-bottom:6px;margin-bottom:10px;border-bottom:2px solid var(--tint);
+    display:flex;align-items:baseline;gap:9px
+  }
+  h2 i{
+    font-style:normal;font-size:9pt;font-weight:800;color:#fff;background:var(--teal);
+    width:18px;height:18px;border-radius:6px;display:inline-grid;place-items:center;flex:none
+  }
+  h3{font-size:10.5pt;font-weight:700;margin:11px 0 4px;color:var(--teal-ink)}
+  p{margin-bottom:7px}
+  ul{margin:0 0 8px 17px}
+  li{margin-bottom:3px}
+  b{font-weight:700}
+  .muted{color:var(--muted)}
+  .small{font-size:9.5pt}
+
+  /* ---- таблиця виплат ---- */
+  table{border-collapse:collapse;width:78mm;margin:8px 0 10px}
+  th,td{padding:6px 12px;border:1px solid var(--line);text-align:left;font-size:10pt}
+  th{background:var(--tint);color:var(--teal-ink);font-weight:700}
+  td:last-child{font-weight:700;color:var(--teal-ink)}
+
+  /* ---- готові шаблони повідомлень ---- */
+  .tpl{
+    background:#F7FBFC;border:1px solid var(--line);border-left:3px solid var(--teal);
+    border-radius:0 9px 9px 0;padding:10px 14px;margin:5px 0 11px;break-inside:avoid
+  }
+  .tpl p{margin:0;font-size:10pt}
+
+  /* ---- заперечення ---- */
+  .obj{margin-bottom:9px;break-inside:avoid}
+  .obj .q{font-weight:700;color:var(--ink)}
+  .obj .a{color:var(--muted);font-size:10pt}
+
+  /* ---- виноски-акценти ---- */
+  .note{
+    background:var(--tint);border-radius:9px;padding:10px 14px;margin:9px 0;
+    font-size:10pt;color:#08423d;break-inside:avoid
+  }
+  .steps{counter-reset:s;margin:0;list-style:none}
+  .steps li{
+    counter-increment:s;position:relative;padding-left:26px;margin-bottom:7px
+  }
+  .steps li::before{
+    content:counter(s);position:absolute;left:0;top:1px;
+    width:18px;height:18px;border-radius:50%;background:var(--teal);color:#fff;
+    font-size:9pt;font-weight:700;display:grid;place-items:center
+  }
+
+  /* ---- підвал ---- */
+  .foot{
+    margin-top:20px;padding:14px 18px;border-radius:12px;
+    background:var(--deep);color:#fff;break-inside:avoid
+  }
+  .foot b{display:block;font-size:11pt;margin-bottom:5px}
+  .foot p{color:rgba(255,255,255,.82);font-size:10pt;margin:0}
+  .foot a{color:#7ee8df;text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand"><span>a</span>Веб-студія arawebsite</div>
+  <h1>Матеріали партнера</h1>
+  <p>Усе, що потрібно, щоб привести першого клієнта: кому пропонувати, що казати, що відповідати на заперечення. Читати 5 хвилин.</p>
+  <div class="rate">Ваша винагорода — 40% вартості сайту</div>
+</div>
+
+<section>
+  <h2><i>1</i>Суть за 30 секунд</h2>
+  <p>Ви знаходите бізнес, якому потрібен сайт, і знайомите його зі мною. Далі я роблю все сам: спілкуюся, рахую, розробляю, запускаю, підтримую. Коли клієнт повністю оплатив роботу — 40% суми ваші.</p>
+  <table>
+    <tr><th>Сайт коштує</th><th>Ви отримуєте</th></tr>
+    <tr><td>$600</td><td>$240</td></tr>
+    <tr><td>$900</td><td>$360</td></tr>
+    <tr><td>$1 500</td><td>$600</td></tr>
+    <tr><td>$2 500</td><td>$1 000</td></tr>
+  </table>
+  <p class="small muted">Ви нічого не платите й нічим не ризикуєте. Не привели клієнта — просто нічого не сталося.</p>
+</section>
+
+<section>
+  <h2><i>2</i>Кому пропонувати</h2>
+  <p>Ознаки, що бізнесу потрібен сайт — досить одної:</p>
+  <ul>
+    <li>є лише Instagram чи Facebook, і всі замовлення йдуть через директ;</li>
+    <li>сайт є, але зроблений років 5 тому й погано відкривається на телефоні;</li>
+    <li>сайт на безплатному конструкторі — з чужим логотипом і рекламою;</li>
+    <li>бізнес платить за рекламу, а вести людей нікуди;</li>
+    <li>клієнти щодня питають те саме: ціни, адресу, години роботи, чи є вільні місця;</li>
+    <li>хоче онлайн-запис, меню, каталог або форму прорахунку.</li>
+  </ul>
+  <p><b>Найкраще заходить:</b> стоматології й медцентри, б'юті-студії та барбершопи, будівництво й ремонт, автосервіси, кав'ярні й ресторани, магазини, юристи, репетитори, приватні майстри.</p>
+</section>
+
+<section>
+  <h2><i>3</i>Що казати — готові шаблони</h2>
+  <p class="small muted">Можна просто скопіювати й підставити своє ім'я — переписувати своїми словами не обов'язково.</p>
+
+  <h3>А. Знайомому в Telegram або WhatsApp</h3>
+  <div class="tpl"><p>Привіт! Ти ж казав, що вам потрібен нормальний сайт. Я працюю з розробником — Ярослав, веб-студія arawebsite. Робить сайти, які приносять заявки, а не просто «щоб було». Від $600, готово за 1–3 дні, ціну називає ще до старту. Ось приклади робіт: arawebsite. Скинути його контакт?</p></div>
+
+  <h3>Б. Холодне повідомлення бізнесу в Instagram</h3>
+  <div class="tpl"><p>Доброго дня! Дивлюсь ваш профіль — роботи класні, але сайту я не знайшов. Через сайт вас знаходили б у Google і залишали заявки самі, без переписок у директі. Я співпрацюю з веб-студією arawebsite: сайт від $600, готовий за 1–3 дні. Можу познайомити з розробником — прорахунок безкоштовний. Цікаво?</p></div>
+
+  <h3>В. Особисто, вживу — три речення</h3>
+  <div class="tpl"><p>«У вас же немає сайту? Я знаю розробника, який робить сайти під бізнес — не шаблон, а щоб реально дзвонили. Прорахунок безплатний, давай познайомлю?»</p></div>
+
+  <h3>Г. Пост або сторіс</h3>
+  <div class="tpl"><p>Кому потрібен сайт для бізнесу — пишіть мені. Працюю з веб-студією arawebsite: сайт від $600, за 1–3 дні, з формами заявок і онлайн-записом. Приклади робіт скину в особисті.</p></div>
+</section>
+
+<section>
+  <h2><i>4</i>Що показувати</h2>
+  <ul>
+    <li><b>Сайт-портфоліо:</b> portfolio-zeta-gold-0elpf422sg.vercel.app — там кейси, ціни, приклади.</li>
+    <li><b>Кейс:</b> SUSHI SHARK — сайт суші-ресторану, Єленя-Гура (Польща). Блок «Кейси» на сайті.</li>
+    <li><b>Мій Telegram:</b> @arikpromax</li>
+  </ul>
+  <div class="note"><b>Одне правило, щоб ніколи не помилитися:</b> не обіцяйте клієнту конкретну ціну й термін. Кажіть «від $600, точну суму скаже після розмови». Рахую я — і рахую під задачу.</div>
+</section>
+
+<section>
+  <h2><i>5</i>Відповіді на шість головних заперечень</h2>
+
+  <div class="obj">
+    <p class="q">«Дорого»</p>
+    <p class="a">Сайт — не витрата, а канал заявок: один-два клієнти його окуповують. І точну ціну я рахую під задачу — можливо, вам достатньо лендингу за $600, а не каталогу.</p>
+  </div>
+  <div class="obj">
+    <p class="q">«У нас є Instagram, нам вистачає»</p>
+    <p class="a">Instagram — орендована площа: акаунт можуть заблокувати, охоплення падає, стару інформацію ніхто не гортає. Сайт ваш назавжди, і його знаходять у Google саме тоді, коли людина шукає вашу послугу.</p>
+  </div>
+  <div class="obj">
+    <p class="q">«Зроблю сам на конструкторі»</p>
+    <p class="a">Можна. Тільки це 2–3 тижні вашого часу, а на виході — шаблон з чужим логотипом, який повільно грузиться. Тут ви отримуєте готовий сайт за 1–3 дні й не витрачаєте себе.</p>
+  </div>
+  <div class="obj">
+    <p class="q">«Треба подумати», «давайте потім»</p>
+    <p class="a">Прорахунок безкоштовний і ні до чого не зобов'язує. Дізнайтеся суму зараз — вирішите потім, коли буде з чим порівнювати.</p>
+  </div>
+  <div class="obj">
+    <p class="q">«А що взагалі входить?»</p>
+    <p class="a">Структура, тексти, дизайн, розробка, форми заявок, адаптив під телефон, підключення домену й підтримка після запуску. Точний склад — після розмови про задачу.</p>
+  </div>
+  <div class="obj">
+    <p class="q">«Хто це? Не хочу мати справу з невидимим фрілансером»</p>
+    <p class="a">Ярослав працює напряму, без менеджерів-посередників. Є сайт-портфоліо, кейси, телефон, Telegram — спілкуватися будете особисто з ним, від першого брифу до запуску.</p>
+  </div>
+</section>
+
+<section>
+  <h2><i>6</i>Як передати клієнта</h2>
+  <p>Два способи — обидва працюють:</p>
+  <ol class="steps">
+    <li><b>Анкета на сайті.</b> Блок «Партнерам» → увімкніть перемикач «У мене вже є клієнт на прикметі» → вкажіть нішу, місто й контакт. Клієнт закріплюється за вами одразу.</li>
+    <li><b>Telegram @arikpromax.</b> Напишіть одним рядком: «Партнер [ваше ім'я], клієнт — [назва бізнесу, місто]».</li>
+  </ol>
+  <div class="note"><b>Найважливіше:</b> повідомте мене <b>до того</b>, як клієнт напише сам. Тоді закріплення 100%. Далі клієнт числиться за вами <b>90 днів</b> — навіть якщо він звернеться лише через два місяці.</div>
+</section>
+
+<section>
+  <h2><i>7</i>Гроші</h2>
+  <ul>
+    <li><b>40%</b> від суми, яку оплатив клієнт.</li>
+    <li>Виплата <b>протягом 3 днів</b> після повної оплати клієнтом.</li>
+    <li>Спосіб обираєте ви: картка українського банку, USDT, PayPal / Wise.</li>
+    <li>Кількість клієнтів не обмежена — жодних лімітів і жодних мінімумів.</li>
+  </ul>
+</section>
+
+<div class="foot">
+  <b>Ярослав · веб-студія arawebsite</b>
+  <p>
+    Telegram <a href="https://t.me/arikpromax">@arikpromax</a> &nbsp;·&nbsp;
+    +380 95 764 34 16 &nbsp;·&nbsp; arikpro92@gmail.com<br>
+    Питання будь-коли в Telegram — відповідаю протягом дня.
+  </p>
+</div>
+
+</body>
+</html>
