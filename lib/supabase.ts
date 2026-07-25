@@ -15,6 +15,24 @@ export type CaseItem = {
   sort_order: number;
 };
 
+// Анкета партнера — 1-в-1 відповідає таблиці `partner_leads` у Supabase
+export type PartnerLead = {
+  id?: number;
+  created_at?: string;
+  name: string;
+  method: string; // спосіб зв'язку: Telegram, Телефон…
+  contact: string;
+  who: string; // хто партнер: дизайнер, майстер, власник бізнесу…
+  payout: string; // як зручно отримувати винагороду
+  has_client: boolean; // чи вже є клієнт на прикметі
+  client_niche: string;
+  client_city: string;
+  client_contact: string;
+  client_when: string; // коли клієнту потрібен сайт
+  message: string;
+  status?: string; // new | talking | deal | paid | closed — веду в адмінці
+};
+
 // Демо-кейси: показуються, поки база порожня або Supabase не підключений
 export const demoCases: CaseItem[] = [
   {

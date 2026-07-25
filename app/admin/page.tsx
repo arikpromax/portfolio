@@ -247,6 +247,9 @@ export default function AdminPage() {
         <div className="admin-head">
           <h1>Кейси на сайті</h1>
           <div className="admin-actions">
+            <a href="/admin/partners" className="btn btn--ghost btn--sm">
+              <i className="fa-solid fa-handshake"></i>Анкети партнерів
+            </a>
             <a href="/" className="btn btn--ghost btn--sm">
               <i className="fa-solid fa-house"></i>На сайт
             </a>

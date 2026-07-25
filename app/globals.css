@@ -555,3 +555,151 @@ body.menu-open{overflow:hidden}
 .cs-shot{display:block;width:100%;height:200px;object-fit:cover;object-position:top}
 /* картка з реальним посиланням — клікабельна */
 .cs-card--linked{cursor:pointer}
+
+/* ---------- Партнерська програма (40% за клієнта) ---------- */
+.pn{background:linear-gradient(180deg,var(--bg) 0%,#EAF3F5 100%)}
+
+/* темна картка з калькулятором винагороди */
+.pn-hero{background:linear-gradient(150deg,var(--deep) 0%,var(--deep-2) 100%);color:#fff;
+  border-radius:28px;padding:clamp(30px,4vw,54px);position:relative;overflow:hidden}
+.pn-hero::before{content:"";position:absolute;top:-140px;left:-110px;width:440px;height:440px;border-radius:50%;
+  background:radial-gradient(circle,rgba(52,209,196,.26),transparent 62%)}
+.pn-hero__grid{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(34px,5vw,60px);align-items:center}
+.pn-hero__grid > div{min-width:0}
+
+.pn-calc__label{display:block;font-family:"Manrope";font-weight:800;font-size:.8rem;letter-spacing:.12em;
+  text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:10px}
+.pn-calc__money{font-family:"Unbounded";font-weight:800;font-size:clamp(2.8rem,7vw,4.2rem);line-height:1;
+  background:linear-gradient(90deg,var(--teal-bright),#9df1e8);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent}
+.pn-calc__note{margin-top:12px;color:rgba(255,255,255,.72);font-size:1rem}
+.pn-calc__note b{color:#fff}
+
+.pn-range{-webkit-appearance:none;appearance:none;width:100%;height:6px;margin-top:26px;border-radius:999px;
+  background:rgba(255,255,255,.16);outline:none;cursor:pointer}
+.pn-range::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:26px;height:26px;border-radius:50%;
+  background:var(--teal-bright);border:5px solid #fff;box-shadow:0 6px 16px -4px rgba(0,0,0,.5);cursor:grab;
+  transition:transform .2s}
+.pn-range::-webkit-slider-thumb:hover{transform:scale(1.12)}
+.pn-range::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--teal-bright);
+  border:5px solid #fff;box-shadow:0 6px 16px -4px rgba(0,0,0,.5);cursor:grab}
+.pn-range:focus-visible{outline:3px solid var(--teal-bright);outline-offset:6px}
+.pn-range__ends{display:flex;justify-content:space-between;margin-top:8px;font-size:.8rem;color:rgba(255,255,255,.5);font-weight:600}
+
+.pn-chips{display:flex;flex-wrap:wrap;gap:9px;margin:18px 0 26px}
+.pn-chip{padding:9px 16px;border-radius:999px;cursor:pointer;font-family:"Manrope";font-weight:700;font-size:.9rem;
+  color:rgba(255,255,255,.8);background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.14);
+  transition:background .2s,color .2s,border-color .2s,transform .15s}
+.pn-chip:hover{transform:translateY(-2px);border-color:var(--teal-bright)}
+.pn-chip.on{background:var(--teal-bright);border-color:var(--teal-bright);color:var(--deep-2)}
+.pn-chip:focus-visible{outline:3px solid var(--teal-bright);outline-offset:2px}
+
+.pn-step{display:flex;gap:15px;align-items:flex-start;padding:15px 18px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.09);border-radius:15px;margin-bottom:11px;transition:background .25s,transform .25s}
+.pn-step:hover{background:rgba(255,255,255,.11);transform:translateX(5px)}
+.pn-step__ico{width:44px;height:44px;flex-shrink:0;border-radius:12px;display:grid;place-items:center;
+  background:rgba(52,209,196,.16);color:var(--teal-bright);font-size:1.1rem}
+.pn-step__txt b{display:flex;align-items:center;gap:9px;color:#fff;font-weight:700;font-size:1rem;margin-bottom:3px}
+.pn-step__num{font-family:"Unbounded";font-size:.78rem;color:var(--teal-bright);opacity:.75}
+.pn-step__txt span{display:block;color:rgba(255,255,255,.7);font-size:.9rem;line-height:1.45}
+.pn-how__note{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font-size:.88rem;color:rgba(255,255,255,.62)}
+.pn-how__note i{color:var(--teal-bright);margin-top:3px}
+
+/* кому підходить */
+.pn-who{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:26px}
+.pn-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:26px 22px;
+  box-shadow:var(--shadow-sm);transition:transform .3s cubic-bezier(.2,.7,.3,1),box-shadow .3s,border-color .3s}
+.pn-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-md);border-color:var(--teal)}
+.pn-card__ico{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:1.15rem;
+  background:var(--cyan-tint);color:var(--teal-ink);margin-bottom:14px;transition:transform .35s cubic-bezier(.2,.7,.3,1)}
+.pn-card:hover .pn-card__ico{transform:scale(1.1) rotate(-6deg)}
+.pn-card h3{font-family:"Manrope";font-weight:800;font-size:1.02rem;margin-bottom:7px}
+.pn-card p{font-size:.9rem;color:var(--muted)}
+
+/* умови */
+.pn-terms{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:28px;box-shadow:var(--shadow-sm)}
+.pn-terms__title{font-family:"Manrope";font-weight:800;font-size:.8rem;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--teal-ink);margin-bottom:18px}
+.pn-terms__grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 26px}
+.pn-term{display:flex;gap:12px;align-items:flex-start;font-size:.95rem;color:var(--ink)}
+.pn-term i{width:30px;height:30px;flex-shrink:0;border-radius:9px;display:grid;place-items:center;
+  background:var(--cyan-tint);color:var(--teal-ink);font-size:.85rem;margin-top:1px}
+
+/* анкета партнера */
+.pn-form{margin-top:30px;background:var(--surface);border:1px solid var(--line);border-radius:24px;
+  padding:clamp(26px,3.4vw,42px);box-shadow:0 30px 70px -34px rgba(15,61,82,.5);scroll-margin-top:100px}
+.pn-form__head{max-width:620px;margin-bottom:26px}
+.pn-form__badge{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;
+  background:var(--cyan-tint);color:var(--teal-ink);font-weight:700;font-size:.8rem;margin-bottom:14px}
+.pn-form__head h3{font-family:"Unbounded";font-weight:600;font-size:clamp(1.3rem,2.4vw,1.75rem);margin-bottom:10px}
+.pn-form__head p{color:var(--muted);font-size:1rem}
+.pn-grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.pn-form .btn[type="submit"]{width:100%;justify-content:center;margin-top:10px}
+
+/* перемикач «у мене вже є клієнт» */
+.pn-switch{display:flex;gap:14px;align-items:center;width:100%;text-align:left;cursor:pointer;
+  padding:15px 18px;margin:6px 0 16px;border-radius:14px;background:#F7FBFC;
+  border:1.5px solid var(--line);transition:border-color .2s,background .2s}
+.pn-switch:hover{border-color:var(--teal)}
+.pn-switch.on{border-color:var(--teal);background:var(--cyan-tint)}
+.pn-switch__track{width:46px;height:26px;flex-shrink:0;border-radius:999px;background:#CBD9DF;
+  position:relative;transition:background .25s}
+.pn-switch.on .pn-switch__track{background:var(--teal)}
+.pn-switch__knob{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;
+  box-shadow:0 2px 6px rgba(0,0,0,.25);transition:transform .25s cubic-bezier(.2,.7,.3,1)}
+.pn-switch.on .pn-switch__knob{transform:translateX(20px)}
+.pn-switch__txt b{display:block;font-weight:800;font-size:.95rem;color:var(--ink)}
+.pn-switch__txt span{font-size:.85rem;color:var(--muted)}
+.pn-switch:focus-visible{outline:3px solid var(--teal-bright);outline-offset:2px}
+
+.pn-client{padding:20px 20px 6px;margin-bottom:16px;border-radius:14px;background:#F7FBFC;border:1px dashed var(--line);
+  animation:pnOpen .35s cubic-bezier(.2,.7,.3,1)}
+@keyframes pnOpen{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.pn-client__note{display:flex;gap:9px;align-items:flex-start;font-size:.85rem;color:var(--muted);padding-bottom:14px}
+.pn-client__note i{color:var(--teal-ink);margin-top:3px}
+
+/* ---------- Адмінка: анкети партнерів ---------- */
+.adm-badge{display:inline-block;margin-left:10px;padding:4px 11px;border-radius:999px;
+  background:var(--teal);color:#fff;font-family:"Manrope";font-weight:700;font-size:.75rem;vertical-align:middle}
+.adm-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.adm-chip{color:var(--muted);background:#fff;border:1.5px solid var(--line)}
+.adm-chip:hover{border-color:var(--teal);color:var(--teal-ink)}
+.adm-chip.on{background:var(--teal);border-color:var(--teal);color:#fff}
+
+.adm-lead{border-bottom:1px solid var(--line)}
+.adm-lead:last-child{border-bottom:0}
+.adm-lead__row{display:flex;align-items:center;gap:13px;padding:14px 0;cursor:pointer}
+.adm-lead__row:hover .admin-item__txt b{color:var(--teal-ink)}
+.adm-dot{width:11px;height:11px;flex-shrink:0;border-radius:50%;background:var(--muted)}
+.adm-dot.s-new{background:var(--teal);box-shadow:0 0 0 4px rgba(15,163,155,.16)}
+.adm-dot.s-talking{background:#E8943A}
+.adm-dot.s-deal{background:#3B82F6}
+.adm-dot.s-paid{background:#22C55E}
+.adm-dot.s-closed{background:#94A3B8}
+.adm-tag{display:inline-flex;align-items:center;gap:5px;margin-left:9px;padding:2px 9px;border-radius:999px;
+  background:var(--cyan-tint);color:var(--teal-ink);font-size:.72rem;font-weight:700;vertical-align:middle}
+.adm-status-pill{flex-shrink:0;font-size:.8rem;font-weight:700;color:var(--muted);white-space:nowrap}
+.adm-caret{color:var(--muted);font-size:.85rem}
+.adm-lead__body{padding:4px 0 20px 24px}
+.adm-kv{display:grid;grid-template-columns:190px 1fr;gap:14px;padding:7px 0;font-size:.93rem;border-top:1px dashed var(--line)}
+.adm-kv b{font-weight:700;color:var(--muted);font-size:.85rem}
+.adm-select{padding:9px 14px;border:1.5px solid var(--line);border-radius:999px;background:#fff;
+  font-family:"Manrope";font-weight:700;font-size:.85rem;color:var(--ink);cursor:pointer}
+.adm-select:focus{outline:none;border-color:var(--teal)}
+@media (max-width:560px){
+  .adm-kv{grid-template-columns:1fr;gap:2px}
+  .adm-lead__body{padding-left:0}
+  .adm-status-pill{display:none}
+}
+
+@media (max-width:980px){
+  .pn-hero__grid{grid-template-columns:1fr;gap:34px}
+  .pn-who{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .pn-who{grid-template-columns:1fr}
+  .pn-terms__grid,.pn-grid2{grid-template-columns:1fr}
+  .pn-chips .pn-chip{flex:1 1 calc(50% - 5px);justify-content:center;text-align:center}
+  .pn-calc .btn{width:100%;justify-content:center}
+}

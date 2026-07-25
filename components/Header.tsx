@@ -6,6 +6,7 @@ const links = [
   { href: "#problem", label: "Проблема" },
   { href: "#solution", label: "Рішення" },
   { href: "#cases", label: "Кейси" },
+  { href: "#partners", label: "Партнерам" },
   { href: "#about", label: "Про мене" },
   { href: "#process", label: "Як працюю" },
   { href: "#price", label: "Ціна" },
