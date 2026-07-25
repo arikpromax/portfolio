@@ -6,7 +6,6 @@ import Marquee from "@/components/Marquee";
 import Problem from "@/components/Problem";
 import Solution from "@/components/Solution";
 import Cases from "@/components/Cases";
-import Partner from "@/components/Partner";
 import Process from "@/components/Process";
 import Why from "@/components/Why";
 import About from "@/components/About";
@@ -45,7 +44,6 @@ export default async function Home() {
       <Problem />
       <Solution />
       <Cases items={items} />
-      <Partner />
       <Process />
       <Why />
       <About />

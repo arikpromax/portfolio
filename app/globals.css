@@ -269,7 +269,15 @@ img{max-width:100%;display:block}
 .footer__contacts{display:flex;gap:24px;flex-wrap:wrap}
 .footer__contacts a{display:flex;align-items:center;gap:9px;color:rgba(255,255,255,.8);font-weight:600;font-size:.95rem;transition:color .2s}
 .footer__contacts a:hover{color:var(--teal-bright)}
-.footer__copy{margin-top:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);font-size:.85rem;opacity:.6}
+.footer__copy{margin-top:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);font-size:.85rem;opacity:.6;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.footer__partners{color:rgba(255,255,255,.75);transition:color .2s}
+.footer__partners:hover{color:var(--teal-bright)}
+
+/* окрема сторінка партнерської програми — відступ під фіксовану шапку */
+.pn-page{padding-top:100px}
+.pn-page .pn{padding-top:44px;background:linear-gradient(180deg,#fff 0%,#EAF3F5 100%)}
+@media (max-width:560px){ .pn-page{padding-top:84px} .pn-page .pn{padding-top:30px} }
 
 /* ---------- About ---------- */
 .about{background:linear-gradient(180deg,#fff,#F7FBFC)}

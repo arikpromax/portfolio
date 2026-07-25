@@ -1,20 +1,34 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { getRef } from "@/lib/referral";
 
 const links = [
-  { href: "#problem", label: "Проблема" },
-  { href: "#solution", label: "Рішення" },
-  { href: "#cases", label: "Кейси" },
-  { href: "#partners", label: "Партнерам" },
-  { href: "#about", label: "Про мене" },
-  { href: "#process", label: "Як працюю" },
-  { href: "#price", label: "Ціна" },
+  { hash: "#problem", label: "Проблема" },
+  { hash: "#solution", label: "Рішення" },
+  { hash: "#cases", label: "Кейси" },
+  { hash: "#about", label: "Про мене" },
+  { hash: "#process", label: "Як працюю" },
+  { hash: "#price", label: "Ціна" },
 ];
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [showPartners, setShowPartners] = useState(false);
+  const pathname = usePathname();
+
+  // Клієнту, якого привів партнер, партнерку в меню не показуємо:
+  // він не має бачити, що з його замовлення хтось отримує відсоток
+  useEffect(() => {
+    setShowPartners(!getRef());
+  }, []);
+
+  // На головній лишаємо чистий якір (#cases) — тоді браузер просто прокручує.
+  // З інших сторінок (/partners) потрібен повний шлях, щоб спершу перейти на головну.
+  const onHome = pathname === "/";
+  const to = (hash: string) => (onHome ? hash : `/${hash}`);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -32,18 +46,19 @@ export default function Header() {
     <>
       <header className={`header${scrolled ? " scrolled" : ""}`}>
         <div className="wrap nav">
-          <a href="#top" className="logo">
+          <a href={to("#top")} className="logo">
             <span className="logo__mark">a</span>arawebsite
           </a>
           <nav className="nav__links">
             {links.map((l) => (
-              <a key={l.href} href={l.href}>
+              <a key={l.hash} href={to(l.hash)}>
                 {l.label}
               </a>
             ))}
+            {showPartners && <a href="/partners">Партнерам</a>}
           </nav>
           <div className="nav__cta">
-            <a href="#contact" className="btn btn--primary">
+            <a href={to("#contact")} className="btn btn--primary">
               <i className="fa-solid fa-calculator"></i>
               <span>Розрахувати сайт</span>
             </a>
@@ -61,11 +76,16 @@ export default function Header() {
 
       <nav className={`mobile-menu${open ? " open" : ""}`}>
         {links.map((l) => (
-          <a key={l.href} href={l.href} onClick={() => setOpen(false)}>
+          <a key={l.hash} href={to(l.hash)} onClick={() => setOpen(false)}>
             {l.label}
           </a>
         ))}
-        <a href="#contact" className="btn btn--primary" onClick={() => setOpen(false)}>
+        {showPartners && (
+          <a href="/partners" onClick={() => setOpen(false)}>
+            Партнерам
+          </a>
+        )}
+        <a href={to("#contact")} className="btn btn--primary" onClick={() => setOpen(false)}>
           <i className="fa-solid fa-calculator"></i>Розрахувати сайт
         </a>
       </nav>
