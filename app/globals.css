@@ -271,8 +271,114 @@ img{max-width:100%;display:block}
 .footer__contacts a:hover{color:var(--teal-bright)}
 .footer__copy{margin-top:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);font-size:.85rem;opacity:.6;
   display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.footer__partners{color:rgba(255,255,255,.75);transition:color .2s}
-.footer__partners:hover{color:var(--teal-bright)}
+.footer__links{display:flex;gap:20px;flex-wrap:wrap;align-items:center}
+.footer__links a,.ck-link{color:rgba(255,255,255,.75);transition:color .2s}
+.footer__links a:hover,.footer__links .ck-link:hover{color:var(--teal-bright)}
+.ck-link{background:none;border:0;padding:0;cursor:pointer;font:inherit}
+
+/* ---------- Смужка про cookie ---------- */
+/* Картка по центру екрана. Фон навмисно не затемнюємо — сайт лишається
+   доступним, поки людина читає й вирішує */
+.ck{
+  position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:120;
+  width:calc(100% - 32px);max-width:560px;
+  display:flex;flex-direction:column;align-items:stretch;gap:16px;
+  padding:24px 26px;border-radius:18px;
+  background:#fff;border:1px solid var(--line);
+  box-shadow:0 40px 80px -24px rgba(15,61,82,.5);
+  animation:ckIn .45s cubic-bezier(.2,.7,.3,1) .8s both;
+}
+/* Квадратна картка з рівними боками — початкове питання про cookie.
+   Панель налаштувань лишається звичайною: її вміст у квадрат не влазить. */
+.ck--square{
+  width:380px;max-width:calc(100% - 24px);aspect-ratio:1;
+  justify-content:center;gap:20px;padding:28px 26px;text-align:center;
+}
+.ck--square .ck__txt{flex-direction:column;align-items:center;gap:12px}
+.ck--square .ck__txt i{font-size:2rem;margin:0}
+.ck--square .ck__btns{flex-direction:column;align-items:stretch;justify-content:center;gap:10px}
+.ck--square .ck__btn{flex:none;width:100%}
+.ck--square .ck-link--inline{order:3;padding:2px 0 0;text-align:center}
+
+.ck--out{animation:ckOut .3s ease forwards}
+@keyframes ckIn{
+  from{opacity:0;transform:translate(-50%,-46%) scale(.97)}
+  to{opacity:1;transform:translate(-50%,-50%) scale(1)}
+}
+@keyframes ckOut{to{opacity:0;transform:translate(-50%,-52%) scale(.98)}}
+.ck__txt{display:flex;gap:13px;align-items:flex-start}
+.ck__txt i{color:var(--teal-ink);font-size:1.15rem;margin-top:2px;flex:none}
+.ck__txt p{font-size:.88rem;color:var(--muted);line-height:1.5}
+.ck__txt a{color:var(--teal-ink);font-weight:700;text-decoration:underline}
+.ck__btns{display:flex;gap:9px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+/* обидві кнопки однакові: погодитись і відмовитись мають бути рівноцінні */
+.ck__btn{
+  padding:11px 20px;border-radius:999px;cursor:pointer;white-space:nowrap;
+  font-family:"Manrope";font-weight:700;font-size:.88rem;
+  background:#fff;color:var(--teal-ink);border:1.5px solid var(--teal);
+  transition:background .2s, transform .15s;
+}
+.ck__btn:hover{background:var(--cyan-tint);transform:translateY(-1px)}
+.ck__btn:focus-visible{outline:3px solid var(--teal-bright);outline-offset:2px}
+.ck-link--inline{font-family:"Manrope";font-weight:700;font-size:.85rem;color:var(--muted);
+  text-decoration:underline;padding:0 4px}
+.ck-link--inline:hover{color:var(--teal-ink)}
+/* «Прийняти» виділена кольором на прохання власника сайту */
+.ck__btn--primary{color:#fff;border-color:transparent;
+  background:linear-gradient(135deg,var(--teal) 0%,var(--teal-ink) 100%);
+  box-shadow:0 10px 22px -10px rgba(15,163,155,.7)}
+.ck__btn--primary:hover{background:linear-gradient(135deg,var(--teal-ink) 0%,var(--teal-ink) 100%)}
+
+/* панель налаштувань усередині смужки */
+.ck__panel{width:100%}
+.ck__panel-title{font-family:"Manrope";font-weight:800;font-size:.95rem;color:var(--ink);margin-bottom:12px}
+.ck-row{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;
+  padding:12px 0;border-top:1px solid var(--line)}
+.ck-row__txt{min-width:0}
+.ck-row__txt b{display:block;font-size:.9rem;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ck-row__txt span{font-size:.82rem;color:var(--muted);line-height:1.45}
+.ck-row__fixed{flex:none;font-size:.78rem;font-weight:700;color:var(--teal-ink);
+  background:var(--cyan-tint);padding:6px 12px;border-radius:999px;white-space:nowrap}
+.ck-toggle{flex:none;width:46px;height:26px;border-radius:999px;border:0;cursor:pointer;
+  background:#CBD9DF;position:relative;transition:background .25s}
+.ck-toggle.on{background:var(--teal)}
+.ck-toggle__knob{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;
+  background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25);transition:transform .25s cubic-bezier(.2,.7,.3,1)}
+.ck-toggle.on .ck-toggle__knob{transform:translateX(20px)}
+.ck-toggle:focus-visible{outline:3px solid var(--teal-bright);outline-offset:2px}
+.ck__btns--panel{margin-top:14px;justify-content:flex-end;width:100%}
+@media (max-width:640px){
+  .ck{width:calc(100% - 20px);padding:20px 18px;gap:14px}
+  /* на вузькому екрані дві кнопки в рядок, «Налаштування» окремим рядком під ними */
+  .ck__btns{width:100%;flex-wrap:wrap}
+  .ck__btn{flex:1 1 calc(50% - 5px);text-align:center;padding:12px 8px;order:1}
+  .ck-link--inline{flex:1 1 100%;text-align:center;padding:6px 0 0;order:2}
+  .ck-row{flex-direction:column;gap:10px}
+  .ck__btns--panel{flex-wrap:nowrap}
+}
+
+/* ---------- Сторінки-документи (політика, cookie) ---------- */
+.doc{padding:120px 0 70px;background:linear-gradient(180deg,#fff,#F7FBFC);min-height:100vh}
+.doc__wrap{max-width:780px}
+.doc h1{font-size:clamp(1.6rem,3.4vw,2.3rem);margin-bottom:6px}
+.doc__upd{font-size:.85rem;color:var(--muted);margin-bottom:26px}
+.doc__lead{padding:16px 18px;border-radius:12px;background:var(--cyan-tint);color:#08423d;
+  font-size:.95rem;margin-bottom:26px}
+.doc h2{font-family:"Manrope";font-weight:800;font-size:1.08rem;color:var(--deep);margin:30px 0 9px}
+.doc h3{font-family:"Manrope";font-weight:700;font-size:.98rem;color:var(--teal-ink);margin:18px 0 6px}
+.doc p{color:var(--ink);margin-bottom:10px;font-size:.97rem}
+.doc ul{margin:0 0 12px 20px;color:var(--ink);font-size:.97rem}
+.doc li{margin-bottom:5px}
+.doc a{color:var(--teal-ink);font-weight:600;text-decoration:underline}
+.doc code{background:var(--cyan-tint);color:var(--teal-ink);padding:2px 6px;border-radius:6px;
+  font-size:.88em;font-family:ui-monospace,Consolas,monospace}
+.doc .ck-link{color:var(--teal-ink);font-weight:600;text-decoration:underline}
+.doc__tablewrap{overflow-x:auto;margin:10px 0 14px}
+.doc__table{border-collapse:collapse;width:100%;min-width:520px;font-size:.9rem}
+.doc__table th,.doc__table td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+.doc__table th{background:var(--cyan-tint);color:var(--teal-ink);font-weight:700}
+.doc__back{margin-top:40px;padding-top:22px;border-top:1px solid var(--line)}
+@media (max-width:560px){ .doc{padding:100px 0 50px} }
 
 /* окрема сторінка партнерської програми — відступ під фіксовану шапку */
 .pn-page{padding-top:100px}

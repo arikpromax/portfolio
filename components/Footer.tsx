@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import CookieSettingsLink from "@/components/CookieSettingsLink";
 
 export default function Footer() {
   // На головній — просто прокрутка вгору, з інших сторінок — перехід на головну
@@ -27,12 +28,14 @@ export default function Footer() {
         </div>
         <div className="footer__copy">
           © 2026 Веб-студія «arawebsite». Сайти, які приносять заявки.
-          {/* Стримане посилання для тих, хто шукає партнерство. Видиме завжди —
-              навіть клієнту від партнера: у підвалі воно нікого не відволікає,
-              зате програму завжди можна знайти, не пам'ятаючи адреси */}
-          <a className="footer__partners" href="/partners">
-            Партнерська програма
-          </a>
+          {/* Стриманий рядок посилань. Партнерська програма видима завжди —
+              у підвалі вона нікого не відволікає, зате її легко знайти */}
+          <span className="footer__links">
+            <a href="/partners">Партнерська програма</a>
+            <a href="/privacy">Політика конфіденційності</a>
+            <a href="/cookies">Файли cookie</a>
+            <CookieSettingsLink label="Налаштування cookie" />
+          </span>
         </div>
       </div>
     </footer>

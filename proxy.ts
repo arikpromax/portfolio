@@ -46,6 +46,9 @@ export function proxy(request: NextRequest) {
 
   const response = NextResponse.redirect(url);
 
+  // Людина вже обрала «тільки необхідні» — мітку не ставимо взагалі
+  if (request.cookies.get("aw_consent")?.value === "essential") return response;
+
   if (VALID.test(code)) {
     response.cookies.set({
       name: COOKIE,

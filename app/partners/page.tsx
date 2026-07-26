@@ -6,6 +6,7 @@ import TelegramFab from "@/components/TelegramFab";
 import Footer from "@/components/Footer";
 import SiteEffects from "@/components/SiteEffects";
 import ScrollProgress from "@/components/ScrollProgress";
+import CookieBanner from "@/components/CookieBanner";
 
 export const metadata: Metadata = {
   title: "Партнерська програма — 40% за приведеного клієнта | arawebsite",
@@ -27,6 +28,7 @@ export default function PartnersPage() {
       <TelegramFab />
       <Footer />
       <SiteEffects />
+      <CookieBanner />
     </>
   );
 }
