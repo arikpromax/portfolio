@@ -89,8 +89,25 @@ function remember(code: string): void {
 export function captureRef(): void {
   if (typeof window === "undefined") return;
 
+  const params = new URLSearchParams(window.location.search);
+
+  // Прийшли з /?ref=clear — сервер уже стер cookie, лишилось прибрати копію
+  if (params.get("refcleared")) {
+    try {
+      localStorage.removeItem(KEY);
+    } catch {}
+    params.delete("refcleared");
+    const rest = params.toString();
+    window.history.replaceState(
+      null,
+      "",
+      window.location.pathname + (rest ? `?${rest}` : "") + window.location.hash
+    );
+    return;
+  }
+
   // Зазвичай ref уже прибрано з адреси сервером, але якщо ні — беремо звідти
-  const fromUrl = new URLSearchParams(window.location.search).get("ref");
+  const fromUrl = params.get("ref");
   const code = (fromUrl ?? "").toLowerCase().trim();
   if (VALID.test(code)) {
     remember(code);

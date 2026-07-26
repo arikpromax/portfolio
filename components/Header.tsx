@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { getRef } from "@/lib/referral";
 
 const links = [
   { hash: "#problem", label: "Проблема" },
@@ -16,24 +15,19 @@ const links = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [showPartners, setShowPartners] = useState(false);
   const pathname = usePathname();
-
-  // Клієнту, якого привів партнер, партнерку в меню не показуємо:
-  // він не має бачити, що з його замовлення хтось отримує відсоток
-  useEffect(() => {
-    setShowPartners(!getRef());
-  }, []);
 
   // На головній лишаємо чистий якір (#cases) — тоді браузер просто прокручує.
   // З інших сторінок (/partners) потрібен повний шлях, щоб спершу перейти на головну.
   const onHome = pathname === "/";
   const to = (hash: string) => (onHome ? hash : `/${hash}`);
 
-  // Один готовий список пунктів — і для десктопного меню, і для мобільного
+  // Партнерку показуємо всім однаково — і звичайним відвідувачам, і тим,
+  // кого привів партнер. Умови програми лежать на окремій сторінці,
+  // тому на самій головній клієнт усе одно не бачить розміру винагороди.
   const items = [
     ...links.map((l) => ({ href: to(l.hash), label: l.label })),
-    ...(showPartners ? [{ href: "/partners", label: "Партнерам" }] : []),
+    { href: "/partners", label: "Партнерам" },
   ];
 
   useEffect(() => {

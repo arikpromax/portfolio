@@ -15,6 +15,10 @@ const COOKIE = "aw_ref";
 const DAYS_90 = 90 * 24 * 60 * 60;
 const VALID = /^[a-z0-9-]{2,32}$/;
 
+// Службові слова: посилання /?ref=clear стирає мітку.
+// Потрібно, щоб перевірити чуже реф-посилання й не лишитись поміченим на 90 днів.
+const RESET = ["clear", "none", "off", "reset", "0"];
+
 export function proxy(request: NextRequest) {
   const raw = request.nextUrl.searchParams.get("ref");
   if (!raw) return NextResponse.next();
@@ -30,6 +34,15 @@ export function proxy(request: NextRequest) {
   // Прибираємо ref з адреси й перекидаємо на чисте посилання
   const url = request.nextUrl.clone();
   url.searchParams.delete("ref");
+
+  // Скидання мітки. Cookie стираємо тут, а щоб зникла й копія в localStorage —
+  // лишаємо в адресі позначку, яку підхватить сторінка
+  if (RESET.includes(code)) {
+    url.searchParams.set("refcleared", "1");
+    const reset = NextResponse.redirect(url);
+    reset.cookies.set({ name: COOKIE, value: "", maxAge: 0, path: "/" });
+    return reset;
+  }
 
   const response = NextResponse.redirect(url);
 
