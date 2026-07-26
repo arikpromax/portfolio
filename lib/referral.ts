@@ -3,7 +3,8 @@
 // Сайт запам'ятовує мітку на 90 днів — стільки ж, скільки клієнт
 // закріплений за партнером за умовами програми.
 
-const KEY = "aw_ref";
+const KEY = "aw_ref"; // ключ у localStorage
+const COOKIE = "aw_ref"; // cookie, яку ставить сервер (proxy.ts)
 const TTL = 90 * 24 * 60 * 60 * 1000; // 90 днів у мілісекундах
 
 // Код може містити лише латиницю, цифри й дефіс — усе інше ігноруємо
@@ -45,25 +46,19 @@ export function refLink(code: string, origin?: string): string {
   return `${base}/?ref=${code}`;
 }
 
-/** Читає ?ref= з адреси й запам'ятовує мітку. Викликається на кожному завантаженні сторінки. */
-export function captureRef(): void {
-  if (typeof window === "undefined") return;
-  const fromUrl = new URLSearchParams(window.location.search).get("ref");
-  if (!fromUrl) return;
-
-  const code = fromUrl.toLowerCase().trim();
-  if (!VALID.test(code)) return;
-
-  try {
-    localStorage.setItem(KEY, JSON.stringify({ code, ts: Date.now() }));
-  } catch {
-    // приватний режим браузера — просто працюємо без мітки
-  }
+/** Мітка з cookie, яку поставив сервер */
+function fromCookie(): string {
+  if (typeof document === "undefined") return "";
+  const hit = document.cookie
+    .split("; ")
+    .find((part) => part.startsWith(`${COOKIE}=`));
+  if (!hit) return "";
+  const code = decodeURIComponent(hit.slice(COOKIE.length + 1)).toLowerCase();
+  return VALID.test(code) ? code : "";
 }
 
-/** Мітка партнера, якщо вона ще жива. Порожній рядок — заявка «своя». */
-export function getRef(): string {
-  if (typeof window === "undefined") return "";
+/** Мітка з localStorage, якщо ще не протермінована */
+function fromStorage(): string {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return "";
@@ -76,4 +71,39 @@ export function getRef(): string {
   } catch {
     return "";
   }
+}
+
+function remember(code: string): void {
+  try {
+    localStorage.setItem(KEY, JSON.stringify({ code, ts: Date.now() }));
+  } catch {
+    // приватний режим браузера — залишиться лише cookie
+  }
+}
+
+/**
+ * Тримає мітку у двох незалежних місцях: cookie (її ставить сервер) і
+ * localStorage. Якщо якесь одне сховище браузер почистить — мітка виживе
+ * у другому. Викликається на кожному завантаженні сторінки.
+ */
+export function captureRef(): void {
+  if (typeof window === "undefined") return;
+
+  // Зазвичай ref уже прибрано з адреси сервером, але якщо ні — беремо звідти
+  const fromUrl = new URLSearchParams(window.location.search).get("ref");
+  const code = (fromUrl ?? "").toLowerCase().trim();
+  if (VALID.test(code)) {
+    remember(code);
+    return;
+  }
+
+  // Сервер поклав мітку в cookie — дублюємо її в localStorage
+  const cookie = fromCookie();
+  if (cookie && cookie !== fromStorage()) remember(cookie);
+}
+
+/** Мітка партнера, якщо вона ще жива. Порожній рядок — заявка «своя». */
+export function getRef(): string {
+  if (typeof window === "undefined") return "";
+  return fromCookie() || fromStorage();
 }
