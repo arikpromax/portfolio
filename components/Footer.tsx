@@ -1,18 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { getRef } from "@/lib/referral";
 
 export default function Footer() {
   // На головній — просто прокрутка вгору, з інших сторінок — перехід на головну
   const top = usePathname() === "/" ? "#top" : "/#top";
-
-  // Клієнту від партнера партнерську програму не показуємо — так само, як у меню
-  const [showPartners, setShowPartners] = useState(false);
-  useEffect(() => {
-    setShowPartners(!getRef());
-  }, []);
 
   return (
     <footer className="footer">
@@ -35,12 +27,12 @@ export default function Footer() {
         </div>
         <div className="footer__copy">
           © 2026 Веб-студія «arawebsite». Сайти, які приносять заявки.
-          {/* Стримане посилання для тих, хто шукає партнерство — клієнта воно не відволікає */}
-          {showPartners && (
-            <a className="footer__partners" href="/partners">
-              Партнерська програма
-            </a>
-          )}
+          {/* Стримане посилання для тих, хто шукає партнерство. Видиме завжди —
+              навіть клієнту від партнера: у підвалі воно нікого не відволікає,
+              зате програму завжди можна знайти, не пам'ятаючи адреси */}
+          <a className="footer__partners" href="/partners">
+            Партнерська програма
+          </a>
         </div>
       </div>
     </footer>
