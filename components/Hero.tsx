@@ -112,6 +112,13 @@ export default function Hero() {
               <i className="fa-solid fa-folder-open"></i>Дивитись кейси
             </a>
           </div>
+          <p className="hero__demo">
+            <i className="fa-solid fa-gift"></i>
+            <span>
+              <b>Демосайт — безкоштовно.</b> Спершу показую, як виглядатиме ваш сайт, і лише потім
+              говоримо про гроші
+            </span>
+          </p>
           {/* Коли з'являться реальні клієнти, можна вписати їх сюди */}
           <p className="hero__trust">
             <i className="fa-solid fa-circle-check"></i>Працюєте напряму зі мною: чесні терміни,

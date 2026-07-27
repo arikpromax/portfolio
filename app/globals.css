@@ -109,6 +109,12 @@ img{max-width:100%;display:block}
 .hero__actions{margin-top:38px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
 .hero__trust{margin-top:22px;display:flex;align-items:center;gap:11px;font-size:.92rem;color:var(--muted)}
 .hero__trust i{color:var(--teal)}
+/* безкоштовний демосайт — головна обіцянка, тому виділено рамкою */
+.hero__demo{margin-top:26px;display:inline-flex;align-items:flex-start;gap:12px;max-width:520px;
+  padding:14px 18px;border-radius:14px;background:var(--cyan-tint);border:1.5px solid var(--teal);
+  font-size:.95rem;color:var(--ink);line-height:1.5}
+.hero__demo i{color:var(--teal-ink);font-size:1.15rem;margin-top:2px;flex:none}
+.hero__demo b{font-weight:800;color:var(--teal-ink)}
 
 /* magnet visual */
 .magnet{position:relative;height:420px;display:grid;place-items:center;transform-style:preserve-3d;transition:transform .35s ease-out;will-change:transform}
@@ -185,9 +191,16 @@ img{max-width:100%;display:block}
 
 /* ---------- Process ---------- */
 .proc{background:linear-gradient(180deg,#F7FBFC,#fff)}
-.proc__badge{display:inline-flex;align-items:center;gap:9px;background:var(--ink);color:#fff;padding:9px 18px;border-radius:999px;font-weight:700;font-size:.9rem;margin-top:8px}
+.proc__badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.proc__badge{display:inline-flex;align-items:center;gap:9px;background:var(--ink);color:#fff;padding:9px 18px;border-radius:999px;font-weight:700;font-size:.9rem}
 .proc__badge i{color:var(--teal-bright)}
-.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:18px}
+.proc__badge--free{background:linear-gradient(135deg,var(--teal) 0%,var(--teal-ink) 100%)}
+.proc__badge--free i{color:#fff}
+/* шість кроків: колонки підлаштовуються самі, щоб картки не стискались надміру */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:18px;margin-top:18px}
+/* крок із безкоштовним демосайтом виділяємо */
+.step--free{border-color:var(--teal);background:linear-gradient(180deg,var(--cyan-tint),#fff)}
+.step--free .step__num{opacity:1}
 .step{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:28px 22px;box-shadow:var(--shadow-sm)}
 .step__num{font-family:"Unbounded";font-weight:700;font-size:1.6rem;color:var(--teal);opacity:.55;margin-bottom:14px;display:block;line-height:1}
 .step__ico{font-size:1.2rem;color:var(--deep);margin-bottom:12px}
@@ -210,6 +223,11 @@ img{max-width:100%;display:block}
 .price-card__inner{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(36px,5vw,64px);align-items:center}
 .price-card__inner > div{min-width:0}
 .price-from{display:inline-block;font-weight:700;font-size:.88rem;letter-spacing:.06em;text-transform:uppercase;color:var(--teal-bright);margin-bottom:10px}
+.price-demo{display:flex;align-items:flex-start;gap:12px;margin:20px 0 24px;padding:14px 18px;
+  border-radius:14px;background:rgba(52,209,196,.12);border:1px solid rgba(52,209,196,.35);
+  font-size:.95rem;color:rgba(255,255,255,.88);line-height:1.5}
+.price-demo i{color:var(--teal-bright);font-size:1.15rem;margin-top:2px;flex:none}
+.price-demo b{color:#fff;font-weight:800}
 .price-big{font-family:"Unbounded";font-weight:800;font-size:clamp(3.1rem,8vw,4.8rem);line-height:.9;letter-spacing:-.02em;display:flex;align-items:baseline;gap:12px}
 .price-big .from-tag{font-family:"Manrope";font-size:.26em;font-weight:600;color:rgba(255,255,255,.6);letter-spacing:0}
 .price-note-line{display:inline-flex;align-items:center;gap:9px;margin-top:20px;font-size:.9rem;font-weight:600;color:rgba(255,255,255,.78);background:rgba(255,255,255,.08);padding:9px 16px;border-radius:999px}

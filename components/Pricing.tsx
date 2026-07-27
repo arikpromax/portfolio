@@ -44,6 +44,13 @@ export default function Pricing() {
                 Точну вартість рахую під вашу задачу й озвучую до старту — жодних сюрпризів у
                 процесі.
               </p>
+              <div className="price-demo">
+                <i className="fa-solid fa-gift"></i>
+                <span>
+                  <b>Демосайт — безкоштовно.</b> Спершу побачите, як виглядатиме ваш сайт, і аж
+                  потім вирішите, чи він вартий цих грошей.
+                </span>
+              </div>
               <a href="#contact" className="btn btn--light btn--lg">
                 <i className="fa-solid fa-calculator"></i>Дізнатись точну вартість для мого бізнесу
               </a>
