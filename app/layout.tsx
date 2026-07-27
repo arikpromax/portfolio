@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-// Публічна адреса сайту (Vercel). Якщо колись підключите свій домен — заміни тут
-const SITE_URL = "https://portfolio-zeta-gold-0elpf422sg.vercel.app/";
+// Публічна адреса сайту. Власний домен підключено 27.07.2026;
+// стара адреса на vercel.app продовжує працювати як дублікат
+const SITE_URL = "https://arawebsite.com/";
 
 export const metadata: Metadata = {
   title: "arawebsite — сайти, які приносять заявки вашому бізнесу",
