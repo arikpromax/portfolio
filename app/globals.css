@@ -298,7 +298,9 @@ img{max-width:100%;display:block}
 .ck--square .ck__txt i{font-size:2rem;margin:0}
 .ck--square .ck__btns{flex-direction:column;align-items:stretch;justify-content:center;gap:10px}
 .ck--square .ck__btn{flex:none;width:100%}
-.ck--square .ck-link--inline{order:3;padding:2px 0 0;text-align:center}
+/* flex:none обов'язковий: у вертикальному контейнері мобільне правило
+   flex:1 1 100% розтягує посилання на всю висоту й накриває кнопки */
+.ck--square .ck-link--inline{order:3;flex:none;padding:2px 0 0;text-align:center}
 
 .ck--out{animation:ckOut .3s ease forwards}
 @keyframes ckIn{
