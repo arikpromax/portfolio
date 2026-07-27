@@ -128,7 +128,10 @@ export default function Cases({ items }: { items?: CaseItem[] }) {
                   )}
                 </div>
                 <div className="cs-info">
-                  <span className="cs-meta">{c.meta}</span>
+                  <span className="cs-meta">
+                    {c.meta}
+                    {c.status === "dev" && <span className="cs-dev">В розробці</span>}
+                  </span>
                   <h3 className="cs-title">{c.title}</h3>
                   <p className="cs-res">
                     {c.description} <b>{c.result}</b>
@@ -138,10 +141,10 @@ export default function Cases({ items }: { items?: CaseItem[] }) {
                       Дивитись сайт <i className="fa-solid fa-arrow-right"></i>
                     </a>
                   ) : (
-                    // Посилання ще немає — нікуди не ведемо
-                    <a className="cs-link" href="#" onClick={(e) => e.preventDefault()}>
-                      Дивитись сайт <i className="fa-solid fa-arrow-right"></i>
-                    </a>
+                    // Сайт ще не запущено — не вдаємо посилання, чесно кажемо про стан
+                    <span className="cs-link cs-link--off">
+                      <i className="fa-solid fa-hammer"></i>Сайт готується до запуску
+                    </span>
                   )}
                 </div>
               </article>

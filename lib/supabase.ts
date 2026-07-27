@@ -12,6 +12,7 @@ export type CaseItem = {
   result: string; // фраза-результат, виводиться жирним у кінці
   link: string; // реальне посилання на сайт ("" — якщо ще немає)
   image_url: string; // скриншот сайту зі сховища Supabase ("" — стилізований макет)
+  status?: string; // "" — сайт запущено, "dev" — ще в розробці (показуємо значок)
   sort_order: number;
 };
 

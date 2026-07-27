@@ -15,6 +15,7 @@ const emptyCase: CaseItem = {
   result: "",
   link: "",
   image_url: "",
+  status: "",
   sort_order: 0,
 };
 
@@ -376,6 +377,17 @@ export default function AdminPage() {
                     onChange={(e) => set({ link: e.target.value })}
                     placeholder="https://…"
                   />
+                </div>
+                <div className="field">
+                  <label htmlFor="c-status">Стан сайту</label>
+                  <select
+                    id="c-status"
+                    value={editing.status ?? ""}
+                    onChange={(e) => set({ status: e.target.value })}
+                  >
+                    <option value="">Запущений — працює в інтернеті</option>
+                    <option value="dev">У розробці — покажемо значок на картці</option>
+                  </select>
                 </div>
               </div>
               <div className="field">

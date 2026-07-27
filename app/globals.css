@@ -583,12 +583,19 @@ body.menu-open{overflow:hidden}
 .cs-cards{display:flex;gap:9px}
 .cs-cards span{flex:1;height:32px;border-radius:8px;background:#fff;border:1px solid #e3ebef}
 .cs-info{padding:22px 22px 24px}
-.cs-meta{font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--teal-ink)}
+.cs-meta{font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--teal-ink);
+  display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+/* чесна позначка: сайт ще не запущено */
+.cs-dev{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;
+  background:#FFF1E9;color:#C2410C;font-size:.7rem;font-weight:800;letter-spacing:.03em}
 .cs-title{font-family:"Unbounded";font-weight:600;font-size:1.4rem;margin:7px 0 9px}
 .cs-res{color:var(--muted);font-size:.96rem;line-height:1.55}
 .cs-res b{color:var(--ink)}
 .cs-link{display:inline-flex;align-items:center;gap:9px;margin-top:16px;font-weight:700;color:var(--teal-ink);text-decoration:none;font-size:.95rem}
 .cs-link i{transition:transform .2s}.cs-link:hover i{transform:translateX(4px)}
+/* не посилання, а стан — тому приглушено й без стрілки-руху */
+.cs-link--off{color:var(--muted);cursor:default}
+.cs-link--off:hover i{transform:none}
 .cs-controls{display:flex;align-items:center;justify-content:center;gap:20px;margin-top:26px}
 .cs-arrow{width:50px;height:50px;border-radius:50%;border:1.5px solid var(--line);background:#fff;color:var(--deep);font-size:1.05rem;cursor:pointer;display:grid;place-items:center;box-shadow:0 10px 24px -12px rgba(15,61,82,.4);transition:transform .15s,border-color .2s,opacity .2s}
 .cs-arrow:hover:not(:disabled){transform:translateY(-2px);border-color:var(--teal)}
