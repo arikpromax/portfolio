@@ -40,10 +40,16 @@ export function makeRefCode(name: string): string {
 }
 
 /** Повне посилання, яке партнер дає клієнтам */
+/**
+ * Основна адреса сайту. Посилання партнерам будуємо саме від неї, а не від
+ * адреси поточної вкладки: адмінка може бути відкрита за старим посиланням
+ * vercel.app, і партнер отримав би непотрібне йому службове посилання.
+ * Якщо колись зміните домен — правити тут і в app/layout.tsx.
+ */
+export const SITE_ORIGIN = "https://arawebsite.com";
+
 export function refLink(code: string, origin?: string): string {
-  const base =
-    origin ?? (typeof window !== "undefined" ? window.location.origin : "");
-  return `${base}/?ref=${code}`;
+  return `${origin ?? SITE_ORIGIN}/?ref=${code}`;
 }
 
 /** Мітка з cookie, яку поставив сервер */

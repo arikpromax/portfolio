@@ -153,7 +153,7 @@ export default function PartnersAdminPage() {
 
   const copyLink = async (code: string) => {
     try {
-      await navigator.clipboard.writeText(refLink(code, window.location.origin));
+      await navigator.clipboard.writeText(refLink(code));
       setCopied(code);
       setTimeout(() => setCopied(""), 2500);
     } catch {
@@ -260,7 +260,7 @@ export default function PartnersAdminPage() {
                       <div className="adm-kv">
                         <b>Персональне посилання</b>
                         <span className="adm-ref">
-                          <code>{refLink(l.ref_code, typeof window !== "undefined" ? window.location.origin : "")}</code>
+                          <code>{refLink(l.ref_code)}</code>
                           <button
                             type="button"
                             className="btn btn--ghost btn--sm"
