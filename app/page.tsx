@@ -15,7 +15,6 @@ import BackToTop from "@/components/BackToTop";
 import TelegramFab from "@/components/TelegramFab";
 import Footer from "@/components/Footer";
 import SiteEffects from "@/components/SiteEffects";
-import CookieBanner from "@/components/CookieBanner";
 export default function Home() {
   // Кейси лежать у lib/cases.ts — компонент Cases бере їх звідти сам
   return (
@@ -37,7 +36,6 @@ export default function Home() {
       <TelegramFab />
       <Footer />
       <SiteEffects />
-      <CookieBanner />
     </>
   );
 }
