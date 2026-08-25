@@ -15,26 +15,9 @@ import BackToTop from "@/components/BackToTop";
 import TelegramFab from "@/components/TelegramFab";
 import Footer from "@/components/Footer";
 import SiteEffects from "@/components/SiteEffects";
-import RefCapture from "@/components/RefCapture";
 import CookieBanner from "@/components/CookieBanner";
-import { getSupabase, type CaseItem } from "@/lib/supabase";
-
-// Раз на хвилину сторінка перевіряє, чи не з'явились у базі нові кейси
-export const revalidate = 60;
-
-export default async function Home() {
-  // Кейси беремо з Supabase; якщо він не налаштований або база порожня —
-  // компонент Cases сам покаже вбудовані демо-приклади
-  let items: CaseItem[] | undefined;
-  const supabase = getSupabase();
-  if (supabase) {
-    const { data } = await supabase
-      .from("cases")
-      .select("*")
-      .order("sort_order", { ascending: true });
-    if (data && data.length > 0) items = data as CaseItem[];
-  }
-
+export default function Home() {
+  // Кейси лежать у lib/cases.ts — компонент Cases бере їх звідти сам
   return (
     <>
       <Preloader />
@@ -44,7 +27,7 @@ export default async function Home() {
       <Marquee />
       <Problem />
       <Solution />
-      <Cases items={items} />
+      <Cases />
       <Process />
       <Why />
       <About />
@@ -54,7 +37,6 @@ export default async function Home() {
       <TelegramFab />
       <Footer />
       <SiteEffects />
-      <RefCapture />
       <CookieBanner />
     </>
   );

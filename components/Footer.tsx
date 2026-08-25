@@ -28,10 +28,8 @@ export default function Footer() {
         </div>
         <div className="footer__copy">
           © 2026 Веб-студія «arawebsite». Сайти, які приносять заявки.
-          {/* Стриманий рядок посилань. Партнерська програма видима завжди —
-              у підвалі вона нікого не відволікає, зате її легко знайти */}
+          {/* Стриманий рядок службових посилань */}
           <span className="footer__links">
-            <a href="/partners">Партнерська програма</a>
             <a href="/privacy">Політика конфіденційності</a>
             <a href="/cookies">Файли cookie</a>
             <CookieSettingsLink label="Налаштування cookie" />

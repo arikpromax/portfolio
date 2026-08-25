@@ -1,6 +1,7 @@
-import { createClient, SupabaseClient } from "@supabase/supabase-js";
+// Кейси портфоліо. Раніше вони лежали в Supabase, тепер — просто тут:
+// база портфоліо вимкнена, адмінка прибрана, кейси редагуються в цьому файлі.
 
-// Тип одного кейса — 1-в-1 відповідає таблиці `cases` у Supabase
+// Тип одного кейса
 export type CaseItem = {
   id?: number;
   url_label: string; // адреса у віконці-макеті браузера, напр. "dentacare.ua"
@@ -11,44 +12,13 @@ export type CaseItem = {
   description: string; // звичайний текст опису
   result: string; // фраза-результат, виводиться жирним у кінці
   link: string; // реальне посилання на сайт ("" — якщо ще немає)
-  image_url: string; // скриншот сайту зі сховища Supabase ("" — стилізований макет)
+  image_url: string; // адреса скриншоту сайту ("" — стилізований макет)
   status?: string; // "" — сайт запущено, "dev" — ще в розробці (показуємо значок)
   sort_order: number;
 };
 
-// Анкета партнера — 1-в-1 відповідає таблиці `partner_leads` у Supabase
-export type PartnerLead = {
-  id?: number;
-  created_at?: string;
-  name: string;
-  method: string; // спосіб зв'язку: Telegram, Телефон…
-  contact: string;
-  who: string; // хто партнер: дизайнер, майстер, власник бізнесу…
-  payout: string; // як зручно отримувати винагороду
-  has_client: boolean; // чи вже є клієнт на прикметі
-  client_niche: string;
-  client_city: string;
-  client_contact: string;
-  client_when: string; // коли клієнту потрібен сайт
-  message: string;
-  ref_code?: string; // персональний код партнера для посилання ?ref=
-  status?: string; // new | talking | deal | paid | closed — веду в адмінці
-};
 
-// Заявка з головної форми сайту — таблиця `leads` у Supabase
-export type Lead = {
-  id?: number;
-  created_at?: string;
-  name: string;
-  method: string;
-  contact: string;
-  business: string;
-  message: string;
-  ref_code: string; // мітка партнера ("" — клієнт прийшов сам)
-  status?: string; // new | talking | deal | done | closed
-};
-
-// Демо-кейси: показуються, поки база порожня або Supabase не підключений
+// Кейси, які показує сайт
 export const demoCases: CaseItem[] = [
   {
     url_label: "dentacare.ua",
@@ -100,16 +70,3 @@ export const demoCases: CaseItem[] = [
   },
 ];
 
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-export const isSupabaseConfigured = Boolean(url && key);
-
-let client: SupabaseClient | null = null;
-
-// Повертає клієнт Supabase або null, якщо ключі ще не налаштовані
-export function getSupabase(): SupabaseClient | null {
-  if (!url || !key) return null;
-  if (!client) client = createClient(url, key);
-  return client;
-}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { demoCases, type CaseItem } from "@/lib/supabase";
+import { demoCases, type CaseItem } from "@/lib/cases";
 
 const SWIPE_THRESHOLD = 55;
 

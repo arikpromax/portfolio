@@ -1,8 +1,6 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { getSupabase } from "@/lib/supabase";
-import { getRef } from "@/lib/referral";
 
 /*
   Форма шле заявки в Google Таблицю через Google Apps Script (як в оригіналі):
@@ -72,16 +70,12 @@ export default function Contact() {
       return;
     }
 
-    // Мітка партнера, якщо клієнт прийшов за його посиланням ?ref=
-    const ref = getRef();
-
     const data = {
       name,
       method,
       contact: contactVal,
       business,
       message,
-      ref,
       date: new Date().toLocaleString("uk-UA"),
     };
 
@@ -100,13 +94,6 @@ export default function Contact() {
         });
       }
 
-      // Дублюємо заявку в базу — саме там в адмінці видно, який партнер її привів
-      const supabase = getSupabase();
-      if (supabase) {
-        await supabase
-          .from("leads")
-          .insert({ name, method, contact: contactVal, business, message, ref_code: ref });
-      }
       setStatus({
         kind: "ok",
         icon: "fa-solid fa-circle-check",

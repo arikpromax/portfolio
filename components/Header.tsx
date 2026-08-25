@@ -18,17 +18,11 @@ export default function Header() {
   const pathname = usePathname();
 
   // На головній лишаємо чистий якір (#cases) — тоді браузер просто прокручує.
-  // З інших сторінок (/partners) потрібен повний шлях, щоб спершу перейти на головну.
+  // З інших сторінок (/privacy, /cookies) потрібен повний шлях, щоб спершу перейти на головну.
   const onHome = pathname === "/";
   const to = (hash: string) => (onHome ? hash : `/${hash}`);
 
-  // Партнерку показуємо всім однаково — і звичайним відвідувачам, і тим,
-  // кого привів партнер. Умови програми лежать на окремій сторінці,
-  // тому на самій головній клієнт усе одно не бачить розміру винагороди.
-  const items = [
-    ...links.map((l) => ({ href: to(l.hash), label: l.label })),
-    { href: "/partners", label: "Партнерам" },
-  ];
+  const items = links.map((l) => ({ href: to(l.hash), label: l.label }));
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
