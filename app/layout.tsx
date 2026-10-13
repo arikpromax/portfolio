@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import CookieBanner from "@/components/CookieBanner";
+import Analytics from "@/components/Analytics";
 
 // Публічна адреса сайту. Власний домен підключено 27.07.2026;
 // стара адреса на vercel.app продовжує працювати як дублікат
@@ -32,7 +34,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="uk">
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* Банер згоди на всіх сторінках; GA вантажиться лише після «Прийняти» */}
+        <CookieBanner />
+        <Analytics />
+      </body>
     </html>
   );
 }

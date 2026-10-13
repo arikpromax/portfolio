@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import CookieSettingsLink from "@/components/CookieSettingsLink";
 
 export default function Footer() {
   // На головній — просто прокрутка вгору, з інших сторінок — перехід на головну
@@ -31,6 +32,7 @@ export default function Footer() {
           <span className="footer__links">
             <a href="/privacy">Політика конфіденційності</a>
             <a href="/cookies">Файли cookie</a>
+            <CookieSettingsLink label="Налаштування cookie" />
           </span>
         </div>
       </div>
