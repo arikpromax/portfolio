@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
 import Analytics from "@/components/Analytics";
+import InlineScript from "@/components/InlineScript";
 
 // Ставить збережену тему ще до першого кадру, щоб темна сторінка не блимала світлим
 const themeInit = `try{var t=localStorage.getItem("aw_theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}`;
@@ -38,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="uk" suppressHydrationWarning>
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+        <InlineScript html={themeInit} />
       </head>
       <body>
         {children}

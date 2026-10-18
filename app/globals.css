@@ -113,9 +113,18 @@ img{max-width:100%;display:block}
   color:var(--ink);cursor:pointer;font-size:1rem;transition:border-color .2s,color .2s}
 .theme-btn:hover{border-color:var(--accent);color:var(--accent)}
 .theme-btn:focus-visible{outline:3px solid var(--teal-bright);outline-offset:2px}
-.theme-btn .i-sun{display:none}
-html[data-theme="dark"] .theme-btn .i-sun{display:inline-block}
-html[data-theme="dark"] .theme-btn .i-moon{display:none}
+.theme-btn{position:relative;overflow:hidden}
+/* обидві іконки лежать одна на одній: місяць іде обертом униз, сонце виходить на його місце */
+.theme-btn i{position:absolute;transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .35s ease}
+.theme-btn .i-sun{opacity:0;transform:rotate(-120deg) scale(.3) translateY(10px);color:#F5B301}
+html[data-theme="dark"] .theme-btn .i-sun{opacity:1;transform:none}
+html[data-theme="dark"] .theme-btn .i-moon{opacity:0;transform:rotate(120deg) scale(.3) translateY(10px)}
+.theme-btn:hover .i-moon{transform:rotate(-20deg)}
+html[data-theme="dark"] .theme-btn:hover .i-sun{transform:rotate(45deg)}
+/* перехід між темами: нова тема розкривається колом від кнопки (components/ThemeToggle.tsx) */
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+::view-transition-new(root){z-index:2}
+@media (prefers-reduced-motion: reduce){ .theme-btn i{transition:none} }
 .burger{display:none;background:none;border:0;font-size:1.35rem;color:var(--ink);cursor:pointer;padding:6px}
 
 .mobile-menu{position:fixed;inset:0;z-index:71;background:var(--surface);padding:140px var(--gut) 30px;
