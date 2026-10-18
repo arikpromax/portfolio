@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { SectTitle } from "@/components/Blocks";
 import {
-  SceneTimeline,
   MockChat,
   MockDemo,
   MockSitemap,
@@ -108,14 +107,9 @@ export default function Process() {
     <section className="sect" id="process">
       <SectTitle>Як я працюю</SectTitle>
 
-      <div className="split">
-        <div className="split__text reveal">
-          <h3>Від ідеї до запуску — зрозуміло й по кроках</h3>
-          <p>Ви завжди знаєте, на якому етапі ми зараз і що буде далі.</p>
-        </div>
-        <div className="split__visual" aria-hidden="true">
-          <SceneTimeline />
-        </div>
+      <div className="lead-block reveal">
+        <h3>Від ідеї до запуску — зрозуміло й по кроках</h3>
+        <p>Ви завжди знаєте, на якому етапі ми зараз і що буде далі.</p>
       </div>
 
       <div className="stats wrap">

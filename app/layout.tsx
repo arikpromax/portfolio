@@ -3,6 +3,9 @@ import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
 import Analytics from "@/components/Analytics";
 
+// Ставить збережену тему ще до першого кадру, щоб темна сторінка не блимала світлим
+const themeInit = `try{var t=localStorage.getItem("aw_theme");if(t==="dark"||t==="light")document.documentElement.dataset.theme=t}catch(e){}`;
+
 // Публічна адреса сайту. Власний домен підключено 27.07.2026;
 // стара адреса на vercel.app продовжує працювати як дублікат
 const SITE_URL = "https://arawebsite.com/";
@@ -33,7 +36,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="uk">
+    <html lang="uk" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+      </head>
       <body>
         {children}
         {/* Банер згоди на всіх сторінках; GA вантажиться лише після «Прийняти» */}

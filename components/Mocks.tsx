@@ -121,28 +121,6 @@ export function SceneQuiet() {
   );
 }
 
-/** Етапи роботи як дошка з галочками */
-export function SceneTimeline() {
-  const rows = ["Бриф", "Демосайт", "Структура", "Дизайн", "Розробка", "Запуск"];
-  return (
-    <div className="mk-scene mk-scene--timeline">
-      <div className="mk-timeline">
-        {rows.map((r, i) => (
-          <div key={r} className={`mk-timeline__row${i < 4 ? " done" : i === 4 ? " now" : ""}`}>
-            <span className="mk-timeline__dot">
-              {i < 4 ? <i className="fa-solid fa-check"></i> : i + 1}
-            </span>
-            <span className="mk-timeline__name">{r}</span>
-            <span className="mk-timeline__bar">
-              <i style={{ width: i < 4 ? "100%" : i === 4 ? "55%" : "0%" }}></i>
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 /* ---------- Малі макети для карток ---------- */
 
 export function MockEmptyCalls() {

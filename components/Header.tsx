@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import TgLogo from "@/components/TgLogo";
+import ThemeToggle from "@/components/ThemeToggle";
 
 // Глобальне меню вгорі (як «Модели / Покупки» на сайті-зразку)
 const links = [
@@ -92,6 +93,7 @@ export default function Header() {
             <a href="https://t.me/arikpromax" target="_blank" rel="noopener" className="gh__tg" aria-label="Telegram">
               <TgLogo id="head" />
             </a>
+            <ThemeToggle />
             <button
               className="burger"
               aria-label="Меню"
