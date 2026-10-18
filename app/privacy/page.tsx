@@ -175,6 +175,9 @@ export default function PrivacyPage() {
             <li>
               <b>Cloudflare CDN</b> (cdnjs.cloudflare.com) — набір іконок Font Awesome.
             </li>
+            <li>
+              <b>Supabase</b> (supabase.co) — сховище фото, які ми додаємо на сайт через адмін-панель.
+            </li>
           </ul>
           <p>
             <b>Google Analytics</b> (googletagmanager.com, google-analytics.com) завантажується лише

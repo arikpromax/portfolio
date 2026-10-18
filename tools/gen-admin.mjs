@@ -38,6 +38,8 @@ const texts = [
   T("sol_h", "Заголовок розділу", "Великими літерами по центру. Напр.: Що я роблю"),
   T("sol_panel_h", "Сірий блок: заголовок", "Великий текст праворуч від ілюстрації з ноутбуком і телефоном."),
   T("sol_panel_p", "Сірий блок: текст", "Абзац під заголовком.", true),
+  T("sol_admin_h", "Сайт + адмін-панель: заголовок", "Блок зі знімком адмінки після карток. Порожньо — блоку немає. Напр.: Сайт + адмін-панель"),
+  T("sol_admin_p", "Сайт + адмін-панель: текст", "Абзац під заголовком.", true),
   // Банер
   T("demo_kicker", "Маленький напис угорі", "Бірюзовий рядок над великим заголовком."),
   T("demo_h", "Великий заголовок", "Курсивом великими літерами. Напр.: Демосайт — безкоштовно"),
@@ -193,18 +195,18 @@ const collections = [
   },
 ];
 
-/* ---------- Вкладки адмінки в порядку блоків сайту ---------- */
+/* ---------- Вкладки адмінки в порядку блоків сайту (номери адмінка ставить сама) ---------- */
 const sections = [
   { name: "Контакти", note: "Вписуєте один раз — змінюється на всьому сайті: кнопки, шапка, підвал, панель «Про нас».", texts: ["tg_user", "phone", "email"] },
-  { name: "1. Перший екран", note: "Велике фото на всю ширину, під ним заголовок і кнопка.", texts: ["hero_kicker", "hero_title", "hero_btn"], photos: ["hero"] },
-  { name: "2. Знайомо?", note: "Темний блок з ілюстрацією і картки під ним. Картку можна додати, прибрати чи перетягнути — сайт сам розкладе їх по дві в ряд.", texts: ["pain_h", "pain_panel_h", "pain_panel_p"], collections: ["pains"] },
-  { name: "3. Що я роблю", note: "Сірий блок з ноутбуком і телефоном, під ним картки по три в ряд.", texts: ["sol_h", "sol_panel_h", "sol_panel_p"], collections: ["features"] },
-  { name: "4. Банер «Демосайт»", note: "Темна смуга на всю ширину з круглою кнопкою.", texts: ["demo_kicker", "demo_h", "demo_sub"] },
-  { name: "5. Як я працюю", note: "Заголовок, великі цифри, що «набігають», і вкладки з етапами.", texts: ["proc_h", "proc_lead_h", "proc_lead_p"], collections: ["stats", "steps"] },
-  { name: "6. Кейси", note: "Скриншот сайту в браузері й телефоні, біла картка з перемикачами. Кожен кейс — окрема картка.", texts: ["cases_h", "cases_card_h", "cases_card_p"], collections: ["cases"] },
-  { name: "7. Чому я", note: "Заголовок, рядок під ним і картки по три в ряд.", texts: ["why_h", "why_sub"], collections: ["usps"] },
-  { name: "8. Вартість", note: "Велика ціна, вкладки «що впливає на ціну» з ілюстрацією і білою карткою.", texts: ["price_h", "price_from", "price_value", "price_sub", "price_kicker", "price_note", "price_btn", "price_integrations", "price_integr_more"], collections: ["factors"] },
-  { name: "9. Заявка", note: "Сірий блок унизу: текст ліворуч і форма праворуч. Заявки, як і раніше, приходять у вашу таблицю.", texts: ["contact_kicker", "contact_h", "contact_lead", "contact_points", "form_h", "form_sub", "form_business", "form_btn", "form_ok", "form_note"] },
+  { name: "Перший екран", note: "Велике фото на всю ширину, під ним заголовок і кнопка.", texts: ["hero_kicker", "hero_title", "hero_btn"], photos: ["hero"] },
+  { name: "Знайомо?", note: "Темний блок з ілюстрацією і картки під ним. Картку можна додати, прибрати чи перетягнути — сайт сам розкладе їх по дві в ряд.", texts: ["pain_h", "pain_panel_h", "pain_panel_p"], collections: ["pains"] },
+  { name: "Що я роблю", note: "Сірий блок з ноутбуком і телефоном, картки по три в ряд, а під ними блок «Сайт + адмін-панель» зі знімком адмінки.", texts: ["sol_h", "sol_panel_h", "sol_panel_p", "sol_admin_h", "sol_admin_p"], collections: ["features"], photos: ["admin"] },
+  { name: "Банер «Демосайт»", note: "Темна смуга на всю ширину з круглою кнопкою.", texts: ["demo_kicker", "demo_h", "demo_sub"] },
+  { name: "Як я працюю", note: "Заголовок, великі цифри, що «набігають», і вкладки з етапами.", texts: ["proc_h", "proc_lead_h", "proc_lead_p"], collections: ["stats", "steps"] },
+  { name: "Кейси", note: "Скриншот сайту в браузері й телефоні, біла картка з перемикачами. Кожен кейс — окрема картка.", texts: ["cases_h", "cases_card_h", "cases_card_p"], collections: ["cases"] },
+  { name: "Чому я", note: "Заголовок, рядок під ним і картки по три в ряд.", texts: ["why_h", "why_sub"], collections: ["usps"] },
+  { name: "Вартість", note: "Велика ціна, вкладки «що впливає на ціну» з ілюстрацією і білою карткою.", texts: ["price_h", "price_from", "price_value", "price_sub", "price_kicker", "price_note", "price_btn", "price_integrations", "price_integr_more"], collections: ["factors"] },
+  { name: "Заявка", note: "Сірий блок унизу: текст ліворуч і форма праворуч. Заявки, як і раніше, приходять у вашу таблицю.", texts: ["contact_kicker", "contact_h", "contact_lead", "contact_points", "form_h", "form_sub", "form_business", "form_btn", "form_ok", "form_note"] },
   { name: "Про нас", note: "Панель, що виїжджає зліва: кругла кнопка ліворуч унизу або пункт меню. Нова людина в команді — нова картка.", texts: ["about_h"], collections: ["team"] },
   { name: "Шапка й підвал", note: "Меню, кнопка в шапці, сіра смужка з вкладками і рядок у підвалі.", texts: ["header_cta", "nav_services", "nav_cases", "nav_about", "nav_price", "subnav_year", "subnav_name", "tab_top", "tab_solution", "tab_process", "tab_cases", "tab_price", "footer_copy"] },
   { name: "Google і соцмережі", note: "Як сайт виглядає в пошуку Google і коли посиланням діляться в месенджерах.", texts: ["seo_title", "seo_desc"] },
@@ -260,6 +262,19 @@ on conflict (slug) do update set config = excluded.config, name = excluded.name;
 `;
 
 for (const [col, list] of Object.entries(content.lists)) {
+  if (col === "site_photos") {
+    for (const [i, it] of list.entries()) {
+      sql += `
+-- ---------- фото на сайті: ${it.extra.slot} ----------
+with s as (select id from public.sites where slug = ${q(SLUG)})
+insert into public.items (site_id, collection, title, text, image_url, extra, sort_order)
+select s.id, ${q(col)}, ${q(it.title)}, ${q(it.text)}, ${q(it.image_url)}, ${q(JSON.stringify(it.extra))}::jsonb, ${i + 1}
+from s
+where not exists (select 1 from public.items i, s where i.site_id = s.id and i.collection = ${q(col)} and i.extra->>'slot' = ${q(it.extra.slot)});
+`;
+    }
+    continue;
+  }
   const rows = list
     .map(
       (it, i) =>

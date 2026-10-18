@@ -174,6 +174,14 @@ html[data-theme="dark"] .theme-btn:hover .i-sun{transform:rotate(45deg)}
 .panel__text p{font-size:1.02rem;color:var(--text-2)}
 .panel--dark .panel__text p{color:rgba(255,255,255,.78)}
 
+/* ---------- Сайт + адмін-панель (у розділі «Що я роблю») ---------- */
+.admin-block{margin-top:16px}
+.admin-shot{position:relative;width:min(760px,52vw)}
+.admin-shot .mk-browser img{display:block;width:100%;height:auto}
+.admin-shot__toast{position:absolute;left:-5%;bottom:-6%}
+@media (max-width:900px){ .admin-shot{width:min(560px,92%)} }
+@media (max-width:640px){ .admin-shot__toast{left:4%;bottom:-8%} }
+
 /* ---------- Ряди карток ---------- */
 .cards{display:grid;gap:16px;margin-top:16px}
 .cards--3{grid-template-columns:repeat(3,1fr)}
