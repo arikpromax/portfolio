@@ -6,7 +6,8 @@ import { getConsent, setConsent, REOPEN_EVENT } from "@/lib/consent";
 /**
  * Картка по центру екрана з питанням про cookie. Фон не затемнює й нічого не
  * блокує — сайт можна читати й гортати, поки вона висить.
- * «Налаштування» розкривають панель із реальним перемикачем на Google Analytics.
+ * Три рівноцінні дії: «Прийняти», «Відхилити», «Налаштувати». У налаштуваннях видно,
+ * що необхідні cookie не вимикаються, а статистику (Google Analytics) можна вимкнути.
  * Повернути банер після вибору можна посиланням у підвалі.
  */
 export default function CookieBanner() {
@@ -49,7 +50,8 @@ export default function CookieBanner() {
     >
       {settings ? (
         <div className="ck__panel">
-          <p className="ck__panel-title">Налаштування файлів cookie</p>
+          <p className="ck__panel-title">Налаштування cookie</p>
+          <p className="ck__panel-sub">Необхідні працюють завжди, статистику можна вимкнути.</p>
 
           <div className="ck-row">
             <div className="ck-row__txt">
@@ -59,27 +61,43 @@ export default function CookieBanner() {
                 виконати саме ваше рішення.
               </span>
             </div>
-            <span className="ck-row__fixed">Завжди увімкнені</span>
+            <div className="ck-row__ctl">
+              <span
+                className="ck-toggle on locked"
+                role="switch"
+                aria-checked="true"
+                aria-disabled="true"
+                aria-label="Необхідні — не вимикаються"
+              >
+                <span className="ck-toggle__knob">
+                  <i className="fa-solid fa-lock"></i>
+                </span>
+              </span>
+              <span className="ck-row__state">Не вимикаються</span>
+            </div>
           </div>
 
           <div className="ck-row">
             <div className="ck-row__txt">
-              <b>Статистика відвідувань</b>
+              <b>Статистика · Google Analytics</b>
               <span>
-                Google Analytics рахує, скільки людей заходить на сайт, звідки і які розділи читають.
-                Імʼя, контакти й текст заявки туди не потрапляють.
+                Рахує, скільки людей заходить на сайт, звідки і які розділи читають. Імʼя, контакти й
+                текст заявки туди не потрапляють.
               </span>
             </div>
-            <button
-              type="button"
-              className={`ck-toggle${analyticsAllowed ? " on" : ""}`}
-              role="switch"
-              aria-checked={analyticsAllowed}
-              aria-label="Статистика відвідувань"
-              onClick={() => setAnalyticsAllowed((v) => !v)}
-            >
-              <span className="ck-toggle__knob"></span>
-            </button>
+            <div className="ck-row__ctl">
+              <button
+                type="button"
+                className={`ck-toggle${analyticsAllowed ? " on" : ""}`}
+                role="switch"
+                aria-checked={analyticsAllowed}
+                aria-label="Статистика відвідувань"
+                onClick={() => setAnalyticsAllowed((v) => !v)}
+              >
+                <span className="ck-toggle__knob"></span>
+              </button>
+              <span className="ck-row__state">{analyticsAllowed ? "Увімкнено" : "Вимкнено"}</span>
+            </div>
           </div>
 
           <div className="ck__btns ck__btns--panel">
@@ -88,7 +106,7 @@ export default function CookieBanner() {
             </button>
             <button
               type="button"
-              className="ck__btn"
+              className="ck__btn ck__btn--primary"
               onClick={() => choose(analyticsAllowed ? "all" : "essential")}
             >
               Зберегти вибір
@@ -100,20 +118,19 @@ export default function CookieBanner() {
           <div className="ck__txt">
             <i className="fa-solid fa-cookie-bite"></i>
             <p>
-              Google Analytics показує мені, скільки людей заходить на сайт і що їм цікаво. Він
-              ставить cookie, тому вмикається лише з вашої згоди.{" "}
-              <a href="/cookies">Про файли cookie</a>
+              Ми використовуємо cookie Google Analytics, щоб бачити, скільки людей заходить на сайт і
+              що їм цікаво. Вмикаємо їх лише з вашої згоди. <a href="/cookies">Про файли cookie</a>
             </p>
           </div>
           <div className="ck__btns">
-            <button type="button" className="ck-link ck-link--inline" onClick={() => setSettings(true)}>
-              Налаштування
-            </button>
-            <button type="button" className="ck__btn" onClick={() => choose("essential")}>
-              Тільки необхідні
-            </button>
             <button type="button" className="ck__btn ck__btn--primary" onClick={() => choose("all")}>
               Прийняти
+            </button>
+            <button type="button" className="ck__btn" onClick={() => choose("essential")}>
+              Відхилити
+            </button>
+            <button type="button" className="ck__btn" onClick={() => setSettings(true)}>
+              Налаштувати
             </button>
           </div>
         </>

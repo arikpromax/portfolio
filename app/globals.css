@@ -471,6 +471,7 @@ img{max-width:100%;display:block}
 .mk-figma__h{font-size:9px;font-weight:700;color:var(--ink);padding:0 12px 4px}
 .mk-figma__props .mk-figma__h{padding:4px 0 0}
 .mk-figma__layer{display:flex;align-items:center;gap:6px;padding:4px 12px;color:#444b52;white-space:nowrap;overflow:hidden}
+.mk-figma__layer em{font-style:normal;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .mk-figma__layer i{color:#9aa3a9;font-size:8px}
 .mk-figma__layer.on{background:#E3F0FF;color:#0D6EFD}
 .mk-figma__layer.on i{color:#0D6EFD}
@@ -582,30 +583,19 @@ img{max-width:100%;display:block}
 
 /* ---------- Смужка про cookie ---------- */
 /* Картка по центру екрана. Фон навмисно не затемнюємо — сайт лишається
-   доступним, поки людина читає й вирішує */
+   доступним, поки людина читає й вирішує. Кути й кнопки прямі, як на всьому сайті */
 .ck{
   position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:120;
-  width:calc(100% - 32px);max-width:560px;
+  width:calc(100% - 32px);max-width:540px;max-height:calc(100vh - 32px);overflow-y:auto;
   display:flex;flex-direction:column;align-items:stretch;gap:16px;
-  padding:24px 26px;border-radius:18px;
-  background:#fff;border:1px solid var(--line);
-  box-shadow:0 40px 80px -24px rgba(15,61,82,.5);
+  padding:28px 28px 24px;background:#fff;border-top:4px solid var(--teal-ink);
+  box-shadow:0 40px 80px -24px rgba(8,27,36,.55);
   animation:ckIn .45s cubic-bezier(.2,.7,.3,1) .8s both;
 }
-/* Квадратна картка з рівними боками — початкове питання про cookie.
-   Панель налаштувань лишається звичайною: її вміст у квадрат не влазить. */
-.ck--square{
-  width:380px;max-width:calc(100% - 24px);aspect-ratio:1;
-  justify-content:center;gap:20px;padding:28px 26px;text-align:center;
-}
+/* перше питання — компактна картка, налаштування ширші */
+.ck--square{width:400px;max-width:calc(100% - 24px);gap:20px;text-align:center}
 .ck--square .ck__txt{flex-direction:column;align-items:center;gap:12px}
 .ck--square .ck__txt i{font-size:2rem;margin:0}
-.ck--square .ck__btns{flex-direction:column;align-items:stretch;justify-content:center;gap:10px}
-.ck--square .ck__btn{flex:none;width:100%}
-/* flex:none обов'язковий: у вертикальному контейнері мобільне правило
-   flex:1 1 100% розтягує посилання на всю висоту й накриває кнопки */
-.ck--square .ck-link--inline{order:3;flex:none;padding:2px 0 0;text-align:center}
-
 .ck--out{animation:ckOut .3s ease forwards}
 @keyframes ckIn{
   from{opacity:0;transform:translate(-50%,-46%) scale(.97)}
@@ -614,53 +604,47 @@ img{max-width:100%;display:block}
 @keyframes ckOut{to{opacity:0;transform:translate(-50%,-52%) scale(.98)}}
 .ck__txt{display:flex;gap:13px;align-items:flex-start}
 .ck__txt i{color:var(--teal-ink);font-size:1.15rem;margin-top:2px;flex:none}
-.ck__txt p{font-size:.88rem;color:var(--muted);line-height:1.5}
+.ck__txt p{font-size:.9rem;color:#38424a;line-height:1.55}
 .ck__txt a{color:var(--teal-ink);font-weight:700;text-decoration:underline}
-.ck__btns{display:flex;gap:9px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
-/* обидві кнопки однакові: погодитись і відмовитись мають бути рівноцінні */
+.ck__btns{display:flex;flex-direction:column;gap:8px}
+/* «Прийняти» і «Відхилити» однакового розміру: відмовитись так само легко, як погодитись */
 .ck__btn{
-  padding:11px 20px;border-radius:999px;cursor:pointer;white-space:nowrap;
-  font-family:inherit;font-weight:700;font-size:.88rem;
-  background:#fff;color:var(--teal-ink);border:1.5px solid var(--teal);
-  transition:background .2s, transform .15s;
+  width:100%;padding:13px 18px;border-radius:0;cursor:pointer;white-space:nowrap;
+  font-family:inherit;font-weight:700;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+  background:#fff;color:var(--ink);border:1.5px solid var(--ink);transition:background .2s,color .2s,border-color .2s;
 }
-.ck__btn:hover{background:var(--cyan-tint);transform:translateY(-1px)}
+.ck__btn:hover{background:var(--ink);color:#fff}
 .ck__btn:focus-visible{outline:3px solid var(--teal-bright);outline-offset:2px}
-.ck-link--inline{font-family:inherit;font-weight:700;font-size:.85rem;color:var(--muted);
-  text-decoration:underline;padding:0 4px}
-.ck-link--inline:hover{color:var(--teal-ink)}
 /* «Прийняти» виділена кольором на прохання власника сайту */
-.ck__btn--primary{color:#fff;border-color:transparent;
-  background:linear-gradient(135deg,var(--teal) 0%,var(--teal-ink) 100%);
-  box-shadow:0 10px 22px -10px rgba(15,163,155,.7)}
-.ck__btn--primary:hover{background:linear-gradient(135deg,var(--teal-ink) 0%,var(--teal-ink) 100%)}
+.ck__btn--primary{background:var(--teal-ink);border-color:var(--teal-ink);color:#fff}
+.ck__btn--primary:hover{background:var(--deep);border-color:var(--deep)}
 
-/* панель налаштувань усередині смужки */
+/* панель налаштувань */
 .ck__panel{width:100%}
-.ck__panel-title{font-family:inherit;font-weight:800;font-size:.95rem;color:var(--ink);margin-bottom:12px}
-.ck-row{display:flex;gap:16px;align-items:flex-start;justify-content:space-between;
-  padding:12px 0;border-top:1px solid var(--line)}
+.ck__panel-title{font-family:var(--head);font-weight:800;font-size:1.7rem;line-height:1.1;text-transform:uppercase;color:var(--ink);margin-bottom:6px}
+.ck__panel-sub{font-size:.88rem;color:var(--muted);margin-bottom:14px}
+.ck-row{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:14px 0;border-top:1px solid var(--line)}
+.ck-row:last-of-type{border-bottom:1px solid var(--line)}
 .ck-row__txt{min-width:0}
-.ck-row__txt b{display:block;font-size:.9rem;font-weight:800;color:var(--ink);margin-bottom:2px}
-.ck-row__txt span{font-size:.82rem;color:var(--muted);line-height:1.45}
-.ck-row__fixed{flex:none;font-size:.78rem;font-weight:700;color:var(--teal-ink);
-  background:var(--cyan-tint);padding:6px 12px;border-radius:999px;white-space:nowrap}
-.ck-toggle{flex:none;width:46px;height:26px;border-radius:999px;border:0;cursor:pointer;
-  background:#CBD9DF;position:relative;transition:background .25s}
-.ck-toggle.on{background:var(--teal)}
-.ck-toggle__knob{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;
-  background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25);transition:transform .25s cubic-bezier(.2,.7,.3,1)}
-.ck-toggle.on .ck-toggle__knob{transform:translateX(20px)}
+.ck-row__txt b{display:block;font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:3px}
+.ck-row__txt span{font-size:.84rem;color:var(--muted);line-height:1.45}
+.ck-row__ctl{flex:none;width:104px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.ck-row__state{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.ck-toggle{flex:none;display:block;width:48px;height:26px;border-radius:999px;border:0;cursor:pointer;
+  background:#C9D3D8;position:relative;transition:background .25s}
+.ck-toggle.on{background:var(--teal-ink)}
+.ck-toggle__knob{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;
+  background:#fff;color:var(--teal-ink);font-size:9px;box-shadow:0 2px 6px rgba(0,0,0,.25);transition:transform .25s cubic-bezier(.2,.7,.3,1)}
+.ck-toggle.on .ck-toggle__knob{transform:translateX(22px)}
+/* необхідні не вимикаються: перемикач приглушений і з замком */
+.ck-toggle.locked{cursor:not-allowed;opacity:.6}
 .ck-toggle:focus-visible{outline:3px solid var(--teal-bright);outline-offset:2px}
-.ck__btns--panel{margin-top:14px;justify-content:flex-end;width:100%}
+.ck__btns--panel{flex-direction:row;margin-top:18px}
+.ck__btns--panel .ck__btn{flex:1}
 @media (max-width:640px){
-  .ck{width:calc(100% - 20px);padding:20px 18px;gap:14px}
-  /* на вузькому екрані дві кнопки в рядок, «Налаштування» окремим рядком під ними */
-  .ck__btns{width:100%;flex-wrap:wrap}
-  .ck__btn{flex:1 1 calc(50% - 5px);text-align:center;padding:12px 8px;order:1}
-  .ck-link--inline{flex:1 1 100%;text-align:center;padding:6px 0 0;order:2}
-  .ck-row{flex-direction:column;gap:10px}
-  .ck__btns--panel{flex-wrap:nowrap}
+  .ck{padding:22px 18px 18px;gap:14px}
+  .ck-row{align-items:flex-start;gap:12px}
+  .ck-row__ctl{width:92px}
 }
 
 /* ---------- Сторінки-документи (політика, cookie) ---------- */

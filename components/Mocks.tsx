@@ -467,7 +467,7 @@ export function MockDesign() {
     ["fa-solid fa-hashtag", "Головна"],
     ["fa-solid fa-bars", "Меню"],
     ["fa-solid fa-font", "Заголовок"],
-    ["fa-regular fa-square", "Кнопка «Записатись»", true],
+    ["fa-regular fa-square", "Кнопка", true],
     ["fa-solid fa-table-cells-large", "Картки послуг"],
     ["fa-solid fa-star", "Відгуки"],
     ["fa-solid fa-location-dot", "Карта"],
@@ -493,7 +493,7 @@ export function MockDesign() {
           {layers.map(([ic, name, on]) => (
             <span key={name} className={`mk-figma__layer${on ? " on" : ""}`}>
               <i className={ic}></i>
-              {name}
+              <em>{name}</em>
             </span>
           ))}
         </div>
