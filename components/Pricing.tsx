@@ -1,77 +1,67 @@
-const factors = [
-  {
-    icon: "fa-solid fa-layer-group",
-    title: "Обсяг сторінок",
-    text: "Лендинг чи багатосторінковий каталог",
-  },
-  {
-    icon: "fa-solid fa-file-lines",
-    title: "Контент",
-    text: "Чи є готові тексти й фото, чи готую їх я",
-  },
-  {
-    icon: "fa-solid fa-plug",
-    title: "Інтеграції",
-    text: "Форми, онлайн-запис, карта, чат, аналітика",
-  },
-  {
-    icon: "fa-solid fa-palette",
-    title: "Дизайн",
-    text: "Шаблонний підхід чи унікальний макет",
-  },
-];
+"use client";
 
+import { useState } from "react";
+import { SectTitle } from "@/components/Blocks";
+import { Visual } from "@/components/Mocks";
+import { useContent, src } from "@/components/ContentProvider";
+
+// Вкладки з «носиком» над великою ілюстрацією й картка праворуч — як навігація TomTom у зразку
 export default function Pricing() {
+  const { t, list, x } = useContent();
+  const factors = list("factors");
+  const [picked, setCur] = useState(0);
+  const cur = Math.min(picked, Math.max(factors.length - 1, 0)); // власник міг видалити фактор
+  const f = factors[cur];
+
   return (
-    <section className="section" id="price">
-      <div className="wrap">
-        <div className="section__head reveal">
-          <span className="eyebrow">Вартість</span>
-          <h2>Прозора ціна під ваш проєкт</h2>
-          <p>Жодних прихованих платежів — ви знаєте суму ще до старту роботи.</p>
-        </div>
-        <div className="price-card cursor-glow reveal">
-          <div className="price-card__inner">
-            <div>
-              <span className="price-from">Сайт під ваш бізнес</span>
-              <div className="price-big">
-                <span className="from-tag">від</span>$600
-              </div>
-              <div className="price-note-line">
-                <i className="fa-solid fa-circle-info"></i>Фінальна ціна — після прорахунку
-              </div>
-              <p className="price-desc">
-                Точну вартість рахую під вашу задачу й озвучую до старту — жодних сюрпризів у
-                процесі.
-              </p>
-              <div className="price-demo">
-                <i className="fa-solid fa-gift"></i>
-                <span>
-                  <b>Демосайт — безкоштовно.</b> Спершу побачите, як виглядатиме ваш сайт, і аж
-                  потім вирішите, чи він вартий цих грошей.
-                </span>
-              </div>
-              <a href="#contact" className="btn btn--light btn--lg">
-                <i className="fa-solid fa-calculator"></i>Дізнатись точну вартість для мого бізнесу
-              </a>
+    <section className="sect" id="price">
+      <SectTitle>{t("price_h")}</SectTitle>
+      <div className="price-head reveal">
+        <p className="price-head__big">
+          {t("price_from") && <span>{t("price_from")}</span>} {t("price_value")}
+        </p>
+        {t("price_sub") && <p className="price-head__sub">{t("price_sub")}</p>}
+      </div>
+
+      {f && (
+        <>
+          <div className="tabs tabs--notch" role="tablist" aria-label={t("price_kicker") || "Що впливає на ціну"}>
+            {factors.map((it, i) => (
+              <button
+                key={i}
+                role="tab"
+                aria-selected={i === cur}
+                className={`tabs__btn${i === cur ? " on" : ""}`}
+                onClick={() => setCur(i)}
+              >
+                {it.title}
+              </button>
+            ))}
+          </div>
+          <div className="feature" role="tabpanel">
+            <div className="feature__visual" aria-hidden="true" key={cur}>
+              <Visual k={x(f, "visual")} img={f.image_url ? src(f.image_url) : ""} />
             </div>
-            <div>
-              <p className="factors-title">Що впливає на ціну</p>
-              {factors.map((f) => (
-                <div key={f.title} className="factor">
-                  <div className="factor__ico">
-                    <i className={f.icon}></i>
-                  </div>
-                  <div className="factor__txt">
-                    <b>{f.title}</b>
-                    <span>{f.text}</span>
-                  </div>
-                </div>
-              ))}
+            <div className="feature__card">
+              {t("price_kicker") && <p className="kicker">{t("price_kicker")}</p>}
+              <h3>{f.title}</h3>
+              {f.text && <p>{f.text}</p>}
+              {t("price_note") && (
+                <p className="feature__note">
+                  <i className="fa-solid fa-circle-info"></i>
+                  {t("price_note")}
+                </p>
+              )}
+              {t("price_btn") && (
+                <a href="#contact" className="btn btn--primary">
+                  <i className="fa-solid fa-calculator"></i>
+                  {t("price_btn")}
+                </a>
+              )}
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </section>
   );
 }

@@ -1,0 +1,23 @@
+[
+  { "value": "calls", "label": "Телефон: дзвінків немає" },
+  { "value": "rival", "label": "Два сайти: ваш і конкурента" },
+  { "value": "broken", "label": "Телефон: сайт не влазить" },
+  { "value": "noprice", "label": "Картка без ціни" },
+  { "value": "proof", "label": "Фото робіт і відгук" },
+  { "value": "form", "label": "Форма заявки" },
+  { "value": "screens", "label": "Комп'ютер, планшет і телефон" },
+  { "value": "speed", "label": "Спідометр швидкості" },
+  { "value": "map", "label": "Карта з маршрутом" },
+  { "value": "search", "label": "Пошук у Google" },
+  { "value": "chat-brief", "label": "Листування: бриф" },
+  { "value": "chat-support", "label": "Листування: підтримка" },
+  { "value": "demo", "label": "Демо-версія сайту" },
+  { "value": "sitemap", "label": "Схема сторінок (як база даних)" },
+  { "value": "design", "label": "Редактор макета" },
+  { "value": "code", "label": "Код" },
+  { "value": "launch", "label": "Сайт опубліковано" },
+  { "value": "layers", "label": "Сторінки: лендинг, візитка, каталог" },
+  { "value": "niches", "label": "Іконки ніш" },
+  { "value": "integrations", "label": "Хмара інтеграцій" },
+  { "value": "content", "label": "Фото й текст" }
+]

@@ -1,14 +1,19 @@
+"use client";
+
+import TgLogo from "@/components/TgLogo";
+import { useContent } from "@/components/ContentProvider";
+
 export default function TelegramFab() {
+  const { contacts } = useContent();
   return (
     <a
-      href="https://t.me/arikpromax"
+      href={contacts.tgUrl}
       target="_blank"
       rel="noopener"
       className="fab"
       aria-label="Написати в Telegram"
     >
-      <i className="fa-brands fa-telegram"></i>
-      <span>Написати в Telegram</span>
+      <TgLogo id="fab" />
     </a>
   );
 }
