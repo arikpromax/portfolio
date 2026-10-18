@@ -3,6 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 import TgLogo from "@/components/TgLogo";
 
+// Команда. Щоб додати людину — ще один запис: фото кладемо в public/
+const team = [
+  {
+    name: "Ярослав",
+    role: "Засновник",
+    photo: "/yaroslav.jpg",
+    about:
+      "Роблю сайти від ідеї до запуску: продумую структуру, малюю дизайн, пишу код і підключаю все потрібне — оплату, доставку, ботів, аналітику. Після запуску лишаюся на звʼязку.",
+  },
+];
+
 /**
  * Кругла кнопка ліворуч (пара до кнопки Telegram праворуч) — відкриває панель «Про нас».
  * Панель також відкривається з посилання «Про нас» у шапці: воно веде на #about.
@@ -54,34 +65,23 @@ export default function AboutFab() {
         <button className="about__close" aria-label="Закрити" onClick={close} ref={closeRef} tabIndex={open ? 0 : -1}>
           <i className="fa-solid fa-xmark"></i>
         </button>
-        <p className="kicker">Про нас</p>
-        <h2>Нас двоє. Шаблонів — жодного.</h2>
-        <p className="about__lead">
-          arawebsite — студія, де з вами говорять ті, хто робить сайт. Без менеджерів, без черг і
-          без «передамо розробникам»: від першого дзвінка до запуску — ми самі.
-        </p>
+        <h2>Про нас</h2>
 
-        <div className="about__person">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/yaroslav.jpg" alt="Ярослав" />
-          <div>
-            <b>Ярослав</b>
-            <span className="about__role">Засновник</span>
-            <p>Відповідаю за кожен сайт, що виходить під іменем arawebsite.</p>
-          </div>
+        <div className="about__team">
+          {team.map((m) => (
+            <div key={m.name} className="about__person">
+              <div className="about__who">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={m.photo} alt={m.name} />
+                <div>
+                  <b>{m.name}</b>
+                  <span className="about__role">{m.role}</span>
+                </div>
+              </div>
+              <p>{m.about}</p>
+            </div>
+          ))}
         </div>
-
-        <ul className="ticks">
-          <li>
-            <i className="fa-solid fa-check"></i>Відповідаємо протягом дня
-          </li>
-          <li>
-            <i className="fa-solid fa-check"></i>Демосайт — до будь-якої оплати
-          </li>
-          <li>
-            <i className="fa-solid fa-check"></i>Не зникаємо після запуску
-          </li>
-        </ul>
 
         <div className="about__actions">
           <a href="#contact" className="btn btn--primary" onClick={close} tabIndex={open ? 0 : -1}>
