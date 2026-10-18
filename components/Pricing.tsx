@@ -37,7 +37,7 @@ export default function Pricing() {
       <SectTitle>Вартість</SectTitle>
       <div className="price-head reveal">
         <p className="price-head__big">
-          <span>від</span> $600
+          <span>від</span> $500
         </p>
         <p className="price-head__sub">
           Сайт під ваш бізнес. Точну вартість рахую під вашу задачу й озвучую до старту — жодних

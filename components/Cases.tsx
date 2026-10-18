@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { demoCases } from "@/lib/cases";
+import { cases } from "@/lib/cases";
 import { SectTitle } from "@/components/Blocks";
 import { Browser, Phone } from "@/components/Mocks";
 
 /** Велика ілюстрація з білою карткою поверх і перемикачами — як «Страницы производительности» у зразку */
 export default function Cases() {
   const [idx, setIdx] = useState(0);
-  const c = demoCases[idx];
+  const c = cases[idx];
 
   return (
     <section className="sect" id="cases">
@@ -24,7 +24,12 @@ export default function Cases() {
           ) : (
             <Browser a={c.accent} b={c.accent2} url={c.url_label} className="showcase__desk" />
           )}
-          <Phone a={c.accent} b={c.accent2} className="showcase__phone" />
+          <Phone a={c.accent} b={c.accent2} className="showcase__phone">
+            {c.image_mobile && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={c.image_mobile} alt="" />
+            )}
+          </Phone>
         </div>
 
         <div className="showcase__card reveal">
@@ -33,7 +38,7 @@ export default function Cases() {
             Різні ніші, одна логіка: зрозуміла структура, довіра й проста дорога до заявки.
           </p>
           <div className="radios" role="radiogroup" aria-label="Кейс">
-            {demoCases.map((item, i) => (
+            {cases.map((item, i) => (
               <button
                 key={item.title}
                 role="radio"
@@ -67,7 +72,6 @@ export default function Cases() {
           </div>
         </div>
       </div>
-      <p className="note">Демо-приклади — справжні кейси з&apos;являться тут згодом.</p>
     </section>
   );
 }

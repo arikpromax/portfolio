@@ -63,7 +63,7 @@ const steps = [
 const stats = [
   { label: "Сайт під ключ", prefix: "1–", from: 1, value: 3, unit: "дні" },
   { label: "Демосайт до оплати", prefix: "$", value: 0, unit: "безкоштовно" },
-  { label: "Вартість сайту", prefix: "від $", value: 600, unit: "фінальна — після прорахунку" },
+  { label: "Вартість сайту", prefix: "від $", value: 500, unit: "фінальна — після прорахунку" },
 ];
 
 function Counter({ value, from = 0 }: { value: number; from?: number }) {
