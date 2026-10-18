@@ -1,3 +1,5 @@
+import TgLogo from "@/components/TgLogo";
+
 export default function TelegramFab() {
   return (
     <a
@@ -7,8 +9,7 @@ export default function TelegramFab() {
       className="fab"
       aria-label="Написати в Telegram"
     >
-      <i className="fa-brands fa-telegram"></i>
-      <span>Написати в Telegram</span>
+      <TgLogo id="fab" />
     </a>
   );
 }

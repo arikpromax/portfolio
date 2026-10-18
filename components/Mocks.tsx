@@ -332,16 +332,131 @@ export function MockDemo() {
   );
 }
 
+/*
+  Структура сайту як схема бази даних: сторінки — таблиці з полями й типами,
+  лінії показують, що з чим пов'язано. Координати в одиницях viewBox 600×340.
+*/
+type DbTable = { name: string; x: number; y: number; w: number; hl?: boolean; rows: [string, string][] };
+const DB_HEAD = 28;
+const DB_ROW = 24;
+const dbTables: DbTable[] = [
+  {
+    name: "Головна",
+    x: 20,
+    y: 40,
+    w: 160,
+    rows: [
+      ["Перший екран", "блок"],
+      ["Послуги", "блок"],
+      ["Кейси", "блок"],
+      ["Відгуки", "блок"],
+      ["Заявка", "форма"],
+    ],
+  },
+  {
+    name: "Послуги",
+    x: 230,
+    y: 16,
+    w: 150,
+    rows: [
+      ["Список послуг", "список"],
+      ["Ціни", "таблиця"],
+      ["Кнопка заявки", "кнопка"],
+    ],
+  },
+  {
+    name: "Кейси",
+    x: 230,
+    y: 196,
+    w: 150,
+    rows: [
+      ["Фото робіт", "галерея"],
+      ["Опис", "текст"],
+      ["Посилання", "url"],
+    ],
+  },
+  {
+    name: "Заявка",
+    x: 430,
+    y: 120,
+    w: 150,
+    hl: true,
+    rows: [
+      ["Імʼя", "текст"],
+      ["Телефон", "tel"],
+      ["Тип бізнесу", "вибір"],
+    ],
+  },
+  {
+    name: "Telegram-бот",
+    x: 430,
+    y: 250,
+    w: 150,
+    rows: [
+      ["Нова заявка", "бот"],
+      ["Сповіщення", "push"],
+    ],
+  },
+];
+// Зв'язки: [звідки x, y, куди x, y]
+const dbLinks: [number, number, number, number][] = [
+  [180, 104, 230, 30], // Головна.Послуги → Послуги
+  [180, 128, 230, 210], // Головна.Кейси → Кейси
+  [180, 176, 430, 134], // Головна.Заявка → Заявка
+  [380, 104, 430, 134], // Послуги.Кнопка заявки → Заявка
+];
+
 export function MockSitemap() {
   return (
-    <div className="mk-tree">
-      <span className="mk-tree__node root">Головна</span>
-      <div className="mk-tree__row">
-        <span className="mk-tree__node">Послуги</span>
-        <span className="mk-tree__node">Роботи</span>
-        <span className="mk-tree__node">Ціни</span>
-        <span className="mk-tree__node hl">Заявка</span>
-      </div>
+    <div className="mk-db">
+      <svg viewBox="0 0 600 340" aria-hidden="true">
+        {dbLinks.map(([x1, y1, x2, y2], i) => {
+          const mx = (x1 + x2) / 2;
+          return (
+            <g key={i} className="mk-db__link">
+              <path d={`M${x1} ${y1} C${mx} ${y1} ${mx} ${y2} ${x2} ${y2}`} />
+              <circle cx={x1} cy={y1} r="3.5" />
+              <circle cx={x2} cy={y2} r="3.5" />
+            </g>
+          );
+        })}
+        {/* Заявка → Telegram-бот: пряма лінія вниз */}
+        <g className="mk-db__link">
+          <path d={`M505 ${120 + DB_HEAD + 3 * DB_ROW} L505 250`} />
+          <circle cx="505" cy={120 + DB_HEAD + 3 * DB_ROW} r="3.5" />
+          <circle cx="505" cy="250" r="3.5" />
+        </g>
+        {dbTables.map((t) => {
+          const h = DB_HEAD + t.rows.length * DB_ROW;
+          return (
+            <g key={t.name} className={`mk-db__table${t.hl ? " hl" : ""}`}>
+              <rect className="mk-db__box" x={t.x} y={t.y} width={t.w} height={h} rx="8" />
+              <path
+                className="mk-db__head"
+                d={`M${t.x} ${t.y + DB_HEAD} V${t.y + 8} Q${t.x} ${t.y} ${t.x + 8} ${t.y} H${t.x + t.w - 8} Q${t.x + t.w} ${t.y} ${t.x + t.w} ${t.y + 8} V${t.y + DB_HEAD} Z`}
+              />
+              <rect className="mk-db__key" x={t.x + 12} y={t.y + 10} width="8" height="8" rx="2" />
+              <text className="mk-db__name" x={t.x + 28} y={t.y + 18.5}>
+                {t.name}
+              </text>
+              {t.rows.map(([field, type], i) => {
+                const ry = t.y + DB_HEAD + i * DB_ROW;
+                return (
+                  <g key={field}>
+                    {i > 0 && <line className="mk-db__sep" x1={t.x} x2={t.x + t.w} y1={ry} y2={ry} />}
+                    <text className="mk-db__field" x={t.x + 12} y={ry + 15.5}>
+                      {field}
+                    </text>
+                    <text className="mk-db__type" x={t.x + t.w - 10} y={ry + 15.5} textAnchor="end">
+                      {type}
+                    </text>
+                  </g>
+                );
+              })}
+            </g>
+          );
+        })}
+      </svg>
     </div>
   );
 }

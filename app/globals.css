@@ -33,7 +33,7 @@ body{
   color:var(--ink);background:var(--bg);line-height:1.6;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
-body.menu-open{overflow:hidden}
+body.menu-open,body.about-open{overflow:hidden}
 h1,h2,h3{font-family:var(--head);line-height:1.04;letter-spacing:.005em}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
@@ -72,7 +72,7 @@ img{max-width:100%;display:block}
 .gh__cta{display:flex;align-items:center;gap:9px;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
 .gh__cta i{color:var(--teal-ink)}
 .gh__cta:hover{color:var(--teal-ink)}
-.gh__tg{font-size:1.3rem;color:#229ED9}
+.gh__tg svg{display:block;width:26px;height:26px}
 .burger{display:none;background:none;border:0;font-size:1.35rem;color:var(--ink);cursor:pointer;padding:6px}
 
 .mobile-menu{position:fixed;inset:0;z-index:71;background:#fff;padding:140px var(--gut) 30px;
@@ -100,6 +100,7 @@ img{max-width:100%;display:block}
 .intro h1{font-size:clamp(2.4rem,4.6vw,4.2rem);font-weight:800}
 .intro__body p{color:#38424a;font-size:1.02rem}
 .intro__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.intro__body > :first-child{margin-top:0}
 .intro__note{display:flex;gap:12px;margin-top:20px;font-size:.92rem!important;color:var(--muted)!important}
 .intro__note i{color:var(--teal-ink);margin-top:4px}
 .intro__note b{color:var(--ink)}
@@ -115,7 +116,7 @@ img{max-width:100%;display:block}
 .panel__visual{position:absolute;inset:0;display:grid;align-items:center;padding:6% var(--gut)}
 .panel--bl .panel__visual,.panel--l .panel__visual{justify-items:end}
 .panel--r .panel__visual,.panel--br .panel__visual{justify-items:start}
-.panel__text{position:absolute;max-width:440px}
+.panel__text{position:absolute;max-width:min(440px,34vw)}
 .panel--bl .panel__text{left:var(--gut);bottom:clamp(32px,5vw,64px)}
 .panel--br .panel__text{right:var(--gut);bottom:clamp(32px,5vw,64px)}
 .panel--r .panel__text{right:var(--gut);top:50%;translate:0 -50%}
@@ -149,12 +150,6 @@ img{max-width:100%;display:block}
 .split__text h3{font-size:clamp(2rem,3.6vw,3.1rem);font-weight:800;text-transform:uppercase;margin-bottom:16px}
 .split__text p{color:#38424a;margin-bottom:12px}
 .split__visual{min-height:clamp(340px,36vw,540px);background:var(--gray);display:grid;place-items:center;overflow:hidden}
-.split--photo{grid-template-columns:6fr 5fr}
-.split__visual--photo{position:relative}
-.split__visual--photo img{width:min(76%,460px);aspect-ratio:1;border-radius:50%;object-fit:cover;box-shadow:0 30px 60px -30px rgba(8,27,36,.5)}
-.split__status{position:absolute;left:24px;bottom:24px;display:flex;align-items:center;gap:9px;background:#fff;padding:10px 16px;font-size:.85rem;font-weight:700}
-.split__status i{color:#22C55E;font-size:.6rem}
-.split__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
 .ticks{list-style:none;display:grid;gap:8px;margin-top:8px}
 .ticks li{display:flex;gap:10px;align-items:center;font-weight:500}
 .ticks i{color:var(--teal-ink)}
@@ -257,6 +252,27 @@ img{max-width:100%;display:block}
 .form-status.ok{display:block;background:var(--cyan-tint);color:var(--teal-ink)}
 .form-status.err{display:block;background:#FFF1E9;color:#C2410C}
 
+/* ---------- Панель «Про нас» (кнопка ліворуч унизу) ---------- */
+.about-veil{position:fixed;inset:0;z-index:90;background:rgba(8,27,36,.55);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.about-veil.on{opacity:1;visibility:visible}
+.about{position:fixed;left:0;top:0;bottom:0;z-index:91;width:min(460px,100%);overflow-y:auto;background:#fff;
+  padding:56px 36px 36px;translate:-100% 0;visibility:hidden;transition:translate .4s cubic-bezier(.2,.7,.3,1),visibility .4s;
+  box-shadow:30px 0 60px -30px rgba(0,0,0,.4)}
+.about.on{translate:0 0;visibility:visible}
+.about__close{position:absolute;right:16px;top:16px;width:44px;height:44px;border:0;background:var(--gray);cursor:pointer;font-size:1.2rem;color:var(--ink)}
+.about__close:hover{background:#E3E8EA}
+.about h2{font-size:clamp(2.1rem,4vw,2.8rem);font-weight:800;text-transform:uppercase;margin-bottom:16px}
+.about__lead{color:#38424a;margin-bottom:28px}
+.about__person{display:flex;gap:16px;align-items:center;padding:18px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:22px}
+.about__person img{flex:none;width:76px;height:76px;border-radius:50%;object-fit:cover}
+.about__person b{display:block;font-family:var(--head);font-weight:800;font-size:1.5rem;line-height:1.1;text-transform:uppercase}
+.about__role{display:inline-block;margin:4px 0 6px;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#fff;background:var(--teal-ink);padding:3px 8px}
+.about__person p{font-size:.92rem;color:var(--muted)}
+.about__actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.about__actions .btn{flex:1 1 auto}
+.about__tg{width:18px;height:18px}
+@media (prefers-reduced-motion: reduce){ .about,.about-veil{transition:none} }
+
 /* ---------- Підвал ---------- */
 .footer{background:#0B0D0F;color:rgba(255,255,255,.7);padding:48px 0 36px}
 .footer__grid{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
@@ -339,7 +355,7 @@ img{max-width:100%;display:block}
 .mk-float.f3{animation-delay:-3s}
 @keyframes mkFloat{0%,100%{translate:0 0}50%{translate:0 -10px}}
 
-.mk-scene{position:relative;width:min(760px,58vw);aspect-ratio:16/10}
+.mk-scene{position:relative;width:min(760px,52vw);aspect-ratio:16/10}
 .mk-scene__desk{position:absolute;left:0;top:0;width:84%}
 .mk-scene{container-type:size}
 .mk-scene .mk-scene__phone{position:absolute;right:0;bottom:-2%;--ph:74cqh}
@@ -431,12 +447,21 @@ img{max-width:100%;display:block}
 .mk-chat__msg.me{align-self:flex-end;background:var(--teal-ink);color:#fff;border-radius:14px 14px 4px 14px}
 .mk-demo{position:relative;width:66%}
 .mk-demo__ribbon{position:absolute;top:-12px;right:-14px;background:var(--ink);color:#fff;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:7px 12px}
-.mk-tree{display:flex;flex-direction:column;align-items:center;gap:24px}
-.mk-tree__row{position:relative;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-.mk-tree__row::before{content:"";position:absolute;left:12%;right:12%;top:-13px;height:2px;background:#C5CED4}
-.mk-tree__node{background:#fff;border:1.5px solid #DCE3E7;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700}
-.mk-tree__node.root{background:var(--ink);border-color:var(--ink);color:#fff}
-.mk-tree__node.hl{border-color:var(--teal-ink);background:var(--cyan-tint);color:var(--teal-ink)}
+.mk-db{width:90%;max-width:700px}
+.mk-db svg{display:block;width:100%;height:auto;overflow:visible}
+.mk-db__box{fill:#fff;stroke:#D5DDE2;stroke-width:1;filter:drop-shadow(0 10px 14px rgba(8,27,36,.12))}
+.mk-db__head{fill:var(--deep)}
+.mk-db__table.hl .mk-db__head{fill:var(--teal-ink)}
+.mk-db__table.hl .mk-db__box{stroke:var(--teal-ink);stroke-width:1.5}
+.mk-db__key{fill:var(--teal-bright)}
+.mk-db__name{font:700 12px "Roboto",sans-serif;fill:#fff}
+.mk-db__field{font:500 11px "Roboto",sans-serif;fill:#2a333a}
+.mk-db__type{font:400 9.5px ui-monospace,Consolas,monospace;fill:#8A969E}
+.mk-db__sep{stroke:#EEF1F2;stroke-width:1}
+.mk-db__link path{fill:none;stroke:var(--teal);stroke-width:1.6;stroke-dasharray:5 4;animation:dbFlow 1.2s linear infinite}
+.mk-db__link circle{fill:#fff;stroke:var(--teal);stroke-width:1.6}
+@keyframes dbFlow{to{stroke-dashoffset:-18}}
+@media (prefers-reduced-motion: reduce){ .mk-db__link path{animation:none} }
 .mk-figma{width:86%;max-width:760px;background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(8,27,36,.5),0 0 0 1px rgba(14,34,48,.08);font-size:10px}
 .mk-figma__bar{display:flex;align-items:center;gap:6px;padding:7px 10px;background:#1E1E1E;color:#cfd3d6}
 .mk-figma__bar i{width:7px;height:7px;border-radius:50%;background:#FF6B5F}
@@ -534,11 +559,9 @@ img{max-width:100%;display:block}
   .mk-scene{width:min(560px,92%)}
 
   .cards--3,.cards--2{grid-template-columns:1fr 1fr}
-  .split,.split--photo,.tabpane{grid-template-columns:1fr}
+  .split,.tabpane{grid-template-columns:1fr}
   .split__text,.tabpane__text{padding:0 var(--gut)}
   .tabpane__text{padding-top:32px;padding-bottom:8px}
-  .split--photo .split__visual{order:-1}
-  .split__visual--photo{min-height:0;padding:32px 0}
   .contact__grid{grid-template-columns:1fr}
 }
 @media (max-width:640px){
@@ -557,8 +580,6 @@ img{max-width:100%;display:block}
   .mk-integr span{font-size:10.5px;padding:5px 9px;gap:5px}
   .mk-figma{width:96%;font-size:8px}
   .mk-figma__frame .t1{font-size:11px}
-  .fab{right:16px;bottom:16px;padding:14px}
-  .fab i{font-size:1.35rem}
   .to-top{right:16px;bottom:76px;width:42px;height:42px}
 }
 
@@ -670,15 +691,15 @@ img{max-width:100%;display:block}
 
 
 /* ---------- Floating Telegram button ---------- */
-.fab{position:fixed;right:24px;bottom:24px;z-index:80;display:flex;align-items:center;gap:0;
-  background:linear-gradient(135deg,#2AABEE,#229ED9);color:#fff;border-radius:999px;
-  padding:15px;box-shadow:0 14px 30px -8px rgba(34,158,217,.7);transition:gap .25s, padding .25s, transform .25s, box-shadow .25s;overflow:hidden;white-space:nowrap}
-.fab i{font-size:1.5rem;line-height:1}
-.fab span{max-width:0;opacity:0;font-weight:700;font-size:.98rem;transition:max-width .3s, opacity .25s, margin .3s;margin:0}
-.fab:hover{gap:10px;padding:15px 22px 15px 18px;transform:translateY(-3px);box-shadow:0 18px 36px -8px rgba(34,158,217,.85)}
-.fab:hover span{max-width:160px;opacity:1;margin-left:2px}
+.fab{position:fixed;right:24px;bottom:24px;z-index:80;width:60px;height:60px;border-radius:50%;border:0;padding:0;cursor:pointer;
+  display:grid;place-items:center;background:none;box-shadow:0 14px 30px -8px rgba(34,158,217,.7);transition:transform .25s, box-shadow .25s}
+.fab svg{width:100%;height:100%;display:block}
+.fab:hover{transform:translateY(-3px);box-shadow:0 18px 36px -8px rgba(34,158,217,.85)}
 .fab:focus-visible{outline:3px solid var(--teal-bright);outline-offset:3px}
-.fab::before{content:"";position:absolute;inset:0;border-radius:999px;border:2px solid rgba(42,171,238,.6);animation:fabPulse 2.6s ease-out infinite}
+.fab::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid rgba(42,171,238,.6);animation:fabPulse 2.6s ease-out infinite}
+.fab--left{right:auto;left:24px;color:#fff;font-size:1.35rem;background:linear-gradient(140deg,var(--deep),var(--teal));box-shadow:0 14px 30px -8px rgba(15,61,82,.6)}
+.fab--left::before{display:none}
+.fab--left:hover{box-shadow:0 18px 36px -8px rgba(15,61,82,.75)}
 @keyframes fabPulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(1.6);opacity:0}}
 @media (prefers-reduced-motion: reduce){ .fab::before{animation:none;display:none} }
 /* back-to-top button */
@@ -693,7 +714,7 @@ img{max-width:100%;display:block}
 
 /* кнопки Telegram і «нагору» на телефоні — після їхніх базових правил */
 @media (max-width:640px){
-  .fab{right:16px;bottom:16px;padding:14px}
-  .fab i{font-size:1.35rem}
+  .fab{right:16px;bottom:16px;width:54px;height:54px}
+  .fab--left{right:auto;left:16px;font-size:1.2rem}
   .to-top{right:16px;bottom:76px;width:42px;height:42px}
 }

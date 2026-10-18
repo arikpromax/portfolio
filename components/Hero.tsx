@@ -16,11 +16,6 @@ export default function Hero() {
           <h1>Сайт, який приносить заявки</h1>
         </div>
         <div className="intro__body reveal">
-          <p>
-            Вашому бізнесу — а не просто висить в інтернеті. Розробляю сайти під будь-який бізнес —
-            від лендингу до каталогу. Роблю так, щоб відвідувач не закрив вкладку, а залишив
-            заявку, подзвонив або записався на прийом.
-          </p>
           <div className="intro__actions">
             <a href="#contact" className="btn btn--primary">
               <i className="fa-solid fa-calculator"></i>Отримати розрахунок

@@ -6,11 +6,11 @@ import DemoBanner from "@/components/DemoBanner";
 import Process from "@/components/Process";
 import Cases from "@/components/Cases";
 import Why from "@/components/Why";
-import About from "@/components/About";
 import Pricing from "@/components/Pricing";
 import Contact from "@/components/Contact";
 import BackToTop from "@/components/BackToTop";
 import TelegramFab from "@/components/TelegramFab";
+import AboutFab from "@/components/AboutFab";
 import Footer from "@/components/Footer";
 import SiteEffects from "@/components/SiteEffects";
 
@@ -28,12 +28,12 @@ export default function Home() {
         <Process />
         <Cases />
         <Why />
-        <About />
         <Pricing />
         <Contact />
       </main>
       <BackToTop />
       <TelegramFab />
+      <AboutFab />
       <Footer />
       <SiteEffects />
     </>

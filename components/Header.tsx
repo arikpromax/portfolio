@@ -2,12 +2,13 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import TgLogo from "@/components/TgLogo";
 
 // Глобальне меню вгорі (як «Модели / Покупки» на сайті-зразку)
 const links = [
   { hash: "#solution", label: "Послуги" },
   { hash: "#cases", label: "Кейси" },
-  { hash: "#about", label: "Про мене" },
+  { hash: "#about", label: "Про нас" },
   { hash: "#price", label: "Ціна" },
 ];
 
@@ -89,7 +90,7 @@ export default function Header() {
               <span>Розрахувати сайт</span>
             </a>
             <a href="https://t.me/arikpromax" target="_blank" rel="noopener" className="gh__tg" aria-label="Telegram">
-              <i className="fa-brands fa-telegram"></i>
+              <TgLogo id="head" />
             </a>
             <button
               className="burger"
