@@ -8,9 +8,6 @@ export default function Hero() {
           alt="Знак arawebsite на робочому столі поруч із телефоном і ноутбуком"
           fetchPriority="high"
         />
-        <span className="hero__word" aria-hidden="true">
-          arawebsite
-        </span>
       </div>
 
       <div className="wrap intro">

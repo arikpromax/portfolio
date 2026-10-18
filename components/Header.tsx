@@ -18,7 +18,6 @@ const tabs = [
   { id: "process", label: "Як працюю" },
   { id: "cases", label: "Кейси" },
   { id: "price", label: "Ціна" },
-  { id: "gallery", label: "Галерея" },
 ];
 
 export default function Header() {

@@ -7,7 +7,7 @@ import {
   MockChat,
   MockDemo,
   MockSitemap,
-  MockPalette,
+  MockDesign,
   MockCode,
   MockLaunch,
 } from "@/components/Mocks";
@@ -43,7 +43,7 @@ const steps = [
     tab: "Дизайн",
     title: "Дизайн",
     text: "Малюю сучасний макет під вашу нішу й бренд.",
-    visual: <MockPalette />,
+    visual: <MockDesign />,
   },
   {
     tab: "Розробка",

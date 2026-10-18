@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { SectTitle } from "@/components/Blocks";
-import { MockLayers, MockContent, MockIntegrations, MockPalette } from "@/components/Mocks";
+import { MockLayers, MockContent, MockIntegrations, MockDesign } from "@/components/Mocks";
 
 // Вкладки з «носиком» над великою ілюстрацією й картка праворуч — як навігація TomTom у зразку
 const factors = [
@@ -18,13 +18,13 @@ const factors = [
   },
   {
     tab: "Інтеграції",
-    text: "Форми, онлайн-запис, карта, чат, аналітика. Підключаю лише те, що справді потрібно вашому бізнесу.",
+    text: "Підключаю будь-що: оплату, доставку, CRM, ботів і месенджери, соцмережі, аналітику, онлайн-запис. Скільки інтеграцій — стільки й роботи.",
     visual: <MockIntegrations />,
   },
   {
     tab: "Дизайн",
     text: "Шаблонний підхід чи унікальний макет. Унікальний дизайн довше, зате сайт ні з ким не сплутати.",
-    visual: <MockPalette />,
+    visual: <MockDesign />,
   },
 ];
 

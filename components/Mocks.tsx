@@ -59,9 +59,18 @@ export function Phone({
   className = "",
   children,
 }: Tone & { className?: string; children?: React.ReactNode }) {
+  // Корпус iPhone 14 Pro з Devices.css (MIT) — розмітка частин як у бібліотеці
   return (
-    <div className={`mk-phone ${className}`}>
-      <div className="mk-phone__screen">{children ?? <MiniSite a={a} b={b} />}</div>
+    <div className={`device device-iphone-14-pro mk-phone ${className}`}>
+      <div className="device-frame">
+        <div className="device-screen">{children ?? <MiniSite a={a} b={b} />}</div>
+      </div>
+      <div className="device-stripe"></div>
+      <div className="device-header"></div>
+      <div className="device-sensors"></div>
+      <div className="device-btns"></div>
+      <div className="device-power"></div>
+      <div className="device-home"></div>
     </div>
   );
 }
@@ -162,12 +171,32 @@ export function MockRival() {
 
 export function MockBroken() {
   return (
+    // Сайт, зверстаний лише під комп'ютер: на телефоні все дрібне й вилазить за край
     <Phone className="mk-center">
       <div className="mk-broken">
-        <span className="w1"></span>
-        <span className="w2"></span>
-        <span className="w3"></span>
-        <span className="w4"></span>
+        <div className="mk-broken__nav">
+          <span>Головна</span>
+          <span>Про нас</span>
+          <span>Послуги</span>
+          <span>Ціни</span>
+          <span>Контакти</span>
+          <span>Галерея</span>
+        </div>
+        <span className="mk-broken__h">Ласкаво просимо на наш офіційний сайт</span>
+        <span className="mk-broken__p">
+          Наша компанія працює на ринку понад десять років і пропонує широкий спектр послуг для
+          приватних і корпоративних клієнтів у вашому місті та області
+        </span>
+        <div className="mk-broken__row">
+          <i></i>
+          <i></i>
+          <i></i>
+          <i></i>
+        </div>
+        <span className="mk-broken__btn">Детальніше</span>
+        <span className="mk-broken__scroll">
+          <i></i>
+        </span>
       </div>
     </Phone>
   );
@@ -317,21 +346,76 @@ export function MockSitemap() {
   );
 }
 
-export function MockPalette() {
+/** Вікно редактора макетів: шари, полотно з виділеною кнопкою, кольори й шрифт */
+export function MockDesign() {
+  const layers: [string, string, boolean?][] = [
+    ["fa-solid fa-hashtag", "Головна"],
+    ["fa-solid fa-bars", "Меню"],
+    ["fa-solid fa-font", "Заголовок"],
+    ["fa-regular fa-square", "Кнопка «Записатись»", true],
+    ["fa-solid fa-table-cells-large", "Картки послуг"],
+    ["fa-solid fa-star", "Відгуки"],
+    ["fa-solid fa-location-dot", "Карта"],
+  ];
+  const colors: [string, string][] = [
+    ["#0F3D52", "0F3D52"],
+    ["#0B8079", "0B8079"],
+    ["#34D1C4", "34D1C4"],
+    ["#E6F7F5", "E6F7F5"],
+  ];
   return (
-    <div className="mk-palette">
-      <div className="mk-palette__sw">
-        <i style={{ background: "#0F3D52" }}></i>
-        <i style={{ background: "#0FA39B" }}></i>
-        <i style={{ background: "#34D1C4" }}></i>
-        <i style={{ background: "#E6F7F5" }}></i>
+    <div className="mk-figma">
+      <div className="mk-figma__bar">
+        <i></i>
+        <i></i>
+        <i></i>
+        <span>Макет · Головна</span>
+        <b>100%</b>
       </div>
-      <span className="mk-palette__type">Аа</span>
-      <div className="mk-palette__grid">
-        <i></i>
-        <i></i>
-        <i></i>
-        <i></i>
+      <div className="mk-figma__body">
+        <div className="mk-figma__layers">
+          <span className="mk-figma__h">Шари</span>
+          {layers.map(([ic, name, on]) => (
+            <span key={name} className={`mk-figma__layer${on ? " on" : ""}`}>
+              <i className={ic}></i>
+              {name}
+            </span>
+          ))}
+        </div>
+        <div className="mk-figma__canvas">
+          <div className="mk-figma__frame">
+            <div className="nav">
+              <i></i>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span className="t1">Усмішка без болю</span>
+            <span className="t2"></span>
+            <span className="mk-figma__cta">
+              Записатись
+              <em className="mk-figma__size">180 × 48</em>
+            </span>
+            <div className="cards">
+              <i></i>
+              <i></i>
+              <i></i>
+            </div>
+          </div>
+        </div>
+        <div className="mk-figma__props">
+          <span className="mk-figma__h">Кольори</span>
+          {colors.map(([c, hex]) => (
+            <span key={hex} className="mk-figma__sw">
+              <i style={{ background: c }}></i>#{hex}
+            </span>
+          ))}
+          <span className="mk-figma__h">Шрифт</span>
+          <span className="mk-figma__font">Аа</span>
+          <span className="mk-figma__muted">Fira Sans · 800</span>
+          <span className="mk-figma__h">Кути</span>
+          <span className="mk-figma__muted">Радіус 4</span>
+        </div>
       </div>
     </div>
   );
@@ -407,12 +491,37 @@ export function MockNiches() {
 }
 
 export function MockIntegrations() {
+  // Усе, що можна підключити до сайту
   const items: [string, string][] = [
     ["fa-solid fa-pen-to-square", "Форма заявки"],
     ["fa-solid fa-calendar-check", "Онлайн-запис"],
-    ["fa-solid fa-location-dot", "Карта"],
-    ["fa-brands fa-telegram", "Чат"],
-    ["fa-solid fa-chart-line", "Аналітика"],
+    ["fa-solid fa-credit-card", "Онлайн-оплата"],
+    ["fa-brands fa-apple-pay", "Apple Pay"],
+    ["fa-brands fa-google-pay", "Google Pay"],
+    ["fa-solid fa-cart-shopping", "Кошик і замовлення"],
+    ["fa-solid fa-truck-fast", "Нова Пошта"],
+    ["fa-solid fa-box", "Укрпошта"],
+    ["fa-brands fa-telegram", "Telegram-бот"],
+    ["fa-brands fa-viber", "Viber"],
+    ["fa-brands fa-whatsapp", "WhatsApp"],
+    ["fa-solid fa-comments", "Онлайн-чат"],
+    ["fa-brands fa-instagram", "Instagram"],
+    ["fa-brands fa-facebook", "Facebook"],
+    ["fa-brands fa-tiktok", "TikTok"],
+    ["fa-brands fa-youtube", "YouTube"],
+    ["fa-solid fa-location-dot", "Google Maps"],
+    ["fa-solid fa-star", "Відгуки Google"],
+    ["fa-solid fa-chart-line", "Google Analytics"],
+    ["fa-brands fa-meta", "Meta Pixel"],
+    ["fa-solid fa-table", "Google Таблиці"],
+    ["fa-solid fa-address-book", "CRM"],
+    ["fa-solid fa-calendar-days", "Google Календар"],
+    ["fa-solid fa-comment-sms", "SMS-сповіщення"],
+    ["fa-solid fa-envelope-open-text", "Email-розсилка"],
+    ["fa-solid fa-calculator", "Калькулятор ціни"],
+    ["fa-solid fa-ticket", "Промокоди"],
+    ["fa-solid fa-language", "Кілька мов"],
+    ["fa-solid fa-sliders", "Адмінка"],
   ];
   return (
     <div className="mk-integr">
@@ -422,6 +531,9 @@ export function MockIntegrations() {
           {t}
         </span>
       ))}
+      <span className="more">
+        <i className="fa-solid fa-plug"></i>І будь-що інше
+      </span>
     </div>
   );
 }
