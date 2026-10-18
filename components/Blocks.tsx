@@ -1,7 +1,13 @@
+"use client";
+
 // Повторювані будівельні блоки сторінки — ті самі, з яких складено сайт-зразок
+import { Visual } from "@/components/Mocks";
+import { useContent, src } from "@/components/ContentProvider";
+import type { Item } from "@/lib/content";
 
 /** Великий заголовок розділу по центру («ДИЗАЙН», «ПРОИЗВОДИТЕЛЬНОСТЬ» у зразку) */
 export function SectTitle({ children }: { children: React.ReactNode }) {
+  if (!children) return null;
   return <h2 className="sect-title reveal">{children}</h2>;
 }
 
@@ -28,28 +34,36 @@ export function Panel({
         {visual}
       </div>
       <div className="panel__text reveal">
-        <h3>{title}</h3>
+        {title && <h3>{title}</h3>}
         {children}
       </div>
     </div>
   );
 }
 
-export type CardItem = { visual: React.ReactNode; title: string; text: string };
-
-/** Ряд карток «ілюстрація + заголовок + текст» на 2 чи 3 колонки */
-export function Cards({ cols = 3, items }: { cols?: 2 | 3; items: CardItem[] }) {
+/**
+ * Картки з адмінки рядами по `per` штук: ілюстрація (макет або власне фото), заголовок, текст.
+ * Останній ряд стає ширшим, якщо в ньому менше карток, — додане в адмінці завжди стає на місце.
+ */
+export function CardRows({ items, per }: { items: Item[]; per: 2 | 3 }) {
+  const { x } = useContent();
+  const rows: Item[][] = [];
+  for (let i = 0; i < items.length; i += per) rows.push(items.slice(i, i + per));
   return (
-    <div className={`cards cards--${cols}`}>
-      {items.map((it) => (
-        <article key={it.title} className="card reveal">
-          <div className="card__shot" aria-hidden="true">
-            {it.visual}
-          </div>
-          <h3>{it.title}</h3>
-          <p>{it.text}</p>
-        </article>
+    <>
+      {rows.map((row, r) => (
+        <div key={r} className={`cards cards--${row.length}`}>
+          {row.map((it, i) => (
+            <article key={i} className="card reveal">
+              <div className="card__shot" aria-hidden="true">
+                <Visual k={x(it, "visual")} img={it.image_url ? src(it.image_url) : ""} />
+              </div>
+              <h3>{it.title}</h3>
+              {it.text && <p>{it.text}</p>}
+            </article>
+          ))}
+        </div>
       ))}
-    </div>
+    </>
   );
 }

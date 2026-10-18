@@ -2,69 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { SectTitle } from "@/components/Blocks";
-import {
-  MockChat,
-  MockDemo,
-  MockSitemap,
-  MockDesign,
-  MockCode,
-  MockLaunch,
-} from "@/components/Mocks";
+import { Visual } from "@/components/Mocks";
+import { useContent, src } from "@/components/ContentProvider";
 
-const steps = [
-  {
-    tab: "Бриф",
-    title: "Бриф",
-    text: "Розбираюся у вашому бізнесі, клієнтах і меті сайту.",
-    visual: (
-      <MockChat
-        lines={[
-          [true, "Потрібен сайт для клініки"],
-          [false, "Хто ваші пацієнти і що вони шукають першим?"],
-          [true, "Ціни й запис онлайн"],
-        ]}
-      />
-    ),
-  },
-  {
-    tab: "Демосайт",
-    title: "Демосайт — безкоштовно",
-    text: "Показую, як виглядатиме ваш сайт. До будь-якої оплати й без зобов'язань.",
-    visual: <MockDemo />,
-  },
-  {
-    tab: "Структура",
-    title: "Структура та контент",
-    text: "Складаю логіку сторінок і тексти, що ведуть до заявки.",
-    visual: <MockSitemap />,
-  },
-  {
-    tab: "Дизайн",
-    title: "Дизайн",
-    text: "Малюю сучасний макет під вашу нішу й бренд.",
-    visual: <MockDesign />,
-  },
-  {
-    tab: "Розробка",
-    title: "Розробка",
-    text: "Збираю швидкий адаптивний сайт із формами та інтеграціями.",
-    visual: <MockCode />,
-  },
-  {
-    tab: "Запуск",
-    title: "Запуск і підтримка",
-    text: "Публікуємо сайт, і я лишаюся на зв'язку для правок.",
-    visual: <MockLaunch />,
-  },
-];
-
-// Цифри, що «набігають» з нуля, коли блок з'являється на екрані
-const stats = [
-  { label: "Сайт під ключ", prefix: "1–", from: 1, value: 3, unit: "дні" },
-  { label: "Демосайт до оплати", prefix: "$", value: 0, unit: "безкоштовно" },
-  { label: "Вартість сайту", prefix: "від $", value: 500, unit: "фінальна — після прорахунку" },
-];
-
+// Цифри, що «набігають» до числа, коли блок з'являється на екрані
 function Counter({ value, from = 0 }: { value: number; from?: number }) {
   const ref = useRef<HTMLSpanElement>(null);
   const [shown, setShown] = useState(from);
@@ -99,60 +40,83 @@ function Counter({ value, from = 0 }: { value: number; from?: number }) {
   return <span ref={ref}>{shown}</span>;
 }
 
+// Число з адмінки: «500», «1 200» → 500, 1200. Не число — показуємо як є, без анімації
+const toNum = (v: string) => {
+  const n = Number(v.replace(/\s/g, "").replace(",", "."));
+  return v.trim() !== "" && Number.isFinite(n) ? n : null;
+};
+
 export default function Process() {
-  const [cur, setCur] = useState(0);
+  const { t, list, x } = useContent();
+  const stats = list("stats");
+  const steps = list("steps");
+  const [picked, setCur] = useState(0);
+  const cur = Math.min(picked, Math.max(steps.length - 1, 0)); // власник міг видалити етап
   const step = steps[cur];
 
   return (
     <section className="sect" id="process">
-      <SectTitle>Як я працюю</SectTitle>
+      <SectTitle>{t("proc_h")}</SectTitle>
 
-      <div className="lead-block reveal">
-        <h3>Від ідеї до запуску — зрозуміло й по кроках</h3>
-        <p>Ви завжди знаєте, на якому етапі ми зараз і що буде далі.</p>
-      </div>
+      {(t("proc_lead_h") || t("proc_lead_p")) && (
+        <div className="lead-block reveal">
+          {t("proc_lead_h") && <h3>{t("proc_lead_h")}</h3>}
+          {t("proc_lead_p") && <p>{t("proc_lead_p")}</p>}
+        </div>
+      )}
 
-      <div className="stats wrap">
-        {stats.map((s) => (
-          <div key={s.label} className="stat reveal">
-            <span className="stat__label">{s.label}</span>
-            <b className="stat__num">
-              {s.prefix}
-              <Counter value={s.value} from={s.from} />
-            </b>
-            <span className="stat__unit">{s.unit}</span>
+      {stats.length > 0 && (
+        <div className="stats wrap">
+          {stats.map((s, i) => {
+            const n = toNum(x(s, "number"));
+            const from = toNum(x(s, "from")) ?? 0;
+            return (
+              <div key={i} className="stat reveal">
+                <span className="stat__label">{s.title}</span>
+                <b className="stat__num">
+                  {x(s, "prefix")}
+                  {n === null ? x(s, "number") : <Counter value={n} from={from} />}
+                </b>
+                {s.text && <span className="stat__unit">{s.text}</span>}
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {step && (
+        <>
+          <div className="tabs" role="tablist" aria-label="Етапи роботи">
+            {steps.map((s, i) => (
+              <button
+                key={i}
+                role="tab"
+                aria-selected={i === cur}
+                className={`tabs__btn${i === cur ? " on" : ""}`}
+                onClick={() => setCur(i)}
+              >
+                <span className="tabs__num">{String(i + 1).padStart(2, "0")}</span>
+                {s.title}
+              </button>
+            ))}
           </div>
-        ))}
-      </div>
-
-      <div className="tabs" role="tablist" aria-label="Етапи роботи">
-        {steps.map((s, i) => (
-          <button
-            key={s.tab}
-            role="tab"
-            aria-selected={i === cur}
-            className={`tabs__btn${i === cur ? " on" : ""}`}
-            onClick={() => setCur(i)}
-          >
-            <span className="tabs__num">{String(i + 1).padStart(2, "0")}</span>
-            {s.tab}
-          </button>
-        ))}
-      </div>
-      <div className="tabpane" role="tabpanel" key={cur}>
-        <div className="tabpane__text">
-          <h3>{step.title}</h3>
-          <p>{step.text}</p>
-          {cur === 1 && (
-            <a href="#contact" className="btn btn--primary">
-              <i className="fa-solid fa-gift"></i>Хочу демосайт
-            </a>
-          )}
-        </div>
-        <div className="tabpane__visual" aria-hidden="true">
-          {step.visual}
-        </div>
-      </div>
+          <div className="tabpane" role="tabpanel" key={cur}>
+            <div className="tabpane__text">
+              <h3>{x(step, "heading") || step.title}</h3>
+              {step.text && <p>{step.text}</p>}
+              {x(step, "btn") && (
+                <a href="#contact" className="btn btn--primary">
+                  <i className="fa-solid fa-gift"></i>
+                  {x(step, "btn")}
+                </a>
+              )}
+            </div>
+            <div className="tabpane__visual" aria-hidden="true">
+              <Visual k={x(step, "visual")} img={step.image_url ? src(step.image_url) : ""} />
+            </div>
+          </div>
+        </>
+      )}
     </section>
   );
 }

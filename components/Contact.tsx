@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useContent, lines } from "@/components/ContentProvider";
 
 /*
   Форма шле заявки в Google Таблицю через Google Apps Script (як в оригіналі):
@@ -23,6 +24,7 @@ type MethodName = (typeof methods)[number]["name"];
 type Status = { kind: "ok" | "err"; icon: string; text: string } | null;
 
 export default function Contact() {
+  const { t, contacts } = useContent();
   const [method, setMethod] = useState<MethodName>("Телефон");
   const [contact, setContact] = useState("");
   const [sending, setSending] = useState(false);
@@ -97,7 +99,7 @@ export default function Contact() {
       setStatus({
         kind: "ok",
         icon: "fa-solid fa-circle-check",
-        text: "Дякую! Заявку отримано — я зв'яжуся з вами найближчим часом.",
+        text: t("form_ok"),
       });
       form.reset();
       setContact("");
@@ -105,7 +107,7 @@ export default function Contact() {
       setStatus({
         kind: "err",
         icon: "fa-solid fa-triangle-exclamation",
-        text: "Не вдалося надіслати. Напишіть мені в Телеграм @arikpromax — і ми все вирішимо.",
+        text: `Не вдалося надіслати. Напишіть у Телеграм @${contacts.tgUser} — і ми все вирішимо.`,
       });
     } finally {
       setSending(false);
@@ -116,28 +118,22 @@ export default function Contact() {
     <section className="contact" id="contact">
       <div className="wrap contact__grid">
         <div className="reveal">
-          <p className="kicker">Залишилось питання?</p>
-          <h2>Розкажіть про бізнес — порахую вартість сайту</h2>
-          <p className="lead">
-            Залиште заявку, і я зв'яжуся з вами, щоб уточнити деталі та назвати точну ціну. Без
-            зобов'язань.
-          </p>
+          {t("contact_kicker") && <p className="kicker">{t("contact_kicker")}</p>}
+          <h2>{t("contact_h")}</h2>
+          {t("contact_lead") && <p className="lead">{t("contact_lead")}</p>}
           <div className="contact__list">
-            <div>
-              <i className="fa-solid fa-circle-check"></i>Відповідаю протягом дня
-            </div>
-            <div>
-              <i className="fa-solid fa-circle-check"></i>Порахую вартість саме під вашу нішу
-            </div>
-            <div>
-              <i className="fa-solid fa-circle-check"></i>Підкажу, що варто, а що — зайве
-            </div>
+            {lines(t("contact_points")).map((p, i) => (
+              <div key={i}>
+                <i className="fa-solid fa-circle-check"></i>
+                {p}
+              </div>
+            ))}
           </div>
         </div>
 
         <div className="form-card reveal">
-          <h3>Отримати розрахунок</h3>
-          <p className="sub">Заповніть форму — і я напишу вам першим.</p>
+          <h3>{t("form_h")}</h3>
+          {t("form_sub") && <p className="sub">{t("form_sub")}</p>}
           <form ref={formRef} onSubmit={onSubmit} noValidate>
             <div className="field">
               <label htmlFor="name">Ваше ім&apos;я</label>
@@ -187,11 +183,9 @@ export default function Contact() {
                 <option value="" disabled>
                   Оберіть напрямок
                 </option>
-                <option>Стоматологія / медицина</option>
-                <option>Будівництво / ремонт</option>
-                <option>Краса / послуги</option>
-                <option>Торгівля / магазин</option>
-                <option>Інше</option>
+                {lines(t("form_business")).map((b) => (
+                  <option key={b}>{b}</option>
+                ))}
               </select>
             </div>
             <div className="field">
@@ -213,7 +207,8 @@ export default function Contact() {
                 </>
               ) : (
                 <>
-                  <i className="fa-solid fa-paper-plane"></i>Надіслати заявку
+                  <i className="fa-solid fa-paper-plane"></i>
+                  {t("form_btn")}
                 </>
               )}
             </button>
@@ -223,7 +218,7 @@ export default function Contact() {
               </div>
             )}
             <p className="form-note">
-              <i className="fa-solid fa-lock"></i> Дані використовую лише для зв&apos;язку з вами
+              <i className="fa-solid fa-lock"></i> {t("form_note")}
             </p>
           </form>
         </div>

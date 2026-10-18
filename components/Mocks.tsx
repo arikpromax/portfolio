@@ -3,6 +3,7 @@
   для веб-студії чесніше показувати сам продукт — екрани сайтів, форми, пошук, карту.
   Усе намальовано розміткою й CSS (класи .mk-*), без картинок і емодзі.
 */
+import { useContent, lines } from "@/components/ContentProvider";
 
 type Tone = { a?: string; b?: string };
 const vars = ({ a = "#0FA39B", b = "#0F3D52" }: Tone) =>
@@ -583,50 +584,58 @@ export function MockNiches() {
   );
 }
 
+// Іконка для інтеграції за назвою; невідома назва — «вилка»
+const INTEGR_ICONS: [RegExp, string][] = [
+  [/форм/i, "fa-solid fa-pen-to-square"],
+  [/запис/i, "fa-solid fa-calendar-check"],
+  [/apple/i, "fa-brands fa-apple-pay"],
+  [/google pay/i, "fa-brands fa-google-pay"],
+  [/оплат|liqpay|monobank|wayforpay/i, "fa-solid fa-credit-card"],
+  [/кошик|замовл/i, "fa-solid fa-cart-shopping"],
+  [/нова пошта/i, "fa-solid fa-truck-fast"],
+  [/укрпошт|доставк/i, "fa-solid fa-box"],
+  [/telegram/i, "fa-brands fa-telegram"],
+  [/viber/i, "fa-brands fa-viber"],
+  [/whatsapp/i, "fa-brands fa-whatsapp"],
+  [/чат/i, "fa-solid fa-comments"],
+  [/instagram/i, "fa-brands fa-instagram"],
+  [/facebook/i, "fa-brands fa-facebook"],
+  [/tiktok/i, "fa-brands fa-tiktok"],
+  [/youtube/i, "fa-brands fa-youtube"],
+  [/map|карт/i, "fa-solid fa-location-dot"],
+  [/відгук/i, "fa-solid fa-star"],
+  [/analytics|аналіт/i, "fa-solid fa-chart-line"],
+  [/pixel|meta/i, "fa-brands fa-meta"],
+  [/таблиц|sheets/i, "fa-solid fa-table"],
+  [/crm/i, "fa-solid fa-address-book"],
+  [/календар/i, "fa-solid fa-calendar-days"],
+  [/sms/i, "fa-solid fa-comment-sms"],
+  [/email|розсилк|пошта/i, "fa-solid fa-envelope-open-text"],
+  [/калькулятор/i, "fa-solid fa-calculator"],
+  [/промокод|знижк/i, "fa-solid fa-ticket"],
+  [/мов/i, "fa-solid fa-language"],
+  [/адмінк/i, "fa-solid fa-sliders"],
+];
+const integrIcon = (name: string) => INTEGR_ICONS.find(([re]) => re.test(name))?.[1] ?? "fa-solid fa-plug";
+
+/** Усе, що можна підключити до сайту — список редагується в адмінці (по одному на рядок) */
 export function MockIntegrations() {
-  // Усе, що можна підключити до сайту
-  const items: [string, string][] = [
-    ["fa-solid fa-pen-to-square", "Форма заявки"],
-    ["fa-solid fa-calendar-check", "Онлайн-запис"],
-    ["fa-solid fa-credit-card", "Онлайн-оплата"],
-    ["fa-brands fa-apple-pay", "Apple Pay"],
-    ["fa-brands fa-google-pay", "Google Pay"],
-    ["fa-solid fa-cart-shopping", "Кошик і замовлення"],
-    ["fa-solid fa-truck-fast", "Нова Пошта"],
-    ["fa-solid fa-box", "Укрпошта"],
-    ["fa-brands fa-telegram", "Telegram-бот"],
-    ["fa-brands fa-viber", "Viber"],
-    ["fa-brands fa-whatsapp", "WhatsApp"],
-    ["fa-solid fa-comments", "Онлайн-чат"],
-    ["fa-brands fa-instagram", "Instagram"],
-    ["fa-brands fa-facebook", "Facebook"],
-    ["fa-brands fa-tiktok", "TikTok"],
-    ["fa-brands fa-youtube", "YouTube"],
-    ["fa-solid fa-location-dot", "Google Maps"],
-    ["fa-solid fa-star", "Відгуки Google"],
-    ["fa-solid fa-chart-line", "Google Analytics"],
-    ["fa-brands fa-meta", "Meta Pixel"],
-    ["fa-solid fa-table", "Google Таблиці"],
-    ["fa-solid fa-address-book", "CRM"],
-    ["fa-solid fa-calendar-days", "Google Календар"],
-    ["fa-solid fa-comment-sms", "SMS-сповіщення"],
-    ["fa-solid fa-envelope-open-text", "Email-розсилка"],
-    ["fa-solid fa-calculator", "Калькулятор ціни"],
-    ["fa-solid fa-ticket", "Промокоди"],
-    ["fa-solid fa-language", "Кілька мов"],
-    ["fa-solid fa-sliders", "Адмінка"],
-  ];
+  const { t } = useContent();
+  const more = t("price_integr_more");
   return (
     <div className="mk-integr">
-      {items.map(([ic, t]) => (
-        <span key={t}>
-          <i className={ic}></i>
-          {t}
+      {lines(t("price_integrations")).map((name, i) => (
+        <span key={i}>
+          <i className={integrIcon(name)}></i>
+          {name}
         </span>
       ))}
-      <span className="more">
-        <i className="fa-solid fa-plug"></i>І будь-що інше
-      </span>
+      {more && (
+        <span className="more">
+          <i className="fa-solid fa-plug"></i>
+          {more}
+        </span>
+      )}
     </div>
   );
 }
@@ -645,4 +654,53 @@ export function MockContent() {
       </div>
     </div>
   );
+}
+
+/* ---------- Реєстр ілюстрацій для карток ----------
+   Картка в адмінці зберігає ключ ілюстрації (lib/visuals.json — ті самі ключі й назви
+   для списку в адмінці) або власне фото. Невідомий ключ — «комп'ютер, планшет і телефон». */
+const VISUALS: Record<string, () => React.ReactNode> = {
+  calls: () => <MockEmptyCalls />,
+  rival: () => <MockRival />,
+  broken: () => <MockBroken />,
+  noprice: () => <MockNoPrice />,
+  proof: () => <MockProof />,
+  form: () => <MockForm />,
+  screens: () => <MockScreens />,
+  speed: () => <MockSpeed />,
+  map: () => <MockMap />,
+  search: () => <MockSearch />,
+  "chat-brief": () => (
+    <MockChat
+      lines={[
+        [true, "Потрібен сайт для клініки"],
+        [false, "Хто ваші пацієнти і що вони шукають першим?"],
+        [true, "Ціни й запис онлайн"],
+      ]}
+    />
+  ),
+  "chat-support": () => (
+    <MockChat
+      lines={[
+        [true, "Можна поміняти фото на головній?"],
+        [false, "Так, уже замінив — гляньте"],
+      ]}
+    />
+  ),
+  demo: () => <MockDemo />,
+  sitemap: () => <MockSitemap />,
+  design: () => <MockDesign />,
+  code: () => <MockCode />,
+  launch: () => <MockLaunch />,
+  layers: () => <MockLayers />,
+  niches: () => <MockNiches />,
+  integrations: () => <MockIntegrations />,
+  content: () => <MockContent />,
+};
+
+/** Ілюстрація картки: власне фото, якщо його завантажили, інакше макет за ключем */
+export function Visual({ k, img }: { k?: string; img?: string }) {
+  // eslint-disable-next-line @next/next/no-img-element
+  if (img) return <img className="vis-photo" src={img} alt="" />;
+  return <>{(VISUALS[k ?? ""] ?? VISUALS.screens)()}</>;
 }

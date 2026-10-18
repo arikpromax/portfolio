@@ -15,7 +15,7 @@ import Footer from "@/components/Footer";
 import SiteEffects from "@/components/SiteEffects";
 
 // Порядок блоків повторює сторінку-зразок: огляд → розділи з великими ілюстраціями,
-// картками й вкладками → заявка. Кейси лежать у lib/cases.ts.
+// картками й вкладками → заявка. Тексти й картки — lib/content.json або адмінка (lib/content.ts).
 export default function Home() {
   return (
     <>

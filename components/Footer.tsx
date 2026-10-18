@@ -2,10 +2,12 @@
 
 import { usePathname } from "next/navigation";
 import CookieSettingsLink from "@/components/CookieSettingsLink";
+import { useContent } from "@/components/ContentProvider";
 
 export default function Footer() {
   // На головній — просто прокрутка вгору, з інших сторінок — перехід на головну
   const top = usePathname() === "/" ? "#top" : "/#top";
+  const { t, contacts: c } = useContent();
 
   return (
     <footer className="footer">
@@ -15,19 +17,27 @@ export default function Footer() {
             <span className="logo__mark">a</span>arawebsite
           </a>
           <div className="footer__contacts">
-            <a href="https://t.me/arikpromax">
-              <i className="fa-brands fa-telegram"></i>@arikpromax
-            </a>
-            <a href="tel:+380957643416">
-              <i className="fa-solid fa-phone"></i>+380 95 764 34 16
-            </a>
-            <a href="mailto:arikpro92@gmail.com">
-              <i className="fa-solid fa-envelope"></i>arikpro92@gmail.com
-            </a>
+            {c.tgUser && (
+              <a href={c.tgUrl}>
+                <i className="fa-brands fa-telegram"></i>@{c.tgUser}
+              </a>
+            )}
+            {c.phone && (
+              <a href={c.phoneHref}>
+                <i className="fa-solid fa-phone"></i>
+                {c.phone}
+              </a>
+            )}
+            {c.email && (
+              <a href={`mailto:${c.email}`}>
+                <i className="fa-solid fa-envelope"></i>
+                {c.email}
+              </a>
+            )}
           </div>
         </div>
         <div className="footer__copy">
-          © 2026 Веб-студія «arawebsite». Сайти, які приносять заявки.
+          {t("footer_copy")}
           {/* Стриманий рядок службових посилань */}
           <span className="footer__links">
             <a href="/privacy">Політика конфіденційності</a>

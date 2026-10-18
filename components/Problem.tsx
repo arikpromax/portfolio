@@ -1,37 +1,18 @@
-import { SectTitle, Panel, Cards } from "@/components/Blocks";
-import { SceneQuiet, MockEmptyCalls, MockRival, MockBroken, MockNoPrice } from "@/components/Mocks";
+"use client";
 
-const pains = [
-  {
-    visual: <MockEmptyCalls />,
-    title: "Тиша замість дзвінків",
-    text: "Сайт працює, а заявок і дзвінків майже немає. Бюджет на нього витрачений, віддачі — нуль.",
-  },
-  {
-    visual: <MockRival />,
-    title: "Конкурент виглядає надійніше",
-    text: "Поруч компанія з сучасним сайтом забирає ваших клієнтів — просто тому, що викликає більше довіри.",
-  },
-  {
-    visual: <MockBroken />,
-    title: "Незручно з телефону",
-    text: "Сайт застарів, довго вантажиться й «розповзається» на смартфоні. А саме звідти заходить більшість людей.",
-  },
-  {
-    visual: <MockNoPrice />,
-    title: "Незрозуміло, скільки коштує",
-    text: "Клієнт не бачить цін і прикладів робіт — і йде до того, хто все показав одразу.",
-  },
-];
+import { SectTitle, Panel, CardRows } from "@/components/Blocks";
+import { SceneQuiet } from "@/components/Mocks";
+import { useContent } from "@/components/ContentProvider";
 
 export default function Problem() {
+  const { t, list } = useContent();
   return (
     <section className="sect" id="problem">
-      <SectTitle>Знайомо?</SectTitle>
-      <Panel tone="dark" pos="bl" visual={<SceneQuiet />} title="Сайт є, а клієнтів він не приводить">
-        <p>Якщо хоча б один із цих пунктів про вас — справа не у везінні, а в самому сайті.</p>
+      <SectTitle>{t("pain_h")}</SectTitle>
+      <Panel tone="dark" pos="bl" visual={<SceneQuiet />} title={t("pain_panel_h")}>
+        {t("pain_panel_p") && <p>{t("pain_panel_p")}</p>}
       </Panel>
-      <Cards cols={2} items={pains} />
+      <CardRows items={list("pains")} per={2} />
     </section>
   );
 }

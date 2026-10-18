@@ -2,17 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import TgLogo from "@/components/TgLogo";
+import { useContent, src } from "@/components/ContentProvider";
 
-// Команда. Щоб додати людину — ще один запис: фото кладемо в public/
-const team = [
-  {
-    name: "Ярослав",
-    role: "Засновник",
-    photo: "/yaroslav.jpg",
-    about:
-      "Роблю сайти від ідеї до запуску: продумую структуру, малюю дизайн, пишу код і підключаю все потрібне — оплату, доставку, ботів, аналітику. Після запуску лишаюся на звʼязку.",
-  },
-];
 
 /**
  * Кругла кнопка ліворуч (пара до кнопки Telegram праворуч) — відкриває панель «Про нас».
@@ -20,6 +11,9 @@ const team = [
  */
 export default function AboutFab() {
   const [open, setOpen] = useState(false);
+  // Команда — колекція «Команда» в адмінці: нова людина = нова картка
+  const { t, list, x, contacts } = useContent();
+  const team = list("team");
   const closeRef = useRef<HTMLButtonElement>(null);
 
   // #about в адресі — відкрити панель (посилання в шапці, перехід з /privacy чи /cookies)
@@ -65,20 +59,20 @@ export default function AboutFab() {
         <button className="about__close" aria-label="Закрити" onClick={close} ref={closeRef} tabIndex={open ? 0 : -1}>
           <i className="fa-solid fa-xmark"></i>
         </button>
-        <h2>Про нас</h2>
+        <h2>{t("about_h")}</h2>
 
         <div className="about__team">
-          {team.map((m) => (
-            <div key={m.name} className="about__person">
+          {team.map((m, i) => (
+            <div key={i} className="about__person">
               <div className="about__who">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={m.photo} alt={m.name} />
+                {m.image_url && <img src={src(m.image_url)} alt={m.title} />}
                 <div>
-                  <b>{m.name}</b>
-                  <span className="about__role">{m.role}</span>
+                  <b>{m.title}</b>
+                  {x(m, "role") && <span className="about__role">{x(m, "role")}</span>}
                 </div>
               </div>
-              <p>{m.about}</p>
+              {m.text && <p>{m.text}</p>}
             </div>
           ))}
         </div>
@@ -88,7 +82,7 @@ export default function AboutFab() {
             <i className="fa-solid fa-comments"></i>Обговорити проєкт
           </a>
           <a
-            href="https://t.me/arikpromax"
+            href={contacts.tgUrl}
             target="_blank"
             rel="noopener"
             className="btn btn--ghost"

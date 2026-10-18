@@ -1,37 +1,15 @@
-import { SectTitle, Cards } from "@/components/Blocks";
-import { MockLayers, MockNiches, MockChat } from "@/components/Mocks";
+"use client";
 
-const usps = [
-  {
-    visual: <MockLayers />,
-    title: "Сайт під будь-який бізнес",
-    text: "Від простого лендингу до повноцінного сайту-каталогу. Підбираю формат під вашу задачу й бюджет, а не навпаки.",
-  },
-  {
-    visual: <MockNiches />,
-    title: "Розумію складні ніші",
-    text: "Знаю, що для стоматології важливі лікарі, обладнання й сертифікати, а для будівництва — об'єкти, матеріали та етапи. Тому впораюся з будь-яким завданням.",
-  },
-  {
-    visual: (
-      <MockChat
-        lines={[
-          [true, "Можна поміняти фото на головній?"],
-          [false, "Так, уже замінив — гляньте"],
-        ]}
-      />
-    ),
-    title: "Гарантія та особистий супровід",
-    text: "Працюєте напряму зі мною, без менеджерів-посередників. Правки за домовленістю та підтримка після запуску.",
-  },
-];
+import { SectTitle, CardRows } from "@/components/Blocks";
+import { useContent } from "@/components/ContentProvider";
 
 export default function Why() {
+  const { t, list } = useContent();
   return (
     <section className="sect" id="why">
-      <SectTitle>Чому я</SectTitle>
-      <p className="sect-sub reveal">Не просто «зробити сайт», а вирішити завдання бізнесу</p>
-      <Cards items={usps} />
+      <SectTitle>{t("why_h")}</SectTitle>
+      {t("why_sub") && <p className="sect-sub reveal">{t("why_sub")}</p>}
+      <CardRows items={list("usps")} per={3} />
     </section>
   );
 }

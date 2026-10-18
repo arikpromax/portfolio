@@ -1,46 +1,53 @@
 "use client";
 
 import { useState } from "react";
-import { cases } from "@/lib/cases";
 import { SectTitle } from "@/components/Blocks";
 import { Browser, Phone } from "@/components/Mocks";
+import { useContent, src } from "@/components/ContentProvider";
 
 /** Велика ілюстрація з білою карткою поверх і перемикачами — як «Страницы производительности» у зразку */
 export default function Cases() {
-  const [idx, setIdx] = useState(0);
+  const { t, list, x } = useContent();
+  const cases = list("cases");
+  const [picked, setIdx] = useState(0);
+  const idx = Math.min(picked, Math.max(cases.length - 1, 0)); // власник міг видалити кейс
   const c = cases[idx];
+  if (!c) return null;
+
+  const desk = c.image_url ? src(c.image_url) : "";
+  const mobile = x(c, "image_mobile") ? src(x(c, "image_mobile")) : "";
+  const link = x(c, "link");
+  const dev = c.extra?.dev === true || x(c, "dev") === "true";
 
   return (
     <section className="sect" id="cases">
-      <SectTitle>Кейси</SectTitle>
+      <SectTitle>{t("cases_h")}</SectTitle>
 
       <div className="showcase">
         <div className="showcase__visual" aria-hidden="true" key={idx}>
-          {c.image_url ? (
-            <Browser url={c.url_label} className="showcase__desk">
+          {desk ? (
+            <Browser url={x(c, "url_label")} className="showcase__desk">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={c.image_url} alt="" />
+              <img src={desk} alt="" />
             </Browser>
           ) : (
-            <Browser a={c.accent} b={c.accent2} url={c.url_label} className="showcase__desk" />
+            <Browser url={x(c, "url_label")} className="showcase__desk" />
           )}
-          <Phone a={c.accent} b={c.accent2} className="showcase__phone">
-            {c.image_mobile && (
+          <Phone className="showcase__phone">
+            {mobile && (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={c.image_mobile} alt="" />
+              <img src={mobile} alt="" />
             )}
           </Phone>
         </div>
 
         <div className="showcase__card reveal">
-          <h3>Кілька прикладів роботи</h3>
-          <p className="showcase__lead">
-            Різні ніші, одна логіка: зрозуміла структура, довіра й проста дорога до заявки.
-          </p>
+          {t("cases_card_h") && <h3>{t("cases_card_h")}</h3>}
+          {t("cases_card_p") && <p className="showcase__lead">{t("cases_card_p")}</p>}
           <div className="radios" role="radiogroup" aria-label="Кейс">
             {cases.map((item, i) => (
               <button
-                key={item.title}
+                key={i}
                 role="radio"
                 aria-checked={i === idx}
                 className={`radio${i === idx ? " on" : ""}`}
@@ -53,14 +60,14 @@ export default function Cases() {
           </div>
           <div className="showcase__case">
             <span className="showcase__meta">
-              {c.meta}
-              {c.status === "dev" && <span className="showcase__dev">В розробці</span>}
+              {x(c, "meta")}
+              {dev && <span className="showcase__dev">В розробці</span>}
             </span>
             <p>
-              {c.description} <b>{c.result}</b>
+              {c.text} {x(c, "result") && <b>{x(c, "result")}</b>}
             </p>
-            {c.link ? (
-              <a className="showcase__link" href={c.link} target="_blank" rel="noopener">
+            {link ? (
+              <a className="showcase__link" href={link} target="_blank" rel="noopener">
                 Дивитись сайт <i className="fa-solid fa-arrow-right"></i>
               </a>
             ) : (

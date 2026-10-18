@@ -2,78 +2,66 @@
 
 import { useState } from "react";
 import { SectTitle } from "@/components/Blocks";
-import { MockLayers, MockContent, MockIntegrations, MockDesign } from "@/components/Mocks";
+import { Visual } from "@/components/Mocks";
+import { useContent, src } from "@/components/ContentProvider";
 
 // Вкладки з «носиком» над великою ілюстрацією й картка праворуч — як навігація TomTom у зразку
-const factors = [
-  {
-    tab: "Обсяг сторінок",
-    text: "Лендинг чи багатосторінковий каталог. Що більше сторінок і розділів, то більше роботи над структурою й версткою.",
-    visual: <MockLayers />,
-  },
-  {
-    tab: "Контент",
-    text: "Чи є готові тексти й фото, чи готую їх я. Якщо матеріалів немає — напишу тексти й підберу зображення.",
-    visual: <MockContent />,
-  },
-  {
-    tab: "Інтеграції",
-    text: "Підключаю будь-що: оплату, доставку, CRM, ботів і месенджери, соцмережі, аналітику, онлайн-запис. Скільки інтеграцій — стільки й роботи.",
-    visual: <MockIntegrations />,
-  },
-  {
-    tab: "Дизайн",
-    text: "Шаблонний підхід чи унікальний макет. Унікальний дизайн довше, зате сайт ні з ким не сплутати.",
-    visual: <MockDesign />,
-  },
-];
-
 export default function Pricing() {
-  const [cur, setCur] = useState(0);
+  const { t, list, x } = useContent();
+  const factors = list("factors");
+  const [picked, setCur] = useState(0);
+  const cur = Math.min(picked, Math.max(factors.length - 1, 0)); // власник міг видалити фактор
   const f = factors[cur];
 
   return (
     <section className="sect" id="price">
-      <SectTitle>Вартість</SectTitle>
+      <SectTitle>{t("price_h")}</SectTitle>
       <div className="price-head reveal">
         <p className="price-head__big">
-          <span>від</span> $500
+          {t("price_from") && <span>{t("price_from")}</span>} {t("price_value")}
         </p>
-        <p className="price-head__sub">
-          Сайт під ваш бізнес. Точну вартість рахую під вашу задачу й озвучую до старту — жодних
-          прихованих платежів і сюрпризів у процесі.
-        </p>
+        {t("price_sub") && <p className="price-head__sub">{t("price_sub")}</p>}
       </div>
 
-      <div className="tabs tabs--notch" role="tablist" aria-label="Що впливає на ціну">
-        {factors.map((x, i) => (
-          <button
-            key={x.tab}
-            role="tab"
-            aria-selected={i === cur}
-            className={`tabs__btn${i === cur ? " on" : ""}`}
-            onClick={() => setCur(i)}
-          >
-            {x.tab}
-          </button>
-        ))}
-      </div>
-      <div className="feature" role="tabpanel">
-        <div className="feature__visual" aria-hidden="true" key={cur}>
-          {f.visual}
-        </div>
-        <div className="feature__card">
-          <p className="kicker">Що впливає на ціну</p>
-          <h3>{f.tab}</h3>
-          <p>{f.text}</p>
-          <p className="feature__note">
-            <i className="fa-solid fa-circle-info"></i>Фінальна ціна — після прорахунку
-          </p>
-          <a href="#contact" className="btn btn--primary">
-            <i className="fa-solid fa-calculator"></i>Дізнатись точну вартість
-          </a>
-        </div>
-      </div>
+      {f && (
+        <>
+          <div className="tabs tabs--notch" role="tablist" aria-label={t("price_kicker") || "Що впливає на ціну"}>
+            {factors.map((it, i) => (
+              <button
+                key={i}
+                role="tab"
+                aria-selected={i === cur}
+                className={`tabs__btn${i === cur ? " on" : ""}`}
+                onClick={() => setCur(i)}
+              >
+                {it.title}
+              </button>
+            ))}
+          </div>
+          <div className="feature" role="tabpanel">
+            <div className="feature__visual" aria-hidden="true" key={cur}>
+              <Visual k={x(f, "visual")} img={f.image_url ? src(f.image_url) : ""} />
+            </div>
+            <div className="feature__card">
+              {t("price_kicker") && <p className="kicker">{t("price_kicker")}</p>}
+              <h3>{f.title}</h3>
+              {f.text && <p>{f.text}</p>}
+              {t("price_note") && (
+                <p className="feature__note">
+                  <i className="fa-solid fa-circle-info"></i>
+                  {t("price_note")}
+                </p>
+              )}
+              {t("price_btn") && (
+                <a href="#contact" className="btn btn--primary">
+                  <i className="fa-solid fa-calculator"></i>
+                  {t("price_btn")}
+                </a>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </section>
   );
 }

@@ -4,22 +4,23 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import TgLogo from "@/components/TgLogo";
 import ThemeToggle from "@/components/ThemeToggle";
+import { useContent } from "@/components/ContentProvider";
 
-// Глобальне меню вгорі (як «Модели / Покупки» на сайті-зразку)
+// Глобальне меню вгорі (як «Модели / Покупки» на сайті-зразку): якір → ключ підпису в адмінці
 const links = [
-  { hash: "#solution", label: "Послуги" },
-  { hash: "#cases", label: "Кейси" },
-  { hash: "#about", label: "Про нас" },
-  { hash: "#price", label: "Ціна" },
+  { hash: "#solution", key: "nav_services" },
+  { hash: "#cases", key: "nav_cases" },
+  { hash: "#about", key: "nav_about" },
+  { hash: "#price", key: "nav_price" },
 ];
 
 // Вкладки розділів у липкій смузі — підсвічуються під час прокрутки
 const tabs = [
-  { id: "top", label: "Огляд" },
-  { id: "solution", label: "Рішення" },
-  { id: "process", label: "Як працюю" },
-  { id: "cases", label: "Кейси" },
-  { id: "price", label: "Ціна" },
+  { id: "top", key: "tab_top" },
+  { id: "solution", key: "tab_solution" },
+  { id: "process", key: "tab_process" },
+  { id: "cases", key: "tab_cases" },
+  { id: "price", key: "tab_price" },
 ];
 
 export default function Header() {
@@ -27,6 +28,7 @@ export default function Header() {
   const [active, setActive] = useState("top");
   const tabsRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const { t, contacts } = useContent();
 
   // На головній лишаємо чистий якір — браузер просто прокручує.
   // З інших сторінок (/privacy, /cookies) потрібен повний шлях, щоб спершу перейти на головну.
@@ -40,9 +42,9 @@ export default function Header() {
     const update = () => {
       frame = 0;
       let current = tabs[0].id;
-      for (const t of tabs) {
-        const el = document.getElementById(t.id);
-        if (el && el.getBoundingClientRect().top <= 160) current = t.id;
+      for (const tb of tabs) {
+        const el = document.getElementById(tb.id);
+        if (el && el.getBoundingClientRect().top <= 160) current = tb.id;
       }
       setActive(current);
     };
@@ -81,16 +83,16 @@ export default function Header() {
           <nav className="gh__links">
             {links.map((l) => (
               <a key={l.hash} href={to(l.hash)}>
-                {l.label}
+                {t(l.key)}
               </a>
             ))}
           </nav>
           <div className="gh__right">
             <a href={to("#contact")} className="gh__cta">
               <i className="fa-solid fa-calculator"></i>
-              <span>Розрахувати сайт</span>
+              <span>{t("header_cta")}</span>
             </a>
-            <a href="https://t.me/arikpromax" target="_blank" rel="noopener" className="gh__tg" aria-label="Telegram">
+            <a href={contacts.tgUrl} target="_blank" rel="noopener" className="gh__tg" aria-label="Telegram">
               <TgLogo id="head" />
             </a>
             <ThemeToggle />
@@ -109,28 +111,29 @@ export default function Header() {
       <nav className={`mobile-menu${open ? " open" : ""}`}>
         {links.map((l) => (
           <a key={l.hash} href={to(l.hash)} onClick={() => setOpen(false)}>
-            {l.label}
+            {t(l.key)}
           </a>
         ))}
         <a href={to("#contact")} className="btn btn--primary" onClick={() => setOpen(false)}>
-          <i className="fa-solid fa-calculator"></i>Розрахувати сайт
+          <i className="fa-solid fa-calculator"></i>
+          {t("header_cta")}
         </a>
       </nav>
 
       <div className="subnav">
         <div className="subnav__model">
-          <span className="subnav__year">2026</span>
-          <b>arawebsite · сайти для бізнесу</b>
+          {t("subnav_year") && <span className="subnav__year">{t("subnav_year")}</span>}
+          <b>{t("subnav_name")}</b>
         </div>
         <div className="subnav__tabs" ref={tabsRef}>
-          {tabs.map((t) => (
+          {tabs.map((tb) => (
             <a
-              key={t.id}
-              href={to(`#${t.id}`)}
-              data-tab={t.id}
-              className={onHome && active === t.id ? "on" : ""}
+              key={tb.id}
+              href={to(`#${tb.id}`)}
+              data-tab={tb.id}
+              className={onHome && active === tb.id ? "on" : ""}
             >
-              {t.label}
+              {t(tb.key)}
             </a>
           ))}
         </div>

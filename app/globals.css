@@ -178,6 +178,9 @@ html[data-theme="dark"] .theme-btn:hover .i-sun{transform:rotate(45deg)}
 .cards{display:grid;gap:16px;margin-top:16px}
 .cards--3{grid-template-columns:repeat(3,1fr)}
 .cards--2{grid-template-columns:repeat(2,1fr)}
+.cards--1{grid-template-columns:1fr}
+/* власне фото з адмінки замість ілюстрації — заповнює все місце під картинку */
+.vis-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .card__shot{position:relative;container-type:size;aspect-ratio:16/9;background:var(--gray);display:grid;place-items:center;overflow:hidden}
 .card h3{font-size:1.55rem;font-weight:700;padding:22px 28px 8px}
 .card p{font-size:.95rem;color:var(--muted);padding:0 28px 34px;max-width:560px}
@@ -222,7 +225,7 @@ html[data-theme="dark"] .theme-btn:hover .i-sun{transform:rotate(45deg)}
 .tabpane__text{padding:40px 0 40px var(--gut)}
 .tabpane__text h3{font-size:clamp(2rem,3.4vw,3rem);font-weight:800;text-transform:uppercase;margin-bottom:14px}
 .tabpane__text p{color:var(--text-2);margin-bottom:22px;max-width:420px}
-.tabpane__visual{min-height:clamp(320px,32vw,480px);background:var(--gray);display:grid;place-items:center;overflow:hidden}
+.tabpane__visual{position:relative;min-height:clamp(320px,32vw,480px);background:var(--gray);display:grid;place-items:center;overflow:hidden}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 
 /* ---------- Кейси: ілюстрація з карткою й перемикачами ---------- */
