@@ -8,7 +8,7 @@
 import defaults from "./content.json";
 
 // Номер сайту в адмінці (рядок sites.id). 0 — адмінку ще не підключено, сайт живе на content.json.
-export const SITE = 0;
+export const SITE = 110;
 
 const DB = "https://ortiatyxntdikaldepbp.supabase.co/rest/v1";
 const KEY = "sb_publishable_UW1Z8ukEU1XWVCdQxIGkDw_firK4hpO"; // публічний ключ, лише читання
