@@ -17,20 +17,10 @@ export default function Hero() {
         </div>
         <div className="intro__body reveal">
           <div className="intro__actions">
-            <a href="#contact" className="btn btn--primary">
-              <i className="fa-solid fa-calculator"></i>Отримати розрахунок
-            </a>
             <a href="#cases" className="btn btn--ghost">
               Дивитись кейси<i className="fa-solid fa-arrow-right"></i>
             </a>
           </div>
-          <p className="intro__note">
-            <i className="fa-solid fa-gift"></i>
-            <span>
-              <b>Демосайт — безкоштовно.</b> Спершу показую, як виглядатиме ваш сайт, і лише потім
-              говоримо про гроші.
-            </span>
-          </p>
         </div>
       </div>
     </section>

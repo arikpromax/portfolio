@@ -101,9 +101,6 @@ img{max-width:100%;display:block}
 .intro__body p{color:#38424a;font-size:1.02rem}
 .intro__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
 .intro__body > :first-child{margin-top:0}
-.intro__note{display:flex;gap:12px;margin-top:20px;font-size:.92rem!important;color:var(--muted)!important}
-.intro__note i{color:var(--teal-ink);margin-top:4px}
-.intro__note b{color:var(--ink)}
 
 /* ---------- Розділ і його заголовок ---------- */
 .sect{padding-top:clamp(64px,8vw,112px)}
@@ -180,8 +177,8 @@ img{max-width:100%;display:block}
 
 /* ---------- Кейси: ілюстрація з карткою й перемикачами ---------- */
 .showcase{position:relative;min-height:clamp(540px,48vw,720px);background:var(--gray);overflow:hidden}
-.showcase__visual{position:absolute;inset:0;animation:fadeIn .5s ease}
-.showcase .showcase__desk{position:absolute;right:10%;top:12%;width:min(52%,720px)}
+.showcase__visual{position:absolute;inset:0 0 0 calc(var(--gut) + min(420px,40%) + 24px);animation:fadeIn .5s ease}
+.showcase .showcase__desk{position:absolute;right:12%;top:12%;width:min(78%,720px)}
 .showcase__desk img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top}
 .showcase__visual{container-type:size}
 .showcase .showcase__phone{position:absolute;right:5%;bottom:8%;--ph:60cqh}
@@ -207,7 +204,7 @@ img{max-width:100%;display:block}
 .price-head__big span{font-size:.4em;color:var(--muted);vertical-align:.7em;margin-right:6px}
 .price-head__sub{max-width:640px;margin:14px auto 0;color:var(--muted)}
 .feature{position:relative;min-height:clamp(480px,42vw,620px);background:var(--gray);overflow:hidden}
-.feature__visual{position:absolute;inset:0 38% 0 0;display:grid;place-items:center;animation:fadeIn .45s ease}
+.feature__visual{position:absolute;inset:0 calc(var(--gut) + min(420px,36%) + 24px) 0 0;display:grid;place-items:center;animation:fadeIn .45s ease}
 .feature__card{position:absolute;right:var(--gut);top:0;width:min(420px,36%);background:#fff;padding:34px 32px;box-shadow:0 20px 40px -24px rgba(0,0,0,.35)}
 .feature__card h3{font-size:clamp(1.9rem,3vw,2.6rem);font-weight:800;text-transform:uppercase;margin-bottom:12px}
 .feature__card p{color:#38424a;font-size:.96rem}
@@ -534,6 +531,8 @@ img{max-width:100%;display:block}
 @media (max-width:1000px){
   .gh__links{display:none}
   .showcase__card,.feature__card{width:min(380px,44%)}
+  .showcase__visual{left:calc(var(--gut) + min(380px,44%) + 24px)}
+  .feature__visual{right:calc(var(--gut) + min(380px,44%) + 24px)}
 }
 @media (max-width:900px){
   [id]{scroll-margin-top:150px}
