@@ -169,7 +169,7 @@ export default function PrivacyPage() {
           </p>
           <ul>
             <li>
-              <b>Google Fonts</b> (fonts.googleapis.com, fonts.gstatic.com) — шрифти Manrope та
+              <b>Google Fonts</b> (fonts.googleapis.com, fonts.gstatic.com) — шрифти Fira Sans Extra Condensed, Roboto та
               Unbounded.
             </li>
             <li>

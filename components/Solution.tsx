@@ -1,31 +1,45 @@
-const feats = [
+import { SectTitle, Panel, Cards } from "@/components/Blocks";
+import {
+  SceneDevices,
+  MockProof,
+  MockForm,
+  MockScreens,
+  MockSpeed,
+  MockMap,
+  MockSearch,
+} from "@/components/Mocks";
+
+const trust = [
   {
-    icon: "fa-solid fa-images",
+    visual: <MockProof />,
     title: "Докази, а не обіцянки",
     text: "Фото реальних робіт, відгуки клієнтів і чіткі гарантії — те, що знімає сумніви ще до дзвінка.",
   },
   {
-    icon: "fa-solid fa-bolt",
+    visual: <MockForm />,
     title: "Заявка в один клік",
     text: "Помітна форма та дзвінок чи чат у пару дотиків. Без зайвих полів, які відлякують.",
   },
   {
-    icon: "fa-solid fa-mobile-screen-button",
+    visual: <MockScreens />,
     title: "Зручно на будь-якому екрані",
     text: "Однаково чітко й охайно на телефоні, планшеті та комп'ютері.",
   },
+];
+
+const reach = [
   {
-    icon: "fa-solid fa-gauge-high",
+    visual: <MockSpeed />,
     title: "Швидке завантаження",
     text: "Сторінка відкривається за секунди — людина не встигає піти до конкурента.",
   },
   {
-    icon: "fa-solid fa-location-dot",
+    visual: <MockMap />,
     title: "Інтеграція з Google Maps",
     text: "Клієнт одразу бачить, де ви знаходитесь, і як до вас доїхати.",
   },
   {
-    icon: "fa-solid fa-magnifying-glass",
+    visual: <MockSearch />,
     title: "SEO під локальні запити",
     text: "Вас знаходять саме ті, хто шукає вашу послугу поруч із вами.",
   },
@@ -33,25 +47,13 @@ const feats = [
 
 export default function Solution() {
   return (
-    <section className="section sol" id="solution">
-      <div className="wrap">
-        <div className="section__head reveal">
-          <span className="eyebrow">Що я роблю</span>
-          <h2>Сайт, який працює на довіру і на заявки</h2>
-          <p>Кожен елемент сайту має одну мету — перетворити відвідувача на клієнта.</p>
-        </div>
-        <div className="feat-grid">
-          {feats.map((f) => (
-            <div key={f.title} className="feat reveal">
-              <div className="feat__ico">
-                <i className={f.icon}></i>
-              </div>
-              <h3>{f.title}</h3>
-              <p>{f.text}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+    <section className="sect" id="solution">
+      <SectTitle>Що я роблю</SectTitle>
+      <Panel pos="r" visual={<SceneDevices />} title="Сайт, який працює на довіру і на заявки">
+        <p>Кожен елемент сайту має одну мету — перетворити відвідувача на клієнта.</p>
+      </Panel>
+      <Cards items={trust} />
+      <Cards items={reach} />
     </section>
   );
 }

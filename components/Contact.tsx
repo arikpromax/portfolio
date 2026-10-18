@@ -113,16 +113,16 @@ export default function Contact() {
   };
 
   return (
-    <section className="final cursor-glow" id="contact">
-      <div className="wrap final__grid">
+    <section className="contact" id="contact">
+      <div className="wrap contact__grid">
         <div className="reveal">
-          <span className="eyebrow">Залишилось питання?</span>
+          <p className="kicker">Залишилось питання?</p>
           <h2>Розкажіть про бізнес — порахую вартість сайту</h2>
           <p className="lead">
             Залиште заявку, і я зв'яжуся з вами, щоб уточнити деталі та назвати точну ціну. Без
             зобов'язань.
           </p>
-          <div className="final__list">
+          <div className="contact__list">
             <div>
               <i className="fa-solid fa-circle-check"></i>Відповідаю протягом дня
             </div>
