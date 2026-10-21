@@ -3,6 +3,7 @@
   для веб-студії чесніше показувати сам продукт — екрани сайтів, форми, пошук, карту.
   Усе намальовано розміткою й CSS (класи .mk-*), без картинок і емодзі.
 */
+import { useState } from "react";
 import { useContent, lines } from "@/components/ContentProvider";
 
 type Tone = { a?: string; b?: string };
@@ -253,16 +254,25 @@ export function MockSpeed() {
   );
 }
 
-export function MockMap() {
+// Карта світу Google. Поки людина не натисне «Відкрити карту», це знімок (public/map-world.jpg)
+// і до Google сайт не звертається; після натискання вантажиться жива карта — Google
+// бачить IP-адресу й може поставити свої cookie (так написано в /cookies і політиці).
+const GMAP = "https://maps.google.com/maps?ll=38,15&z=2&t=m&hl=uk&output=embed";
+export function MockGoogleMap() {
+  const [live, setLive] = useState(false);
+  if (live)
+    return <iframe className="gmap__frame" src={GMAP} title="Карта Google" allowFullScreen referrerPolicy="no-referrer-when-downgrade" />;
   return (
-    <div className="mk-map">
-      <span className="mk-map__road r1"></span>
-      <span className="mk-map__road r2"></span>
-      <span className="mk-map__road r3"></span>
-      <i className="fa-solid fa-location-dot mk-map__pin"></i>
-      <Toast icon="fa-solid fa-route" className="mk-map__card">
-        Прокласти маршрут
-      </Toast>
+    <div className="gmap">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img className="vis-photo" src="/map-world.jpg" alt="Карта світу Google" loading="lazy" />
+      <button type="button" className="gmap__btn" onClick={() => setLive(true)}>
+        <i className="fa-solid fa-map-location-dot"></i>
+        <span>
+          Відкрити карту
+          <small>завантажиться з Google</small>
+        </span>
+      </button>
     </div>
   );
 }
@@ -668,7 +678,7 @@ const VISUALS: Record<string, () => React.ReactNode> = {
   form: () => <MockForm />,
   screens: () => <MockScreens />,
   speed: () => <MockSpeed />,
-  map: () => <MockMap />,
+  map: () => <MockGoogleMap />,
   search: () => <MockSearch />,
   "chat-brief": () => (
     <MockChat
@@ -697,6 +707,9 @@ const VISUALS: Record<string, () => React.ReactNode> = {
   integrations: () => <MockIntegrations />,
   content: () => <MockContent />,
 };
+
+// Ілюстрації, з якими можна взаємодіяти: їх не ховаємо від екранних читачів
+export const INTERACTIVE_VISUALS = new Set(["map"]);
 
 /** Ілюстрація картки: власне фото, якщо його завантажили, інакше макет за ключем */
 export function Visual({ k, img }: { k?: string; img?: string }) {

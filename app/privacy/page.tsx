@@ -178,6 +178,10 @@ export default function PrivacyPage() {
             <li>
               <b>Supabase</b> (supabase.co) — сховище фото, які ми додаємо на сайт через адмін-панель.
             </li>
+            <li>
+              <b>Google Maps</b> (google.com) — карта в розділі «Що я роблю». Завантажується, лише коли ви
+              натиснете «Відкрити карту»; тоді Google бачить вашу IP-адресу й може поставити свої cookie.
+            </li>
           </ul>
           <p>
             <b>Google Analytics</b> (googletagmanager.com, google-analytics.com) завантажується лише

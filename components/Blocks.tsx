@@ -1,7 +1,7 @@
 "use client";
 
 // Повторювані будівельні блоки сторінки — ті самі, з яких складено сайт-зразок
-import { Visual } from "@/components/Mocks";
+import { Visual, INTERACTIVE_VISUALS } from "@/components/Mocks";
 import { useContent, src } from "@/components/ContentProvider";
 import type { Item } from "@/lib/content";
 
@@ -55,7 +55,10 @@ export function CardRows({ items, per }: { items: Item[]; per: 2 | 3 }) {
         <div key={r} className={`cards cards--${row.length}`}>
           {row.map((it, i) => (
             <article key={i} className="card reveal">
-              <div className="card__shot" aria-hidden="true">
+              <div
+                className="card__shot"
+                aria-hidden={INTERACTIVE_VISUALS.has(x(it, "visual")) && !it.image_url ? undefined : true}
+              >
                 <Visual k={x(it, "visual")} img={it.image_url ? src(it.image_url) : ""} />
               </div>
               <h3>{it.title}</h3>

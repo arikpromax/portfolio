@@ -26,6 +26,8 @@ type Status = { kind: "ok" | "err"; icon: string; text: string } | null;
 export default function Contact() {
   const { t, contacts } = useContent();
   const [method, setMethod] = useState<MethodName>("Телефон");
+  // «Не дзвонити — краще написати»: галочка під номером, лише для способу «Телефон»
+  const [noCall, setNoCall] = useState(false);
   const [contact, setContact] = useState("");
   const [sending, setSending] = useState(false);
   const [status, setStatus] = useState<Status>(null);
@@ -35,6 +37,7 @@ export default function Contact() {
   const active = methods.find((m) => m.name === method)!;
 
   const pickMethod = (name: MethodName) => {
+    setNoCall(false);
     setMethod(name);
     setContact("");
     contactRef.current?.focus();
@@ -74,7 +77,8 @@ export default function Contact() {
 
     const data = {
       name,
-      method,
+      // відмітка йде в ту саму колонку «спосіб зв'язку» — Google-скрипт таблиці міняти не треба
+      method: noCall && method === "Телефон" ? `${method} · ${t("form_nocall")}` : method,
       contact: contactVal,
       business,
       message,
@@ -102,6 +106,7 @@ export default function Contact() {
         text: t("form_ok"),
       });
       form.reset();
+      setNoCall(false);
       setContact("");
     } catch {
       setStatus({
@@ -176,6 +181,18 @@ export default function Contact() {
                 value={contact}
                 onChange={(e) => setContact(e.target.value)}
               />
+              {method === "Телефон" && t("form_nocall") && (
+                <label className="check">
+                  {/* autoComplete="off": браузер не відновлює відмітку після перезавантаження сторінки */}
+                  <input
+                    type="checkbox"
+                    autoComplete="off"
+                    checked={noCall}
+                    onChange={(e) => setNoCall(e.target.checked)}
+                  />
+                  <span>{t("form_nocall")}</span>
+                </label>
+              )}
             </div>
             <div className="field">
               <label htmlFor="business">Тип бізнесу</label>
