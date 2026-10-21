@@ -167,13 +167,13 @@
     ],
     "screens": [
       {
-        "title": "Fish Family",
+        "title": "Сайт на екранах",
         "text": "",
-        "image_url": "https://arawebsite.com/screens/fishfamily-d.jpg",
+        "image_url": "",
         "extra": {
-          "url_label": "fishfamily",
-          "image_tablet": "https://arawebsite.com/screens/fishfamily-t.jpg",
-          "image_mobile": "https://arawebsite.com/screens/fishfamily-m.jpg"
+          "url_label": "",
+          "image_tablet": "",
+          "image_mobile": ""
         }
       }
     ],
