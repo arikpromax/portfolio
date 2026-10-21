@@ -26,6 +26,9 @@ export type Content = {
 
 type Row = Item & { collection: string };
 
+// Колекції без кнопок «Додати» / «Видалити» в адмінці (див. tools/gen-admin.mjs)
+const FIXED = ["screens"];
+
 const fallback = defaults as unknown as Content;
 
 async function get<T>(path: string): Promise<T> {
@@ -60,6 +63,12 @@ export async function getContent(): Promise<Content> {
         extra: row.extra ?? {},
       });
     }
+    // Колекції, яких в адмінці не видалити (додані пізніше, ніж власник запустив міграцію):
+    // поки в базі для них нічого немає — стандартний вміст. Фото сайту — так само по кожному місцю.
+    for (const key of FIXED) if (!lists[key]?.length) lists[key] = fallback.lists[key] ?? [];
+    const slot = (i: Item) => String(i.extra?.slot ?? "");
+    const have = new Set((lists.site_photos ?? []).map(slot));
+    for (const p of fallback.lists.site_photos ?? []) if (!have.has(slot(p))) (lists.site_photos ??= []).push(p);
     return { texts: t, lists };
   } catch {
     // база недоступна — показуємо стандартний вміст, а не порожній сайт

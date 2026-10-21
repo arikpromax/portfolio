@@ -136,6 +136,19 @@ const collections = [
   simpleCards("pains", "Картки проблем", "Картки під темним блоком, по дві в ряд."),
   simpleCards("features", "Картки «Що я роблю»", "Картки під сірим блоком, по три в ряд."),
   {
+    key: "screens",
+    name: "Сайт на екранах",
+    noAdd: true,
+    noDelete: true,
+    fields: [
+      { type: "text", key: "title", name: "Чий це сайт", hint: "Для вас, на сайті не видно. Напр.: Fish Family" },
+      { type: "text", key: "url_label", name: "Адреса у віконці браузера", extra: true, hint: "Сірий рядок над знімком компʼютера. Напр.: fishfamily" },
+      { type: "image", key: "image", name: "Знімок на компʼютері", aspect: 1.6, hint: "Перший екран сайту, горизонтальний 16:10 (напр. 1440×900)." },
+      { type: "image", key: "image_tablet", name: "Знімок на планшеті", extra: true, aspect: 0.75, hint: "Вертикальний 3:4 (напр. 768×1024)." },
+      { type: "image", key: "image_mobile", name: "Знімок на телефоні", extra: true, aspect: 390 / 844, hint: "Вертикальний, як екран телефона (напр. 390×844). Показується в iPhone." },
+    ],
+  },
+  {
     key: "stats",
     name: "Цифри",
     fields: [
@@ -201,7 +214,7 @@ const sections = [
   { name: "Контакти", note: "Вписуєте один раз — змінюється на всьому сайті: кнопки, шапка, підвал, панель «Про нас».", texts: ["tg_user", "phone", "email"] },
   { name: "Перший екран", note: "Велике фото на всю ширину, під ним заголовок і кнопка.", texts: ["hero_kicker", "hero_title", "hero_btn"], photos: ["hero"] },
   { name: "Знайомо?", note: "Темний блок з ілюстрацією і картки під ним. Картку можна додати, прибрати чи перетягнути — сайт сам розкладе їх по дві в ряд.", texts: ["pain_h", "pain_panel_h", "pain_panel_p"], collections: ["pains"] },
-  { name: "Що я роблю", note: "Сірий блок з ноутбуком і телефоном, картки по три в ряд, а під ними блок «Сайт + адмін-панель» зі знімком адмінки.", texts: ["sol_h", "sol_panel_h", "sol_panel_p", "sol_admin_h", "sol_admin_p"], collections: ["features"], photos: ["admin"] },
+  { name: "Що я роблю", note: "Сірий блок з ноутбуком і телефоном, картки по три в ряд, а під ними блок «Сайт + адмін-панель» зі знімком адмінки.", texts: ["sol_h", "sol_panel_h", "sol_panel_p", "sol_admin_h", "sol_admin_p"], collections: ["features", "screens"], photos: ["admin"] },
   { name: "Банер «Демосайт»", note: "Темна смуга на всю ширину з круглою кнопкою.", texts: ["demo_kicker", "demo_h", "demo_sub"] },
   { name: "Як я працюю", note: "Заголовок, великі цифри, що «набігають», і вкладки з етапами.", texts: ["proc_h", "proc_lead_h", "proc_lead_p"], collections: ["stats", "steps"] },
   { name: "Кейси", note: "Скриншот сайту в браузері й телефоні, біла картка з перемикачами. Кожен кейс — окрема картка.", texts: ["cases_h", "cases_card_h", "cases_card_p"], collections: ["cases"] },

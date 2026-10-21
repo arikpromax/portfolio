@@ -165,6 +165,18 @@
         }
       }
     ],
+    "screens": [
+      {
+        "title": "Fish Family",
+        "text": "",
+        "image_url": "https://arawebsite.com/screens/fishfamily-d.jpg",
+        "extra": {
+          "url_label": "fishfamily",
+          "image_tablet": "https://arawebsite.com/screens/fishfamily-t.jpg",
+          "image_mobile": "https://arawebsite.com/screens/fishfamily-m.jpg"
+        }
+      }
+    ],
     "stats": [
       {
         "title": "Сайт під ключ",

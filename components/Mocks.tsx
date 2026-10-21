@@ -4,7 +4,7 @@
   Усе намальовано розміткою й CSS (класи .mk-*), без картинок і емодзі.
 */
 import { useState } from "react";
-import { useContent, lines } from "@/components/ContentProvider";
+import { useContent, lines, src } from "@/components/ContentProvider";
 
 type Tone = { a?: string; b?: string };
 const vars = ({ a = "#0FA39B", b = "#0F3D52" }: Tone) =>
@@ -228,14 +228,27 @@ export function MockForm() {
   );
 }
 
+/** Один сайт на компʼютері, планшеті й телефоні — знімки з колекції «Сайт на екранах»; без знімків — макети */
 export function MockScreens() {
+  const { list, x } = useContent();
+  const s = list("screens")[0];
+  const desk = s?.image_url ? src(s.image_url) : "";
+  const tab = s && x(s, "image_tablet") ? src(x(s, "image_tablet")) : "";
+  const mob = s && x(s, "image_mobile") ? src(x(s, "image_mobile")) : "";
   return (
     <div className="mk-screens">
-      <Browser className="mk-screens__desk" />
+      <Browser className="mk-screens__desk" url={(s && x(s, "url_label")) || undefined}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {desk ? <img src={desk} alt="" loading="lazy" /> : undefined}
+      </Browser>
       <div className="mk-screens__tab">
-        <MiniSite />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {tab ? <img src={tab} alt="" loading="lazy" /> : <MiniSite />}
       </div>
-      <Phone className="mk-screens__phone" />
+      <Phone className="mk-screens__phone">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {mob ? <img src={mob} alt="" loading="lazy" /> : undefined}
+      </Phone>
     </div>
   );
 }
