@@ -7,7 +7,7 @@ import { getConsent, setConsent, REOPEN_EVENT } from "@/lib/consent";
  * Картка по центру екрана з питанням про cookie. Фон не затемнює й нічого не
  * блокує — сайт можна читати й гортати, поки вона висить.
  * Три рівноцінні дії: «Прийняти», «Відхилити», «Налаштувати». У налаштуваннях видно,
- * що необхідні cookie не вимикаються, а статистику (Google Analytics) можна вимкнути.
+ * що необхідні cookie не вимикаються, а статистику й карту Google можна вимкнути.
  * Повернути банер після вибору можна посиланням у підвалі.
  */
 export default function CookieBanner() {
@@ -79,10 +79,10 @@ export default function CookieBanner() {
 
           <div className="ck-row">
             <div className="ck-row__txt">
-              <b>Статистика · Google Analytics</b>
+              <b>Статистика й карта · Google</b>
               <span>
-                Рахує, скільки людей заходить на сайт, звідки і які розділи читають. Імʼя, контакти й
-                текст заявки туди не потрапляють.
+                Google Analytics рахує, скільки людей заходить на сайт, звідки і які розділи читають, а карта
+                Google показується одразу. Імʼя, контакти й текст заявки туди не потрапляють.
               </span>
             </div>
             <div className="ck-row__ctl">
@@ -119,7 +119,7 @@ export default function CookieBanner() {
             <i className="fa-solid fa-cookie-bite"></i>
             <p>
               Ми використовуємо cookie Google Analytics, щоб бачити, скільки людей заходить на сайт і
-              що їм цікаво. Вмикаємо їх лише з вашої згоди. <a href="/cookies">Про файли cookie</a>
+              що їм цікаво, і показуємо карту Google. Вмикаємо їх лише з вашої згоди. <a href="/cookies">Про файли cookie</a>
             </p>
           </div>
           <div className="ck__btns">

@@ -3,7 +3,8 @@
   для веб-студії чесніше показувати сам продукт — екрани сайтів, форми, пошук, карту.
   Усе намальовано розміткою й CSS (класи .mk-*), без картинок і емодзі.
 */
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getConsent, CHANGE_EVENT } from "@/lib/consent";
 import { useContent, lines, src } from "@/components/ContentProvider";
 
 type Tone = { a?: string; b?: string };
@@ -88,21 +89,45 @@ export function Toast({ icon, children, className = "" }: { icon: string; childr
 
 /* ---------- Великі сцени для повноширинних блоків ---------- */
 
-/** Сайт на ноутбуці й телефоні, до них прилітають заявки */
+/** Сайт, що працює: знімки кейсу Alexon (майстер з ремонту) на ноутбуці й телефоні, а довкола — заявки.
+ *  Кейс шукаємо за назвою; якщо його перейменують чи видалять в адмінці — беремо перший */
 export function SceneDevices() {
+  const { list, x } = useContent();
+  const cases = list("cases");
+  const c = cases.find((it) => /alexon/i.test(it.title || "")) || cases[0];
+  const desk = c?.image_url ? src(c.image_url) : "";
+  const mob = c && x(c, "image_mobile") ? src(x(c, "image_mobile")) : "";
   return (
     <div className="mk-scene mk-scene--devices">
-      <Browser className="mk-scene__desk" />
-      <Phone className="mk-scene__phone" />
+      <Browser className="mk-scene__desk" url={(c && x(c, "url_label")) || undefined}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {desk ? <img src={desk} alt="" loading="lazy" /> : undefined}
+      </Browser>
+      <Phone className="mk-scene__phone">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {mob ? <img src={mob} alt="" loading="lazy" /> : undefined}
+      </Phone>
       <Toast icon="fa-solid fa-pen-to-square" className="mk-float f1">
-        Нова заявка
+        <span className="mk-toast__two">
+          Нова заявка
+          <small>Michael · 2 хв тому</small>
+        </span>
       </Toast>
-      <Toast icon="fa-solid fa-calendar-check" className="mk-float f2">
-        Запис на прийом
+      <Toast icon="fa-solid fa-screwdriver-wrench" className="mk-float f2">
+        <span className="mk-toast__two">
+          Виклик майстра
+          <small>пт, 14:00</small>
+        </span>
       </Toast>
-      <Toast icon="fa-solid fa-phone" className="mk-float f3">
-        Дзвінок клієнта
-      </Toast>
+      <div className="mk-win mk-float f3">
+        <span>Заявок за тиждень</span>
+        <b>
+          27
+          <em>
+            <i className="fa-solid fa-arrow-up"></i>3×
+          </em>
+        </b>
+      </div>
     </div>
   );
 }
@@ -112,12 +137,47 @@ export function SceneQuiet() {
   return (
     <div className="mk-scene mk-scene--quiet">
       <Browser dim url="vash-sait.ua" className="mk-scene__desk" />
-      <div className="mk-stat">
-        <span className="mk-stat__label">Заявки за місяць</span>
-        <b className="mk-stat__num">0</b>
-        <svg viewBox="0 0 200 50" className="mk-stat__line" aria-hidden="true">
-          <path d="M0 40 L40 41 L80 40 L120 42 L160 41 L200 42" />
+      {/* Звіт у стилі Google Analytics: слабка аналітика — людей мало, майже всі йдуть, заявок нуль */}
+      <div className="mk-ga">
+        <div className="mk-ga__top">
+          <i className="fa-solid fa-chart-simple mk-ga__logo"></i>
+          Analytics
+          <span className="mk-ga__range">Останні 30 днів</span>
+        </div>
+        <div className="mk-ga__metrics">
+          <div>
+            <span>Відвідувачі</span>
+            <b>38</b>
+            <em className="bad">
+              <i className="fa-solid fa-arrow-down"></i>61%
+            </em>
+          </div>
+          <div>
+            <span>Відмови</span>
+            <b>89%</b>
+            <em className="bad">
+              <i className="fa-solid fa-arrow-up"></i>24%
+            </em>
+          </div>
+          <div className="on">
+            <span>Заявки</span>
+            <b>0</b>
+            <em>0%</em>
+          </div>
+        </div>
+        <svg viewBox="0 0 300 100" className="mk-ga__chart" aria-hidden="true">
+          <path className="grid" d="M0 25H300M0 50H300M0 75H300" />
+          <path className="area" d="M0 34 L30 42 L60 38 L90 52 L120 49 L150 62 L180 66 L210 72 L240 78 L270 83 L300 88 L300 96 L0 96 Z" />
+          <path className="users" d="M0 34 L30 42 L60 38 L90 52 L120 49 L150 62 L180 66 L210 72 L240 78 L270 83 L300 88" />
+          <path className="leads" d="M0 95 H300" />
         </svg>
+        <div className="mk-ga__axis">
+          <span>1 жовт.</span>
+          <span>8</span>
+          <span>15</span>
+          <span>22</span>
+          <span>29</span>
+        </div>
       </div>
     </div>
   );
@@ -267,12 +327,20 @@ export function MockSpeed() {
   );
 }
 
-// Карта світу Google. Поки людина не натисне «Відкрити карту», це знімок (public/map-world.jpg)
-// і до Google сайт не звертається; після натискання вантажиться жива карта — Google
-// бачить IP-адресу й може поставити свої cookie (так написано в /cookies і політиці).
+// Карта світу Google. Хто натиснув «Прийняти» у віконці про cookie — бачить живу карту одразу.
+// Решта бачить знімок (public/map-world.jpg) і кнопку «Відкрити карту»: до натискання сайт до Google
+// не звертається. Жива карта — Google бачить IP-адресу й може поставити свої cookie (так написано в /cookies і політиці).
 const GMAP = "https://maps.google.com/maps?ll=38,15&z=2&t=m&hl=uk&output=embed";
 export function MockGoogleMap() {
   const [live, setLive] = useState(false);
+  useEffect(() => {
+    const sync = () => {
+      if (getConsent() === "all") setLive(true);
+    };
+    sync();
+    window.addEventListener(CHANGE_EVENT, sync); // погодився вже на сторінці — карта зʼявляється одразу
+    return () => window.removeEventListener(CHANGE_EVENT, sync);
+  }, []);
   if (live)
     return <iframe className="gmap__frame" src={GMAP} title="Карта Google" allowFullScreen referrerPolicy="no-referrer-when-downgrade" />;
   return (
@@ -290,19 +358,30 @@ export function MockGoogleMap() {
   );
 }
 
+/** Пошукова видача, де першим стоїть кейс Alexon; посилання під ним — його реальні сторінки послуг */
 export function MockSearch() {
   return (
     <div className="mk-search">
       <span className="mk-search__box">
-        <i className="fa-solid fa-magnifying-glass"></i>стоматологія поруч
+        <i className="fa-solid fa-magnifying-glass"></i>handyman edmonton
       </span>
       <div className="mk-search__res top">
-        <b>Ваш сайт</b>
-        <span className="mk-line"></span>
-      </div>
-      <div className="mk-search__res">
-        <span className="mk-line t"></span>
-        <span className="mk-line"></span>
+        <span className="mk-search__site">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/cases/alexon-icon.png" alt="" loading="lazy" />
+          <span>
+            Alexon Home Services
+            <small>https://alexon-services.ca</small>
+          </span>
+        </span>
+        <b>Handyman, Renovation &amp; Painting in Edmonton</b>
+        <span className="mk-search__snip">Drywall, painting, fence &amp; deck staining, flooring, repairs. Edmonton and area.</span>
+        <span className="mk-search__links">
+          <em>Drywall</em>
+          <em>Painting</em>
+          <em>Flooring</em>
+          <em>Fences &amp; Decks</em>
+        </span>
       </div>
       <div className="mk-search__res">
         <span className="mk-line t"></span>

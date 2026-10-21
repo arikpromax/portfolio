@@ -214,7 +214,7 @@ const sections = [
   { name: "Контакти", note: "Вписуєте один раз — змінюється на всьому сайті: кнопки, шапка, підвал, панель «Про нас».", texts: ["tg_user", "phone", "email"] },
   { name: "Перший екран", note: "Велике фото на всю ширину, під ним заголовок і кнопка.", texts: ["hero_kicker", "hero_title", "hero_btn"], photos: ["hero"] },
   { name: "Знайомо?", note: "Темний блок з ілюстрацією і картки під ним. Картку можна додати, прибрати чи перетягнути — сайт сам розкладе їх по дві в ряд.", texts: ["pain_h", "pain_panel_h", "pain_panel_p"], collections: ["pains"] },
-  { name: "Що я роблю", note: "Сірий блок з ноутбуком і телефоном, картки по три в ряд, а під ними блок «Сайт + адмін-панель» зі знімком адмінки.", texts: ["sol_h", "sol_panel_h", "sol_panel_p", "sol_admin_h", "sol_admin_p"], collections: ["features", "screens"], photos: ["admin"] },
+  { name: "Що я роблю", note: "Сірий блок з ноутбуком і телефоном (на них — знімки кейсу Alexon з вкладки «Кейси»; якщо його перейменувати чи видалити, стане перший кейс), картки по три в ряд, а під ними блок «Сайт + адмін-панель» зі знімком адмінки.", texts: ["sol_h", "sol_panel_h", "sol_panel_p", "sol_admin_h", "sol_admin_p"], collections: ["features", "screens"], photos: ["admin"] },
   { name: "Банер «Демосайт»", note: "Темна смуга на всю ширину з круглою кнопкою.", texts: ["demo_kicker", "demo_h", "demo_sub"] },
   { name: "Як я працюю", note: "Заголовок, великі цифри, що «набігають», і вкладки з етапами.", texts: ["proc_h", "proc_lead_h", "proc_lead_p"], collections: ["stats", "steps"] },
   { name: "Кейси", note: "Скриншот сайту в браузері й телефоні, біла картка з перемикачами. Кожен кейс — окрема картка.", texts: ["cases_h", "cases_card_h", "cases_card_p"], collections: ["cases"] },
